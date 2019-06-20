@@ -47,9 +47,18 @@ module.exports = {
         // proxy: 'http://localhost:6666', //这会告诉开发服务器将任何未知请求 (没有匹配到静态文件的请求) 代理到http://localhost:6666
         // 如果你想要更多的代理控制行为，也可以使用一个 path: options 成对的对象。 
         proxy: {
+            // '/keyguard': {
+            //     target: 'http://172.30.248.74:2001/keyguard/v1', //对应自己的接口
+            //     changeOrigin: true,
+            //     ws: true,
+            //     pathRewrite: {
+            //       '^/keyguard': ''
+            //     }
+            //   },
             [process.env.VUE_APP_BASE_API1]: {
                 target: `${process.env.VUE_APP_BASE_API1_URL}`,
                 changeOrigin: true,
+                ws: true,
                 pathRewrite: {
                   ['^' + process.env.VUE_APP_BASE_API1]: ''
                 }
@@ -57,6 +66,7 @@ module.exports = {
               [process.env.VUE_APP_BASE_API2]: {
                 target: `${process.env.VUE_APP_BASE_API2_URL}`,
                 changeOrigin: true,
+                ws: true,
                 pathRewrite: {
                   ['^' + process.env.VUE_APP_BASE_API2]: ''
                 }
@@ -64,6 +74,7 @@ module.exports = {
               [process.env.VUE_APP_BASE_API3]: {
                 target: `${process.env.VUE_APP_BASE_API3_URL}`,
                 changeOrigin: true,
+                ws: true,
                 pathRewrite: {
                   ['^' + process.env.VUE_APP_BASE_API3]: ''
                 }
