@@ -67,22 +67,21 @@ const mutations = {
 }
 
 const actions = {
-  // user login
-//   login({ commit }, userInfo) {
-//     const { username, password } = userInfo
-//     return new Promise((resolve, reject) => {
-//         setToken('data.token')
-//         resolve()
-//     //   login({ username: username.trim(), password: password }).then(response => {
-//     //     const { data } = response
-//     //     commit('SET_TOKEN', data.token)
-//     //     setToken(data.token)
-//     //     resolve()
-//     //   }).catch(error => {
-//     //     reject(error)
-//     //   })
-//     })
-//   },
+    // user login
+    // login({ commit }, userInfo) {
+    //     const { username, password } = userInfo
+    //     return new Promise((resolve, reject) => {
+    //     login({ username: username.trim(), password: password }).then(response => {
+    //         const { data } = response
+    //         commit('SET_TOKEN', data.token)
+    //         setToken(data.token)
+    //         resolve()
+    //     }).catch(error => {
+    //         reject(error)
+    //     })
+    //     })
+    // },
+    //用户登录
     LoginByUsername({ commit }, userInfo) {
         const auths={
             "auth": {
@@ -103,112 +102,114 @@ const actions = {
         commit('SET_PASSWORD', userInfo.password)
         
         return new Promise((resolve, reject) => {
-            
-        getTokenId(auths).then(res => {  //获取刷新token
-            alert('1')
-            console.log(res)
-            commit('SET_DOMAINID', res.data.token.domainId)
-            commit('SET_DOMAINNAME', res.data.token.domainName)
-            auth.setDomainId(res.data.token.domainId)
-            auth.setDomainName(res.data.token.domainName)
-            const userToken={
-                "auth": {
-                    "identity": {
-                        "methods": [
-                            "token"
-                        ],
-                        "token": {
-                            "id": res.headers['x-subject-token']
+            //获取刷新token
+            getTokenId(auths).then(res => {  
+                commit('SET_DOMAINID', res.data.token.domainId)
+                commit('SET_DOMAINNAME', res.data.token.domainName)
+                auth.setDomainId(res.data.token.domainId)
+                auth.setDomainName(res.data.token.domainName)
+                const userToken={
+                    "auth": {
+                        "identity": {
+                            "methods": [
+                                "token"
+                            ],
+                            "token": {
+                                "id": res.headers['x-subject-token']
+                            }
                         }
                     }
                 }
-            }
-            getTokenId(userToken).then(response => {//获取访问token
-                alert('2')
-                commit('SET_TOKEN', response.headers['x-subject-token'])
-                commit('SET_TOKENTIME', response.data.token.expireAt)
-                auth.setTokenTime(response.data.token.expireAt)
-                auth.setToken(response.headers['x-subject-token'])
-                auth.setName(userInfo.username)
-                auth.setPassWord(userInfo.password)
-                resolve()
+                //获取访问token
+                getTokenId(userToken).then(response => {
+                    commit('SET_TOKEN', response.headers['x-subject-token'])
+                    commit('SET_TOKENTIME', response.data.token.expireAt)
+                    auth.setTokenTime(response.data.token.expireAt)
+                    auth.setToken(response.headers['x-subject-token'])
+                    auth.setName(userInfo.username)
+                    auth.setPassWord(userInfo.password)
+                    resolve()
+                })
+                
+            }).catch(error => {
+                reject(error)
             })
-            
-        }).catch(error => {
-            reject(error)
-        })
         })
     },
-
-  // get user info
-    GetMenu(){//获取菜单资源
+    //获取菜单资源
+    GetMenu({ commit }){
         return new Promise((resolve, reject) => {
-        getCatalog(auth.getName()).then(response => {
-            auth.setCatalogs(response.data.catalogVMs)
-            resolve(response)
-        }).catch(error => {
-            auth.removeToken()
-            this.$router.push({ path: '/' })//重定向到首页
-            reject(error)
-        })
+            getCatalog(auth.getName()).then(response => {
+                // commit('SET_MENU', response.data.catalogVMs)
+                // console.log(response.data.catalogVMs[0])
+                // auth.setCatalogs(response.data.catalogVMs[0])
+                // console.log(auth.getCatalogs())
+                // console.log('SET_MENU存在')
+                
+                resolve(response.data.catalogVMs)
+            }).catch(error => {
+                auth.removeToken()
+                this.$router.push({ path: '/' })//重定向到首页
+                reject(error)
+            })
         })
     },
 
-  // user logout
-  logout({ commit, state }) {
-    return new Promise((resolve, reject) => {
+    // 用户退出
+    logout({ commit, state }) {
+        return new Promise((resolve, reject) => {
 
-        commit('SET_TOKEN', '')
-        commit('SET_ROLES', [])
-        auth.removeAll()
-        resetRouter()
-        resolve()
-    //   logout(state.token).then(() => {
-    //     commit('SET_TOKEN', '')
-    //     commit('SET_ROLES', [])
-    //     removeToken()
-    //     resetRouter()
-    //     resolve()
-    //   }).catch(error => {
-    //     reject(error)
-    //   })
-    })
-  },
+            commit('SET_TOKEN', '')
+            commit('SET_ROLES', [])
+            auth.removeToken()
+            resetRouter()
+            resolve()
+        //   logout(state.token).then(() => {
+        //     commit('SET_TOKEN', '')
+        //     commit('SET_ROLES', [])
+        //     removeToken()
+        //     resetRouter()
+        //     resolve()
+        //   }).catch(error => {
+        //     reject(error)
+        //   })
+        })
+    },
 
-  // remove token
-  resetToken({ commit }) {
-    return new Promise(resolve => {
-      commit('SET_TOKEN', '')
-      commit('SET_ROLES', [])
-      auth.removeToken()
-      resolve()
-    })
-  },
+    // 删除token
+    resetToken({ commit }) {
+        return new Promise(resolve => {
+            commit('SET_TOKEN', '')
+            commit('SET_ROLES', [])
+            auth.removeToken()
+            resolve()
+        })
+    },
 
-  // dynamically modify permissions
-  changeRoles({ commit, dispatch }, role) {
-    return new Promise(async resolve => {
-      const token = role + '-token'
+    // 动态修改权限
+    changeRoles({ commit, dispatch }, role) {
+        return new Promise(async resolve => {
+            const token = role + '-token'
 
-      commit('SET_TOKEN', token)
-      auth.setToken(token)
+            commit('SET_TOKEN', token)
+            auth.setToken(token)
 
-      const { roles } = await dispatch('getInfo')
+            const { roles } = await dispatch('getInfo')
 
-      resetRouter()
+            resetRouter()
 
-      // generate accessible routes map based on roles
-      const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
+            // generate accessible routes map based on roles
+            const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
 
-      // dynamically add accessible routes
-      router.addRoutes(accessRoutes)
+            // dynamically add accessible routes
+            router.addRoutes(accessRoutes)
 
-      // reset visited views and cached views
-      dispatch('tagsView/delAllViews', null, { root: true })
+            // reset visited views and cached views
+            dispatch('tagsView/delAllViews', null, { root: true })
 
-      resolve()
-    })
-  }
+            resolve()
+        })
+    }
 }
 
 export default {

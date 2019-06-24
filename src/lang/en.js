@@ -2,6 +2,7 @@ export default {
   route: {
     dashboard: 'Dashboard',
     documentation: 'Documentation',
+    sys:'zhuzhiqiang',
     guide: 'Guide',
     permission: 'Permission',
     pagePermission: 'Page Permission',

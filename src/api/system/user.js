@@ -15,7 +15,6 @@ export function creat(data) {//创建用户
   })
 }
 export function selectlist(query) {//查询单个用户列表
-  console.log(query)
   return request({
     url: '/keyguard/users/'+query,
     method: 'get',

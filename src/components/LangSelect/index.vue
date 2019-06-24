@@ -31,6 +31,7 @@ export default {
     handleSetLanguage(lang) {
       this.$i18n.locale = lang
       this.$store.dispatch('app/setLanguage', lang)
+    //   this.$router.go(0)//刷新当前页面
       this.$message({
         message: 'Switch Language Success',
         type: 'success'

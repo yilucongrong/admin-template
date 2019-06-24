@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function selectDatas(query) {//查询菜单列表
   return request({
-    url: '/catalogs',
+    url: '/keyguard/catalogs',
     method: 'get',
     params: query
   })
@@ -36,7 +36,6 @@ export function renewData(catalogCode,data) {//更新服务
 }
 
 export function selectRelation(query) {//查询关联的资源记录
-  console.log(query.catalogCode)
     return request({
       url: '/catalogs/'+query.catalogCode+'/endpoints',
       method: 'get',
