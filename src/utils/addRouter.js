@@ -3,11 +3,10 @@ import { asyncRouterMap} from '@/router'
 import {tree} from '@/utils/treeDate'
 import Layout from '@/views/layout'
 import EmptyTemplate from '@/views/layout/EmptyTemplate'
-import i18n from '@/lang'
+
 export function filterAsyncRouter(routerlist) {
     const routerlists=tree(routerlist )
     //获取路由信息
-    // console.log(i18n.locale)
     function getRouter(routerlists){
         routerlists.forEach(e => {
         // 删除无用属性

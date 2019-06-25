@@ -1,15 +1,15 @@
 import router from './router'
 import store from './store'
 import { Message } from 'element-ui'
-import NProgress from 'nprogress' // progress bar
-import 'nprogress/nprogress.css' // progress bar style
-import { getToken,getCatalogs } from '@/utils/auth' // get token from cookie
+import NProgress from 'nprogress' // 进度条
+import 'nprogress/nprogress.css' //进度条样式
+import { getToken } from '@/utils/auth' // 从cookie获取token
 import { filterAsyncRouter} from '@/utils/addRouter'
 import getPageTitle from '@/utils/get-page-title'
 
-NProgress.configure({ showSpinner: false }) // NProgress Configuration
+NProgress.configure({ showSpinner: false }) // 进程配置
 
-const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
+const whiteList = ['/login', '/auth-redirect'] // 没有重定向白名单
 var getRouter
 router.beforeEach(async(to, from, next) => {
     // 开始进度条
@@ -40,18 +40,18 @@ router.beforeEach(async(to, from, next) => {
             
             getRouter = filterAsyncRouter(menus)//过滤菜单
 
-            // generate accessible routes map based on roles
+            // 基于用户获取可访问的路由映射
             const accessRoutes = await store.dispatch('permission/generateRoutes', getRouter)
 
-            // dynamically add accessible routes
+            // 动态添加可访问的路由
             router.addRoutes(accessRoutes)
-
-            // hack method to ensure that addRoutes is complete
-            // set the replace: true, so the navigation will not leave a history record
+            
+            // 确保addroutes完整的hack方法
+            // 设置replace:true，这样导航就不会留下历史记录。
             next({ ...to, replace: true })//解决刷新后出现空白
             // next()
             } catch (error) {
-                // remove token and go to login page to re-login
+                // 删除token并转到登录页重新登录
                 await store.dispatch('user/resetToken')
                 Message.error(error || 'Has Error')
                 next(`/login?redirect=${to.path}`)
