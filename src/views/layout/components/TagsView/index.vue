@@ -1,37 +1,46 @@
 <template>
-  <div id="tags-view-container" class="tags-view-container">
-    <scroll-pane ref="scrollPane" class="tags-view-wrapper">
-      <router-link
-        v-for="tag in visitedViews"
-        ref="tag"
-        :key="tag.path"
-        :class="isActive(tag)?'active':''"
-        :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
-        tag="span"
-        class="tags-view-item"
-        @click.middle.native="closeSelectedTag(tag)"
-        @contextmenu.prevent.native="openMenu(tag,$event)"
-      >
-        {{ generateTitle(tag.title) }}
-        <span v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
-      </router-link>
-    </scroll-pane>
-    <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
-      <li @click="refreshSelectedTag(selectedTag)">
-        {{ $t('tagsView.refresh') }}
-      </li>
-      <li v-if="!(selectedTag.meta&&selectedTag.meta.affix)" @click="closeSelectedTag(selectedTag)">
-        {{
-          $t('tagsView.close') }}
-      </li>
-      <li @click="closeOthersTags">
-        {{ $t('tagsView.closeOthers') }}
-      </li>
-      <li @click="closeAllTags(selectedTag)">
-        {{ $t('tagsView.closeAll') }}
-      </li>
-    </ul>
-  </div>
+<div id="tagdiv">
+    <div  class="fl arrow_scroll arrow_hover" @click="tagMove('left')" :title="$t('navbar.left')">
+      <i class="el-icon-arrow-left"></i>
+    </div>
+    <div id="tags-view-container" class="tags-view-container">
+        <scroll-pane ref="scrollPane" class="tags-view-wrapper" style="float:left;">
+            <router-link
+                v-for="tag in visitedViews"
+                ref="tag"
+                :key="tag.path"
+                :class="isActive(tag)?'active':''"
+                :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
+                tag="span"
+                class="tags-view-item"
+                @click.middle.native="closeSelectedTag(tag)"
+                @contextmenu.prevent.native="openMenu(tag,$event)"
+            >
+                {{ generateTitle(tag.title) }}
+                <span v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+            </router-link>
+        </scroll-pane>
+        <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
+            <li @click="refreshSelectedTag(selectedTag)">
+                {{ $t('tagsView.refresh') }}
+            </li>
+            <li v-if="!(selectedTag.meta&&selectedTag.meta.affix)" @click="closeSelectedTag(selectedTag)">
+                {{
+                $t('tagsView.close') }}
+            </li>
+            <li @click="closeOthersTags">
+                {{ $t('tagsView.closeOthers') }}
+            </li>
+            <li @click="closeAllTags(selectedTag)">
+                {{ $t('tagsView.closeAll') }}
+            </li>
+        </ul>
+    </div>
+    <div class="fr arrow_scroll arrow_hover" @click="tagMove('right')" :title="$t('navbar.right')">
+        <i class="el-icon-arrow-right"></i>
+    </div>
+</div>
+
 </template>
 
 <script>
@@ -197,39 +206,79 @@ export default {
     },
     closeMenu() {
       this.visible = false
+    },
+    tagMove(dir){
+        const tags = this.$refs.tag;
+        if(dir=='left'){
+            this.$refs.scrollPane.scrollWrapper.scrollLeft -= 120;
+        }else{
+            this.$refs.scrollPane.scrollWrapper.scrollLeft += 120;
+        }
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.tags-view-container {
-  height: 34px;
-  width: 100%;
-  background: #fff;
+.fl{
+  float:left;
+}
+.fr{
+  border-left: 1px solid #d8dce5;
+  float:right;
+}
+
+.arrow_scroll{
+  cursor: pointer;
+  width:31px;
+  height:32px;
+  line-height: 32px;
+  background-color: #fff;
   border-bottom: 1px solid #d8dce5;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+  padding:0 8px;
+}
+
+.arrow_hover:hover{
+  background-color: #d8dce5;
+}
+
+#tagdiv::after, #tagdiv::before {
+    display: table;
+}
+
+#tagdiv::after, #tagdiv::before{
+    content: "";
+}
+.tags-view-container {
+    float: left;
+    text-align: left;
+    height: 32px;
+    //   width: 100%;
+    width: calc(100% - 62px);
+    background: #fff;
+    border-bottom: 1px solid #d8dce5;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
   .tags-view-wrapper {
     .tags-view-item {
-      float: left;
+     
       display: inline-block;
       position: relative;
       cursor: pointer;
-      height: 26px;
-      line-height: 26px;
+      height: 32px;
+      line-height: 32px;
       border: 1px solid #d8dce5;
       color: #495060;
       background: #fff;
       padding: 0 8px;
       font-size: 12px;
-      margin-left: 5px;
-      margin-top: 4px;
-      &:first-of-type {
-        margin-left: 15px;
-      }
-      &:last-of-type {
-        margin-right: 15px;
-      }
+    //   margin-left: 5px;
+    //   margin-top: 3px;
+    //   &:first-of-type {
+    //     margin-left: 15px;
+    //   }
+    //   &:last-of-type {
+    //     margin-right: 15px;
+    //   }
       &.active {
         background-color: #1a5f94;
         color: #fff;
