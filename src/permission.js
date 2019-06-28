@@ -39,12 +39,17 @@ router.beforeEach(async(to, from, next) => {
             const menus = await store.dispatch('user/GetMenu')
             
             getRouter = filterAsyncRouter(menus)//过滤菜单
+           
 
             // 基于用户获取可访问的路由映射
             const accessRoutes = await store.dispatch('permission/generateRoutes', getRouter)
 
             // 动态添加可访问的路由
             router.addRoutes(accessRoutes)
+            router.addRoutes(accessRoutes.concat([{
+                path: '*',
+                redirect: '/404'
+              }]));
             
             // 确保addroutes完整的hack方法
             // 设置replace:true，这样导航就不会留下历史记录。

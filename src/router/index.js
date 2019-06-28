@@ -42,7 +42,8 @@ export const constantRoutes = [
                 meta: { title: 'dashboard', icon: 'dashboard', affix: true }
             }
         ]
-    }
+    },
+    { path: '/404', component: () => import('@/views/404'), hidden: true },
 ]
 
 /**

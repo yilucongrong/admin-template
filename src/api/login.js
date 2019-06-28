@@ -9,7 +9,7 @@ export function getTokenId(jwtAuthDTO) {
 }
 export function getCatalog(name) {
   return request({
-    url: '/keyguard/auth/catalog?name='+name,
+    url: '/keyguard/auth/catalog?name='+name,//`/keyguard/auth/catalog?name='${name}`
     method: 'get',
   })
 }
