@@ -37,7 +37,6 @@ router.beforeEach(async(to, from, next) => {
             // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
             //通过命名空间调用user/GetMenu action
             const menus = await store.dispatch('user/GetMenu')
-            
             getRouter = filterAsyncRouter(menus)//过滤菜单
            
 
