@@ -77,3 +77,13 @@
 .el-range-editor.el-input__inner {
   display: inline-flex !important;
 }
+
+.el-input{
+    max-width: 165px;
+}
+.el-date-editor{//时间控件最大宽度设置
+    max-width:300px;
+}
+.el-dialog__footer{
+    border-top: #f3f3f3 solid 2px
+}

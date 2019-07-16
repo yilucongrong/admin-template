@@ -54,6 +54,7 @@ export default {
   data() {
     // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237
     // TODO: refactor with render function
+    // this.onlyOneChild = null
     this.onlyOneChild = null
     return {}
   },
@@ -83,13 +84,13 @@ export default {
       return false
     },
     resolvePath(routePath) {
-      if (isExternal(routePath)) {
-        return routePath
-      }
-      if (isExternal(this.basePath)) {
-        return this.basePath
-      }
-      return path.resolve(this.basePath, routePath)
+        if (isExternal(routePath)) {
+            return routePath
+        }
+        if (isExternal(this.basePath)) {
+            return this.basePath
+        }
+        return path.resolve(this.basePath, routePath)
     },
 
     generateTitle

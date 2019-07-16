@@ -18,7 +18,7 @@ module.exports = {
     // 如果应用被部署在一个子路径上，你就需要用这个选项指定这个子路径。例如，如果你的应用被部署在 https://www.my-app.com/my-app/，
     // 则设置 publicPath 为 /my-app/ 这个值也可以被设置为空字符串 ('') 或是相对路径 ('./')，
     // 这样所有的资源都会被链接为相对路径，这样打出来的包可以被部署在任意路径，也可以用在类似 Cordova hybrid 应用的文件系统中。
-    publicPath: './',
+    publicPath: '/',
     // 当运行 vue-cli-service build 时生成的生产环境构建文件的目录。注意目标目录在构建之前会被清除 (构建时传入 --no-clean 可关闭该行为)。
     outputDir: 'dist',
     // 放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录

@@ -21,21 +21,20 @@ export function filterAsyncRouter(routerlist) {
         e.name=e.catalogName
         
         if (e.parentId === 0||e.children) {//Layout组件特殊处理
-            
-            e.path = e.url
-            
+            //路径为空时会因为undefind报错，给个默认值来解决
+            e.path = e.url||'nopath'
             if(e.url.split('/').length>2){
-            e.component = EmptyTemplate
+                e.component = EmptyTemplate
             }else{
-            e.component = Layout
-            
+                e.component = Layout
             }
             e.icon='setting-fill'
             
         } else {
             e.icon='circle'
             e.component = _import(e.url)
-            e.path = e.url.split('/')[2]
+            //路径为空时会因为undefind报错，给个默认值来解决
+            e.path = e.url.split('/')[2]||'nopath'
         }
         // delete e.parentId
         delete e.url

@@ -17,9 +17,11 @@
     "js-cookie": "^2.2.0",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
+    "path-to-regexp": "^3.0.0",
     "screenfull": "^4.2.0",
     "svg-sprite-loader": "^4.1.6",
     "vue": "^2.6.10",
+    "vue-awesome": "^3.5.4",
     "vue-i18n": "^8.11.2",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"
@@ -35,8 +37,11 @@
     "babel-jest": "^23.6.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "file-saver": "^2.0.2",
     "sass": "^1.18.0",
     "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.6.10"
+    "script-loader": "^0.7.2",
+    "vue-template-compiler": "^2.6.10",
+    "xlsx": "^0.14.3"
   }
 }

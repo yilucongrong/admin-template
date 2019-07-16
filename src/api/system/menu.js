@@ -49,7 +49,6 @@ export function addRelation(catalogCode,query,methods) {//授权资源
     "endpointCodes": query,
     "method": methods
   }
-  console.log(querys)
     return request({
       url: '/catalogs/endpoints',
       method: 'post',

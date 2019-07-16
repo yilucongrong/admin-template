@@ -1,7 +1,13 @@
 export default {
   route: {
     dashboard: '首页',
-    sys:'朱志强',
+    sys:'系统管理',
+    zzjg:'组织结构',
+    yggl:'员工管理',
+    yhgl:'用户管理',
+    xtcd:'系统菜单',
+    jsgl:'角色管理',
+    sjzd:'数据字典',
     documentation: '文档',
     guide: '引导页',
     permission: '权限测试页',
@@ -110,6 +116,7 @@ export default {
     backToTopTips2: '可自定义按钮的样式、show/hide、出现的高度、返回的位置 如需文字提示，可在外部使用Element的el-tooltip元素',
     imageUploadTips: '由于我在使用时它只有vue@1版本，而且和mockjs不兼容，所以自己改造了一下，如果大家要使用的话，优先还是使用官方版本。'
   },
+  //表格
   table: {
     dynamicTips1: '固定表头, 按照表头顺序排序',
     dynamicTips2: '不固定表头, 按照点击顺序排序',
@@ -134,7 +141,102 @@ export default {
     draft: '草稿',
     delete: '删除',
     cancel: '取 消',
-    confirm: '确 定'
+    confirm: '确 定',
+    // 系统管理
+    organizationNum:'组织编码',
+    organizationName:'组织名称',
+    organizationType:'组织类型',
+    superiorType:'上级组织',
+    parentId:'上级组织',
+    address:'地址',
+    email:'邮箱',
+    contacts:'联系人',
+    phone:'电话',
+    mobile:'电话',
+    postalCode:'邮政编码',
+    businessFunction:'业务职能',
+    state:'状态',
+    remarks:'备注',
+    enable:'启用',
+    stop:'停用',
+  },
+  //员工管理
+  employeesManagement:{
+    employeeCode:'员工编码',
+    employeeName:'员工名称',
+    organizationId:'所属组织',
+    sex:'性别',
+    mobile:'联系电话',
+    officePhone:'办公电话',
+    email:'邮箱地址',
+    state:'员工状态',
+    birthday:'生日',
+    hireDate:'入职时间',
+    idNumber:'身份证号',
+    address:'居住地址',
+    remark:'备注',
+    materielName:'物料名称',
+    userName:'用户账号',
+    realName:'用户名称',
+    password:'用户密码',
+    isLog:'日志状态',
+    remark:'备注',
+    materielName:'物料名称',
+    userMaintain:'用户维护'
+  },
+  //用户管理
+  userManagement:{
+    userName:'用户名称',
+    realName:'真实姓名',
+    lastIp:'上一次登陆IP',
+    state:'用户状态',
+    isLog:'用户日志',
+    roleAuthorization:'角色授权',
+    roleName:'角色名称',
+    roleCode:'角色编码',
+    roleType:'角色类型',
+    functionAuthorization:'功能授权',
+    userAuthorization:'用户授权',
+    unrelatedRoles:'未关联角色',
+    associatedRoles:'已关联角色',
+    domainScope:'所属域'
+  },
+  //系统菜单
+  systemMenu:{
+    catalogCode:'资源编码',
+    catalogName:'资源名称',
+    catalogEngName:'资源英文名',
+    catalogOrder:'序号',
+    nodeType:'节点类型',
+    parentId:'父目录',
+    url:'路径',
+    remark:'备注',
+    resourceAssociation:'资源关联',
+    buttonOprate:'按钮操作'
+  },
+   //数据字典
+   dict:{
+    dictCode:'分类编码',
+    dictName:'分类名称',
+    dictType:'类型',
+    dictItemDTOs:'字典类型',
+    dictItemKey:'字典编码',
+    dictItemValue:'字典名称',  
+
+
+ },
+   //角色关联
+   roleManagement:{
+    roleCode:'角色编码',
+    roleName:'角色名称',
+    roletype:'角色类型',
+    userName:'用户编码',
+    remark:'角色描述',
+    employeeId:'用户编码',
+    realName:'用户名称',
+    roleType:'角色类型',
+    remark:'角色',
+    resourceAssociation:'资源关联'
   },
   example: {
     warning: '创建和编辑页面是不能被 keep-alive 缓存的，因为keep-alive 的 include 目前不支持根据路由来缓存，所以目前都是基于 component name 来进行缓存的。如果你想类似的实现缓存效果，可以使用 localStorage 等浏览器缓存方案。或者不要使用 keep-alive 的 include，直接缓存所有页面。详情见'

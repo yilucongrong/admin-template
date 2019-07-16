@@ -81,7 +81,7 @@ export function setPassWord(passWords) {
     // passWords.split("").reverse().join("")
     
 //   return Cookies.set(passWord, passWords)
-alert(this.Encrypt(passWords))
+// alert(this.Encrypt(passWords))
 return Cookies.set(passWord, this.Encrypt(passWords))
 }
 

@@ -26,12 +26,7 @@ export const constantRoutes = [
         hidden: true
     },
     {
-        path: '/auth-redirect',
-        component: () => import('@/views/login/auth-redirect'),
-        hidden: true
-    },
-    {
-        path: '',
+        path: '/',
         component: Layout,
         redirect: 'dashboard',
         children: [
@@ -60,6 +55,12 @@ const createRouter = () => new Router({
 
 const router = createRouter()
 
+router.$addRoutes = (params) => {
+    router.matcher = new Router({mode: 'history', //后端支持可开，去掉路径中的#
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes}).matcher
+    router.addRoutes(params)
+  }
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
     const newRouter = createRouter()

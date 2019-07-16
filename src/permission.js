@@ -38,8 +38,6 @@ router.beforeEach(async(to, from, next) => {
             //通过命名空间调用user/GetMenu action
             const menus = await store.dispatch('user/GetMenu')
             getRouter = filterAsyncRouter(menus)//过滤菜单
-           
-
             // 基于用户获取可访问的路由映射
             const accessRoutes = await store.dispatch('permission/generateRoutes', getRouter)
 
@@ -52,6 +50,7 @@ router.beforeEach(async(to, from, next) => {
             
             // 确保addroutes完整的hack方法
             // 设置replace:true，这样导航就不会留下历史记录。
+            
             next({ ...to, replace: true })//解决刷新后出现空白
             // next()
             } catch (error) {

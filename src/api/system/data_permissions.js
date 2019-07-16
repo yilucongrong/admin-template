@@ -1,6 +1,5 @@
 import request from '@/utils/request'
-import fetch from '@/utils/fetch'
-import scc from '@/utils/scc'
+
 export function selectlists(query) {//查询用户列表
     return request({
         url: '/users',
@@ -34,7 +33,6 @@ export function queryqx(query) {//查询权限类别下拉框
   
 
   export function queryurlkg(query) {//查询列表（调2001下的）
-    console.log(query)
     return request({
       url: `${query.url}`,
       method: 'get',
@@ -43,7 +41,6 @@ export function queryqx(query) {//查询权限类别下拉框
     })
   }
   export function queryurliwms(query) {//查询列表（调2002下的）
-    console.log(query)
     return fetch({
       url: `${query.url}`,
       method: 'get',
@@ -52,7 +49,6 @@ export function queryqx(query) {//查询权限类别下拉框
     })
   }
   export function queryurlscc(query) {//查询列表（调2003下的）
-    console.log(query)
     return scc({
       url: `${query.url}`,
       method: 'get',

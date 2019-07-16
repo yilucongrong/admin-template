@@ -1,7 +1,7 @@
 import {getRecord} from '@/api/data-base/dict'
 //系统数据字典
-const dictDatas = {
-    state:{
+
+const state={
         dt_stock_type:[],//库存类型
         dt_batch_rule_diff:[],//批次规则区分
         dt_account_field:[],//记账字段
@@ -69,24 +69,28 @@ const dictDatas = {
         dt_time_type:[],//时间类别
         dt_iqc_type:[],//质检方式
 
-    },
-    mutations:{
+    }
+const mutations={
         getDicData(state,dicCodes){
             for(let i=0;i<dicCodes.length;i++){
                 if(state[dicCodes[i]].length == 0){
                     getRecord(dicCodes[i]).then(res => {
-                        state[dicCodes[i]] = res.dictItemDTOs;
+                        state[dicCodes[i]] = res.data.dictItemDTOs;
                     })
                 }
             }
             
         }
-    },
-    actions:{
+    }
+const actions={
         getDicData(context,dicCodes){
+            
             context.commit('getDicData',dicCodes);
         }
     }
+export default {
+    namespaced: true,
+    state,
+    mutations,
+    actions
 }
-
-export default dictDatas
