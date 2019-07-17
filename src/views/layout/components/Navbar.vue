@@ -78,7 +78,8 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      location.reload() // 为了重新实例化vue-router对象 避免bug
+    //   this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }
 }

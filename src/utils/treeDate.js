@@ -1,6 +1,6 @@
 //对于/1001/1002/1005，/1001，/1007/1008 数据形式tree加载
 export function loadtreeDate(data) {
-    tree(data)
+    return tree(data)
     // let datatree=[]
     // for(let i=0;i<data.length;i++){//获取全部跟节点
     //     if(data[i].parentId==0){

@@ -27,6 +27,7 @@
                 v-loading="listLoading"
                 :key="tableKey"
                 :data="list"
+                height="315"
                 border
                 fit
                 highlight-current-row

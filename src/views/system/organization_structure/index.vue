@@ -29,7 +29,7 @@
               :data="list"
               border
               fit
-              
+              height="315"
               highlight-current-row
               style="width: 100%;"
               @selection-change='selectRow' cell-class-name="table-cell" header-cell-class-name="header-cell">

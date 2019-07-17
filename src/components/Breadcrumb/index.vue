@@ -2,7 +2,7 @@
   <el-breadcrumb class="app-breadcrumb" separator="/">
     <transition-group name="breadcrumb">
       <el-breadcrumb-item v-for="(item,index) in levelList" :key="item.path">
-        <span v-if="item.redirect==='noRedirect'||index==levelList.length-1" class="no-redirect">{{
+        <span v-if="item.redirect==='noRedirect'||index==levelList.length-1 || item.meta.icon==='setting-fill'" class="no-redirect">{{
           generateTitle(item.meta.title) }}</span>
         <a v-else @click.prevent="handleLink(item)">{{ generateTitle(item.meta.title) }}</a>
       </el-breadcrumb-item>
@@ -54,11 +54,8 @@ export default {
     },
     pathCompile(path) {
       // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
-      console.log(path)
       const { params } = this.$route
-      console.log('1')
       var toPath = pathToRegexp.compile(path)
-      console.log('2')
       return toPath(params)
     },
     handleLink(item) {

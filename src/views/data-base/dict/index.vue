@@ -1,7 +1,7 @@
 <template>
     <div class="app-container calendar-list-container">
         <el-row>
-            <el-col :span="12" class="left-table">
+            <el-col :span="24" class="">
                 <div class="filter-container">
                     <div class="main-header">
                         <div class="select-content">
@@ -10,40 +10,67 @@
                             <el-button class="filter-item" size="small" type="primary" icon="el-icon-search" @click="handleQuery">{{$t('table.search')}}</el-button>
                         </div>
                     </div>
-                    <div class="main-body">
-                        <div class="btn">
-                            <el-button class="filter-item" size="small" type="primary" @click="handleCreate" icon="el-icon-plus">{{$t('table.add')}}</el-button>
-                            <el-button class="filter-item" size="small" type="primary" @click="handleUpdate" icon="el-icon-edit">{{$t('table.edit')}}</el-button>
-                            <el-button class="filter-item" size="small" type="primary" @click="handleDelete" icon="el-icon-delete">{{$t('table.delete')}}</el-button>
-                        </div>
-                        <el-table
-                            :key="tableKey"
-                            :data="list"
-                            border
-                            fit
-                            
-                            highlight-current-row
-                            style="width: 100%;"
-                            @selection-change="selectRow"
-                            cell-class-name="table-cell"
-                            header-cell-class-name="header-cell"
-                            @row-click="selectRow2"
-                            ref="tb">
-                            <el-table-column type="selection" width="30"></el-table-column>
-                            <el-table-column show-overflow-tooltip width="200" align="left" :label="$t('dict.dictCode')" prop="dictCode"></el-table-column>
-                            <el-table-column show-overflow-tooltip width="140" align="left" :label="$t('dict.dictName')" prop="dictName"></el-table-column>
-                            <el-table-column show-overflow-tooltip min-width="120" align="left" :label="$t('dict.dictType')">
-                                <template slot-scope="scope">
-                                    {{ [scope.row.dictType, dictTypeOptions] | optionsFilter }}
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                        <pagination :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageSize" @pagination="getList"/>
-                    </div>
                 </div>
-                
             </el-col>
-
+            <el-col :span="12" class="left-table">
+                <div class="main-body">
+                    <div class="btn">
+                        <el-button class="filter-item" size="small" type="primary" @click="handleCreate" icon="el-icon-plus">{{$t('table.add')}}</el-button>
+                        <el-button class="filter-item" size="small" type="primary" @click="handleUpdate" icon="el-icon-edit">{{$t('table.edit')}}</el-button>
+                        <el-button class="filter-item" size="small" type="primary" @click="handleDelete" icon="el-icon-delete">{{$t('table.delete')}}</el-button>
+                    </div>
+                    <el-table
+                        :key="tableKey"
+                        :data="list"
+                        border
+                        fit
+                        height="315"
+                        highlight-current-row
+                        style="width: 100%;"
+                        @selection-change="selectRow"
+                        cell-class-name="table-cell"
+                        header-cell-class-name="header-cell"
+                        @row-click="selectRow2"
+                        ref="tb">
+                        <el-table-column type="selection" width="30"></el-table-column>
+                        <el-table-column show-overflow-tooltip width="200" align="left" :label="$t('dict.dictCode')" prop="dictCode"></el-table-column>
+                        <el-table-column show-overflow-tooltip width="140" align="left" :label="$t('dict.dictName')" prop="dictName"></el-table-column>
+                        <el-table-column show-overflow-tooltip min-width="120" align="left" :label="$t('dict.dictType')">
+                            <template slot-scope="scope">
+                                {{ [scope.row.dictType, dictTypeOptions] | optionsFilter }}
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <pagination :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageSize" @pagination="getList"/>
+                </div>
+            </el-col>
+            <el-col :span="12" class="right-table">
+                <div class="btn">
+                    <el-button class="filter-item" size="small" type="primary" @click="handleCreate1" icon="el-icon-plus">{{$t('table.add')}}</el-button>
+                    <el-button class="filter-item" size="small" type="primary" @click="handleUpdate1" icon="el-icon-edit">{{$t('table.edit')}}</el-button>
+                    <el-button class="filter-item" size="small" type="primary" @click="handleDelete1()" icon="el-icon-delete">{{$t('table.delete')}}</el-button>
+                </div>
+                <el-table
+                    :key="tableKey"
+                    :data="list1"
+                    border
+                    fit
+                    height="315"
+                    highlight-current-row
+                    style="width: 100%;"
+                    @selection-change="selectRow1"
+                    size="mini"
+                    cell-class-name="table-cell"
+                    header-cell-class-name="header-cell"
+                    v-bind:parentdictCode="dictCode"
+                >
+                    <el-table-column type="selection" width="30"></el-table-column>
+                    <el-table-column show-overflow-tooltip width="200" align="left" :label="$t('dict.dictItemKey')" prop="dictItemKey"></el-table-column>
+                    <el-table-column show-overflow-tooltip min-width="140" align="left" :label="$t('dict.dictItemValue')" prop="dictItemValue"></el-table-column>
+                </el-table>
+                <pagination :total="total1" :page.sync="listQuery1.currentPage" :limit.sync="listQuery1.pageSize" @pagination="getList"/>
+            
+            </el-col>
             <!-- 数据字典新增编辑弹窗 -->
             <el-dialog custom-class="dialog-custom" :close-on-click-modal="false" :close-on-press-escape="false" :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')"
                 :visible.sync="dialogFormVisible"
@@ -136,34 +163,7 @@
                 </div>
             </el-dialog>
 
-            <el-col :span="12" class="right-table">
-                <div class="table-container">
-                    <div class="table-items table-items-top">
-                        <el-button class="filter-item" size="small" type="primary" @click="handleCreate1" icon="el-icon-plus">{{$t('table.add')}}</el-button>
-                        <el-button class="filter-item" size="small" type="primary" @click="handleUpdate1" icon="el-icon-edit">{{$t('table.edit')}}</el-button>
-                        <el-button class="filter-item" size="small" type="primary" @click="handleDelete1()" icon="el-icon-delete">{{$t('table.delete')}}</el-button>
-                    </div>
-                    <el-table
-                        :key="tableKey"
-                        :data="list1"
-                        border
-                        fit
-                        height="285px"
-                        highlight-current-row
-                        style="width: 100%;"
-                        @selection-change="selectRow1"
-                        size="mini"
-                        cell-class-name="table-cell"
-                        header-cell-class-name="header-cell"
-                        v-bind:parentdictCode="dictCode"
-                    >
-                        <el-table-column type="selection" width="30"></el-table-column>
-                        <el-table-column show-overflow-tooltip width="200" align="left" :label="$t('dict.dictItemKey')" prop="dictItemKey"></el-table-column>
-                        <el-table-column show-overflow-tooltip min-width="140" align="left" :label="$t('dict.dictItemValue')" prop="dictItemValue"></el-table-column>
-                    </el-table>
-                    <pagination :total="total1" :page.sync="listQuery1.currentPage" :limit.sync="listQuery1.pageSize" @pagination="getList"/>
-                </div>
-            </el-col>
+            
         </el-row>
     </div>
 </template>
@@ -250,8 +250,8 @@ export default {
         },
         getList1() {//查询明细
             api.getRecord(this.selectlistRow2.dictCode).then(res => {
-                this.list1 = res.dictItemDTOs;
-                this.total1 = res.dictItemDTOs.length;
+                this.list1 = res.data.dictItemDTOs;
+                this.total1 = res.data.dictItemDTOs.length;
             });
         },
         handleQuery() {

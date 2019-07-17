@@ -35,7 +35,7 @@
                 highlight-current-row
                 style="width: 100%"
                 cell-class-name="table-cell"
-                
+                height="315"
                 header-cell-class-name="header-cell"
                 @selection-change="selected"
             >
@@ -155,6 +155,7 @@ import { getRecord as getGict } from "@/api/data-base/dict";
 import { mapState } from "vuex";
 import { selectDatas } from "@/api/system/menu";
 import { codeToName } from "@/utils/codeToName";
+import { debuglog } from 'util';
 
 export default {
     name: "Role",
@@ -281,16 +282,17 @@ export default {
                 this.listQuery2.roleCodes = this.selectedrow[0].roleCode;
                 let dd = [];
                 selectDatas(this.listQuery2).then(res => {
-                this.checkeddatas = loadtreeDate(res.data).filter(function(items) {
-                    //默认选中项
-                    if (items.children) {
-                    items.children.filter(function(em) {
-                        dd.push(em.rowId);
+                    debugger
+                    this.checkeddatas = loadtreeDate(res.data).filter(function(items) {
+                        //默认选中项
+                        if (items.children) {
+                        items.children.filter(function(em) {
+                            dd.push(em.rowId);
+                        });
+                        }
+                        return dd;
                     });
-                    }
-                    return dd;
-                });
-                this.checkeddatas = dd;
+                    this.checkeddatas = dd;
                 });
                 api.selectRecord().then(res => {
                 this.dialogStatus = "create";
