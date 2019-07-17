@@ -276,7 +276,7 @@ export default {
           this.dialogFormVisible1 = false
         },
         getHeight(){
-            this.contentStyleObj.height=document.body.scrollHeight-165+'px';
+            this.contentStyleObj.height=document.body.scrollHeight-110+'px';
         },
         destroyed(){
             window.removeEventListener('resize', this.getHeight)

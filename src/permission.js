@@ -42,8 +42,8 @@ router.beforeEach(async(to, from, next) => {
             const accessRoutes = await store.dispatch('permission/generateRoutes', getRouter)
 
             // 动态添加可访问的路由
-            router.addRoutes(accessRoutes)
-            router.addRoutes(accessRoutes.concat([{
+            router.$addRoutes(accessRoutes)
+            router.$addRoutes(accessRoutes.concat([{
                 path: '*',
                 redirect: '/404'
               }]));

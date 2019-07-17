@@ -382,7 +382,7 @@ export default {
             }
         },
         getHeight(){//自适应高度
-            this.contentStyleObj.height=document.body.scrollHeight-165+'px';
+            this.contentStyleObj.height=document.body.scrollHeight-110+'px';
         },
         destroyed(){//自适应窗体大小
             window.removeEventListener('resize', this.getHeight)

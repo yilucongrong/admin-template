@@ -443,7 +443,7 @@ import { codeToName} from '@/utils/codeToName'
             }))
         },
         getHeight(){
-            this.contentStyleObj.height=document.body.scrollHeight-165+'px';
+            this.contentStyleObj.height=document.body.scrollHeight-110+'px';
         },
         handleNodeClick(data) {//点击树查询
             this.temp.parentId=data.rowId;

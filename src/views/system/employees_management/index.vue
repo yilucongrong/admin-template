@@ -331,7 +331,7 @@ export default {
 
     methods: {
         getHeight(){//树高度
-            this.contentStyleObj.height=document.body.scrollHeight-165+'px';
+            this.contentStyleObj.height=document.body.scrollHeight-110+'px';
         },
         destroyed(){//树高度随窗口变化
             window.removeEventListener('resize', this.getHeight)
