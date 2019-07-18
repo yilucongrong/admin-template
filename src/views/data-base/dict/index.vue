@@ -315,17 +315,23 @@ export default {
 
         // 获取表格1选中时的数据
         selectRow(val) {
-            this.selectlistRow = val;
+            if (val.length > 1) {
+                this.$refs.tb.clearSelection()//清除其他行的选中
+                this.$refs.tb.toggleRowSelection(val[val.length-1],'selected')//单击行绑定点击事件
+            }else if(val.length===1){
+                this.selectlistRow = val[val.length-1]
+                this.selectlistRow2 = val[val.length-1]
+                this.getList1();
+                
+            }
         },
         // 获取表格2选中时的数据
         selectRow1(val) {
             this.selectlistRow1 = val;
         },
-        selectRow2(val) {//表一单击行选中方法
-            this.selectlistRow2 = val;
-            this.$refs.tb.clearSelection();
-            this.$refs.tb.toggleRowSelection(val); //单击行绑定点击事件
-            this.getList1();
+        selectRow2(val){//表一单击行选中方法
+            this.$refs.tb.clearSelection()//清除其他行的选中
+            this.$refs.tb.toggleRowSelection(val)//单击行绑定点击事件
         },
         handleUpdate() { //编辑弹窗
             if (this.selectlistRow && this.selectlistRow.length == 1) {

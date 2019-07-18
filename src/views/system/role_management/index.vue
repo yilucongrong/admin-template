@@ -37,7 +37,7 @@
                 cell-class-name="table-cell"
                 height="315"
                 header-cell-class-name="header-cell"
-                @selection-change="selected"
+                @selection-change="selected" @row-click="rowClick"  ref="tb_a"
             >
                 <!-- <el-table-column type="selection" align="center" width="40" fixed></el-table-column> -->
                 <el-table-column type="selection" width="30"></el-table-column>
@@ -307,8 +307,18 @@ export default {
                 });
             }
         },
-        selected(val) {
-            this.selectedrow = val;
+        // 获取表格选中时的数据
+        selected (val) {
+            if (val.length > 1) {
+                this.$refs.tb_a.clearSelection()//清除其他行的选中
+                this.$refs.tb_a.toggleRowSelection(val[val.length-1],'selected')//单击行绑定点击事件
+            }else if(val.length===1){
+                this.selectedrow = val[val.length-1]
+            }
+        },
+        rowClick(val){
+            this.$refs.tb_a.clearSelection()//清除其他行的选中
+            this.$refs.tb_a.toggleRowSelection(val)//单击行绑定点击事件
         },
         selected1(val) {
             this.selectedrow1 = val;

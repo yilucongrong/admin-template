@@ -31,8 +31,8 @@
                 border
                 fit
                 highlight-current-row
-                style="width: 100%;"
-                @selection-change='selectRow' cell-class-name="table-cell" header-cell-class-name="header-cell">
+                style="width: 100%;" cell-class-name="table-cell" header-cell-class-name="header-cell"
+                @selection-change='selectRow' @row-click="rowClick"  ref="tb_a">
                 <el-table-column type="selection" width="30">
                 </el-table-column>
                 <el-table-column show-overflow-tooltip :label="$t('systemMenu.catalogCode')" prop="catalogCode"  align="center" width="120">
@@ -594,8 +594,18 @@ export default {
         },
         // 获取表格选中时的数据
         selectRow (val) {
-            this.selectlistRow = val
+            if (val.length > 1) {
+                this.$refs.tb_a.clearSelection()//清除其他行的选中
+                this.$refs.tb_a.toggleRowSelection(val[val.length-1],'selected')//单击行绑定点击事件
+            }else if(val.length===1){
+                this.selectlistRow = val[val.length-1]
+            }
         },
+        rowClick(val){
+            this.$refs.tb_a.clearSelection()//清除其他行的选中
+            this.$refs.tb_a.toggleRowSelection(val)//单击行绑定点击事件
+        },
+        
         selectRowUser (val) {
             this.selectlistRowUser = val
         },
