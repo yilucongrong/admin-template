@@ -348,3 +348,18 @@ export function removeClass(ele, cls) {
     ele.className = ele.className.replace(reg, ' ')
   }
 }
+/* 字段名以字符串的形式传入 */
+export function buildTree(source, id, parentId, children) {
+    let cloneData = JSON.parse(JSON.stringify(source))
+    let tree = cloneData.filter(father => {
+      let branchArr = cloneData.filter(child => {
+        return father[id] == child[parentId]
+      })
+      if (branchArr.length > 0) {
+        father[children] = branchArr
+      }
+      //如果第一层不是parentId = 0，请自行修改
+      return father[parentId] == ''  || father[parentId] == 0 || father[parentId] == undefined
+    })
+    return tree
+  }

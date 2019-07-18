@@ -155,8 +155,7 @@ import { getRecord as getGict } from "@/api/data-base/dict";
 import { mapState } from "vuex";
 import { selectDatas } from "@/api/system/menu";
 import { codeToName } from "@/utils/codeToName";
-import { debuglog } from 'util';
-
+import { log } from 'util';
 export default {
     name: "Role",
     components: { Pagination },
@@ -254,7 +253,6 @@ export default {
         },
         getList1() {
             api.authorizationRecord(this.selectedrow.roleCode).then(res => {
-                console.log(res);
                 this.list2 = res.data;
                 this.total = res.data.pages.count;
             });
@@ -282,22 +280,28 @@ export default {
                 this.listQuery2.roleCodes = this.selectedrow[0].roleCode;
                 let dd = [];
                 selectDatas(this.listQuery2).then(res => {
-                    debugger
                     this.checkeddatas = loadtreeDate(res.data).filter(function(items) {
-                        //默认选中项
-                        if (items.children) {
-                        items.children.filter(function(em) {
-                            dd.push(em.rowId);
-                        });
+                        //默认选中项,解决多层级父节点半选中问题
+                        if (items.children){
+                            function getSelectTree(v){
+                                v.filter(function(em) {
+                                    if(em.children){
+                                        getSelectTree(em.children)
+                                    }else{
+                                        dd.push(em.rowId); 
+                                    }
+                                });
+                            }
+                            getSelectTree(items.children)
                         }
                         return dd;
                     });
                     this.checkeddatas = dd;
                 });
                 api.selectRecord().then(res => {
-                this.dialogStatus = "create";
-                this.dialogFormVisible1 = true;
-                this.data1 = loadtreeDates(res.data);
+                    this.dialogStatus = "create";
+                    this.dialogFormVisible1 = true;
+                    this.data1 = loadtreeDates(res.data);
                 });
             } else {
                 this.$message({
@@ -313,7 +317,7 @@ export default {
                 this.$refs.tb_a.clearSelection()//清除其他行的选中
                 this.$refs.tb_a.toggleRowSelection(val[val.length-1],'selected')//单击行绑定点击事件
             }else if(val.length===1){
-                this.selectedrow = val[val.length-1]
+                this.selectedrow = val
             }
         },
         rowClick(val){
@@ -447,6 +451,7 @@ export default {
             let catalogs = this.handleCheckChange().map(function(item, index, array) {
                 return item.catalogCode;
             });
+            console.log(catalogs)
             api.addMenu(this.selectedrow[0].roleCode, { catalogCodes: catalogs }).then(res => {
                 this.$notify({
                     title: "成功",

@@ -85,3 +85,25 @@ export function isArray(arg) {
   }
   return Array.isArray(arg)
 }
+export function validatorContactNumber(rule, value, callback) {
+    if (!value) {
+      callback()
+    } else {
+      if (validContactNumber(value)) {
+        callback()
+      } else {
+        callback(new Error('联系电话格式错误！'))
+      }
+    }
+  }
+  export function validatorEmail(rule, value, callback) {
+    if (!value) {
+      callback()
+    } else {
+      if (validEmail(value)) {
+        callback()
+      } else {
+        callback(new Error('邮箱格式错误！'))
+      }
+    }
+  }

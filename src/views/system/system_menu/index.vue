@@ -598,7 +598,7 @@ export default {
                 this.$refs.tb_a.clearSelection()//清除其他行的选中
                 this.$refs.tb_a.toggleRowSelection(val[val.length-1],'selected')//单击行绑定点击事件
             }else if(val.length===1){
-                this.selectlistRow = val[val.length-1]
+                this.selectlistRow =val
             }
         },
         rowClick(val){
