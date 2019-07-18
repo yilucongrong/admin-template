@@ -24,7 +24,6 @@
                 highlight-current-row
                 style="width: 100%;"
                 @selection-change="selectRow"
-                size="mini"
                 cell-class-name="table-cell"
                 header-cell-class-name="header-cell">
                 <el-table-column type="selection" width="30"></el-table-column>
@@ -57,7 +56,6 @@
                 :model="temp"
                 :rules="rules"
                 ref="temp"
-                size="mini"
                 label-width="120px"
                 style="width:auto;">
                 <el-form-item :label="$t('workstation.lineCode')" prop="lineCode">

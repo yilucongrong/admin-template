@@ -19,7 +19,6 @@
                 highlight-current-row
                 style="width: 100%;"
                 @selection-change="selectRow"
-                size="mini"
                 cell-class-name="table-cell"
                 header-cell-class-name="header-cell">
                 <el-table-column type="selection" fixed width="30" align="center"></el-table-column>

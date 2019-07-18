@@ -63,7 +63,7 @@
     methods: {
       getOptions() {
         return request({
-          url: '/warehouses',
+          url: '/iwms/warehouses',
           method: 'get',
           params: {
             orgCode: this.orgCode
