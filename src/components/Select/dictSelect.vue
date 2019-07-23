@@ -22,6 +22,10 @@
             placeholder: {
                 type: String,
                 default: '请选择'
+            },
+            dictItemKey:{
+                type: String,
+                default: ''
             }
         },
         computed: {
@@ -30,16 +34,26 @@
                 return this.$store.state.dict[this.selectType]
             }
         },
+        model: {
+            prop: 'dictItemKey',
+            event: 'change'
+        },
+        watch: {
+            dictItemKey() {
+                this.itemKey = this.dictItemKey;
+            }
+        },
         mounted () {
             this.$store.dispatch('dict/getDicData',[this.selectType]);
         },
         data() {
             return {
-                itemKey: null
+                itemKey: this.dictItemKey
             }
         },
         methods: {
             changeSelect(val) {
+                this.$emit('change', val)
                 let selectRow = this.options.filter(v => v.dictItemKey == val)
                 .find((value, index, arr) => value)
                 this.$emit('getSelectRow', selectRow)

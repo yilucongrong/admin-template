@@ -1,18 +1,19 @@
 <template>
     <div>
-        <el-button size="mini" @click="name">测试</el-button>
-        <el-button size="small" @click="name">测试</el-button>
+        <!-- <el-button size="mini" @click="name">测试</el-button>
+        <el-button size="small" @click="name">测试</el-button> -->
         <el-button @click="name">测试</el-button>
-        <el-select v-model="dd">
+        <el-select v-model="a">
             <el-option label="1" value="dt_org_function_group" key="dt_org_function_group"></el-option>
             <el-option label="2" value="dt_org_function_rd" key="dt_org_function_rd"></el-option>
             <el-option label="3" value=dt_org_function_produce key="dt_org_function_produce"></el-option>
-
         </el-select>
-        <businessSelect selectType='dt_org_data' :filterData="{key:'businessFunction',value:dd}" :showField="['organizationCode','organizationName']"></businessSelect>
-        <businessSelect selectType='dt_org_data' :filterData="{key:'businessFunction',value:'dt_org_function_rd'}" :showField="['organizationCode','organizationName']"></businessSelect>
+        <businessSelect v-model="b" selectType='dt_org_data' filterKey="businessFunction" :filterValue="a" :showField="['organizationCode','organizationName']"></businessSelect>
+        <businessSelect v-model="f" selectType='dt_org_data' filterKey="businessFunction" filterValue="dt_org_function_produce" :showField="['organizationCode','organizationName']"></businessSelect>
+        <businessSelect v-model="c" selectType='dt_org_code_factory' :showField="['organizationCode','organizationName']"></businessSelect>
 
         <dictSelect v-model="d" selectType='dt_datarights_type'></dictSelect>
+        <dictSelect v-model="e" selectType='dt_dimension'></dictSelect>
         <el-table :data="list" ref="tb"
             border fit  highlight-current-row style="width: 100%;"
             cell-class-name="table-cell" header-cell-class-name="header-cell">
@@ -37,8 +38,12 @@ import dictSelect from '@/components/Select/dictSelect.vue';
                     pageSize: 10,
                 },
                 list: null,
-                dd:null,
-                d:null
+                a:null,
+                b:null,
+                c:null,
+                d:null,
+                e:null,
+                f:null,
             }
         },
         computed: {
@@ -61,7 +66,10 @@ import dictSelect from '@/components/Select/dictSelect.vue';
                 })
             },
             name(){
-
+                console.log(this.a)
+                console.log(this.b)
+                console.log(this.c)
+                console.log(this.d)
             }
         },
     }

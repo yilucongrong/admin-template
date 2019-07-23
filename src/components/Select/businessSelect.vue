@@ -12,9 +12,13 @@
     export default {
         name: 'businessSelect',
         props: {
-            filterData: {//过滤条件{key:'businessFunction',value:'"dt_org_function_rd"'},
-                type: Object,
-                default: {}
+            filterKey: {//过滤条件{key:'businessFunction',value:'"dt_org_function_rd"'},
+                type: String,
+                default: ''
+            },
+            filterValue: {//过滤条件{key:'businessFunction',value:'"dt_org_function_rd"'},
+                type: String,
+                default: ''
             },
             selectType: {//查询业务，对应store/modules/businessComponent.js 业务类型名称
                 type: String
@@ -29,15 +33,18 @@
             placeholder: {
                 type: String,
                 default: '请选择'
-            }
+            },
+            // dictItemKey:{
+            //     type: String,
+            //     default: ''
+            // }
         },
         computed: {
             options(){
-                this.itemKey=undefined//每次变化，先清空文本框数据
                 if(this.$store.state.businessComponent[this.selectType]){
                     return this.$store.state.businessComponent[this.selectType].options.filter(v => {
-                        if(this.filterData.key){
-                            return v[this.filterData.key] == this.filterData.value
+                        if(this.filterKey){
+                            return v[this.filterKey] == this.filterValue
                         }else{
                             return v
                         }
@@ -48,13 +55,23 @@
         mounted () {
             this.$store.dispatch('businessComponent/getBusinessComponentData',[this.selectType]);
         },
+        model: {
+            prop: 'dictItemKey',
+            event: 'change'
+        },
         data() {
             return {
-                itemKey: this.showField[0]//[0]显示code,[1]显示name
+                itemKey: this.dictItemKey
+            }
+        },
+        watch: {
+            options(newValue, oldValue) {
+                this.itemKey=undefined
             }
         },
         methods: {
             changeSelect(val) {
+                this.$emit('change', val)
                 let selectRow = this.options.filter(v => v[this.showField[0]] == val)
                 .find((value, index, arr) => value)
                 this.$emit('getSelectRow', selectRow)
