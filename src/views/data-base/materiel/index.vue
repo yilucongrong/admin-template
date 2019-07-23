@@ -30,7 +30,7 @@
                 :data="list"
                 border
                 fit
-                height="235px"
+                height="315"
                 highlight-current-row
                 style="width: 100%;"
                 @selection-change="selectRow"
@@ -77,7 +77,7 @@
             :close-on-click-modal="false"
             :close-on-press-escape="false"
             :title="dialogStatus == 'create' ? $t('table.add') : $t('table.edit')"
-            :visible.sync="dialogFormVisible"
+            :visible.sync="dialogFormVisible" v-dialogDrag
             @close="handleClose">
             <el-form
                 class="mini-space"
@@ -171,7 +171,7 @@
         <el-dialog
             class="table-container"
             :title="$t('materiel.measuringUnitName')"
-            :visible.sync="dialogFormVisible2"
+            :visible.sync="dialogFormVisible2" v-dialogDrag
             @close="handleClose2">
             <measureUnitTable v-on:dblclick="handleDblclick"></measureUnitTable>
         </el-dialog>

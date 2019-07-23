@@ -79,6 +79,14 @@ module.exports = {
                   ['^' + process.env.VUE_APP_BASE_API3]: ''
                 }
               },
+              [process.env.VUE_APP_BASE_API4]: {
+                target: `${process.env.VUE_APP_BASE_API4_URL}`,
+                changeOrigin: true,
+                ws: true,
+                pathRewrite: {
+                  ['^' + process.env.VUE_APP_BASE_API4]: ''
+                }
+              },
         },
         // 在服务内部的所有其他中间件之后， 提供执行自定义中间件的功能。
         // after: require('./mock/mock-server.js')

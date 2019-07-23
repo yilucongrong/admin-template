@@ -55,7 +55,7 @@
         </div>
 
         <!--新增编辑弹窗 -->
-        <el-dialog :close-on-click-modal="false" custom-class="dialog-custom" :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')" :visible.sync="dialogFormVisible"
+        <el-dialog :close-on-click-modal="false" custom-class="dialog-custom" :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')" :visible.sync="dialogFormVisible" v-dialogDrag
             @close="handleClose">
             <el-form
                 class="small-space"
@@ -102,7 +102,7 @@
         </el-dialog>
 
         <!--功能授权弹窗 -->
-        <el-dialog :close-on-click-modal="false" custom-class="dialog-custom" :title="$t('userManagement.functionAuthorization')" :visible.sync="dialogFormVisible1"
+        <el-dialog :close-on-click-modal="false" custom-class="dialog-custom" :title="$t('userManagement.functionAuthorization')" :visible.sync="dialogFormVisible1" v-dialogDrag
             @close="handleClose">
             <el-tree
                 :data="data1"
@@ -121,7 +121,7 @@
         </el-dialog>
 
         <!--授权用户弹窗 -->
-        <el-dialog :close-on-click-modal="false" custom-class="dialog-custom" :title="$t('userManagement.userAuthorization')" :visible.sync="dialogFormVisible2" @close="handleClose">
+        <el-dialog :close-on-click-modal="false" custom-class="dialog-custom" :title="$t('userManagement.userAuthorization')" :visible.sync="dialogFormVisible2" @close="handleClose" v-dialogDrag>
             <div class="btn">
                 <el-button size="small" class="filter-item" type="primary" icon="el-icon-delete" @click="handleDelete1">{{ $t('table.delete') }}</el-button>
             </div>

@@ -55,7 +55,7 @@
 
     <el-dialog custom-class="dialog-custom" :close-on-click-modal="false" :close-on-press-escape="false"
                :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')"
-               :visible.sync="dialogFormVisible" @close="handleClose">
+               :visible.sync="dialogFormVisible" @close="handleClose" v-dialogDrag>
       <el-form :inline="true" class='demo-form-inline' :model="temp" :rules="rules" ref="temp"
                label-width="120px" style="width:auto;">
         <el-form-item :label="$t('workCenter.orgCode')" prop="orgCode">

@@ -46,7 +46,7 @@
                   :limit.sync="listQuery.pageSize" @pagination="getList" />
     </div>
 
-    <el-dialog custom-class="dialog-custom" :close-on-click-modal="false" :close-on-press-escape="false"  :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')" :visible.sync="dialogFormVisible" @close="handleClose">
+    <el-dialog custom-class="dialog-custom" :close-on-click-modal="false" :close-on-press-escape="false"  :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')" :visible.sync="dialogFormVisible" @close="handleClose" v-dialogDrag>
       <el-form class="small-space" :model="temp" :rules="rules" ref="temp" label-position="left" label-width="100px"
                :inline="true"
                style='max-width: 600px; '>

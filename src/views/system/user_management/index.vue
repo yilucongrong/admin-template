@@ -63,7 +63,7 @@
             </div>
           </div>
            <!-- 用户维护弹窗 -->
-          <el-dialog custom-class="dialog-custom" :title="$t('userManagement.roleAuthorization')" :visible.sync="dialogFormUser" :close-on-click-modal="false">
+          <el-dialog custom-class="dialog-custom" :title="$t('userManagement.roleAuthorization')" :visible.sync="dialogFormUser" :close-on-click-modal="false" v-dialogDrag>
             <el-tabs v-model="activeName2" type="card"  @tab-click="handleTabClick">
               <el-tab-pane :label="$t('userManagement.unrelatedRoles')" name="first">
                   <div>
@@ -163,7 +163,7 @@
             </span>
           </el-dialog>
               <!--功能授权弹窗 -->
-          <el-dialog :close-on-click-modal="false" custom-class="dialog-custom"  :title="$t('userManagement.functionAuthorization')" :visible.sync="dialogFormVisible1" @close="handleClose">
+          <el-dialog :close-on-click-modal="false" custom-class="dialog-custom"  :title="$t('userManagement.functionAuthorization')" :visible.sync="dialogFormVisible1" @close="handleClose" v-dialogDrag>
             <el-tree :data="data1" :props="defaultProps1" show-checkbox node-key="rowId" ref="tree" @check-change="handleCheckChange"></el-tree>
             <div slot="footer" class="dialog-footer">
               <el-button @click="cancel()">{{$t('table.cancel')}}</el-button>

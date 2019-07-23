@@ -3,6 +3,16 @@
         <el-button size="mini" @click="name">测试</el-button>
         <el-button size="small" @click="name">测试</el-button>
         <el-button @click="name">测试</el-button>
+        <el-select v-model="dd">
+            <el-option label="1" value="dt_org_function_group" key="dt_org_function_group"></el-option>
+            <el-option label="2" value="dt_org_function_rd" key="dt_org_function_rd"></el-option>
+            <el-option label="3" value=dt_org_function_produce key="dt_org_function_produce"></el-option>
+
+        </el-select>
+        <businessSelect selectType='dt_org_data' :filterData="{key:'businessFunction',value:dd}" :showField="['organizationCode','organizationName']"></businessSelect>
+        <businessSelect selectType='dt_org_data' :filterData="{key:'businessFunction',value:'dt_org_function_rd'}" :showField="['organizationCode','organizationName']"></businessSelect>
+
+        <dictSelect v-model="d" selectType='dt_datarights_type'></dictSelect>
         <el-table :data="list" ref="tb"
             border fit  highlight-current-row style="width: 100%;"
             cell-class-name="table-cell" header-cell-class-name="header-cell">
@@ -15,7 +25,11 @@
 
 <script>
 import * as api from '@/api/data-base/dict.js';
+import { mapState } from 'vuex'
+import businessSelect from '@/components/Select/businessSelect.vue';
+import dictSelect from '@/components/Select/dictSelect.vue';
     export default {
+        components:{businessSelect,dictSelect},
         data() {
             return {
                 listquery: {
@@ -23,17 +37,27 @@ import * as api from '@/api/data-base/dict.js';
                     pageSize: 10,
                 },
                 list: null,
+                dd:null,
+                d:null
             }
         },
-        created () {
+        computed: {
+            ...mapState({
+                // dt_org_data:state=>state.businessComponent.dt_org_data
+            }),
+        },
+        mounted () {
+            // this.$store.dispatch('businessComponent/getBusinessComponentData',['dt_org_data']);
             this.getList();
         },
+        // created () {
+        //     this.getList();
+        // },
         methods: {
             getList() {
                 api.queryRecords(this.listquery).then(res =>{
                     
                     this.list = res.data.list
-                    
                 })
             },
             name(){

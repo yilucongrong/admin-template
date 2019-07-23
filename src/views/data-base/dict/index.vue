@@ -46,7 +46,7 @@
 
             <!-- 数据字典新增编辑弹窗 -->
             <el-dialog custom-class="dialog-custom" :close-on-click-modal="false" :close-on-press-escape="false" :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')"
-                :visible.sync="dialogFormVisible"
+                :visible.sync="dialogFormVisible" v-dialogDrag
                 @close="handleClose">
                 <el-form class="small-space" :model="temp" :rules="rules" ref="temp" label-position="left" label-width="100px" :inline="false"
                     style="max-width: 500px; " >
@@ -75,7 +75,7 @@
 
             <!-- 新增明细弹窗 -->
             <el-dialog custom-class="dialog-custom" :close-on-click-modal="false" :close-on-press-escape="false" :title="dialogStatus=='create1'?$t('table.add'):$t('table.edit')"
-                :visible.sync="dialogFormVisible1"
+                :visible.sync="dialogFormVisible1" v-dialogDrag
                 @close="handleClose">
                 <el-form class="small-space" :model="temp" :rules="rules" ref="temp" label-position="left" label-width="100px" :inline="false"
                     
@@ -118,7 +118,7 @@
 
             <!-- 明细编辑弹窗 -->
             <el-dialog custom-class="dialog-custom" :close-on-click-modal="false" :close-on-press-escape="false" :title="dialogStatus=='update1'?$t('table.edit'):$t('table.add')"
-                :visible.sync="dialogFormVisible2"
+                :visible.sync="dialogFormVisible2" v-dialogDrag
                 @close="handleClose">
                 <el-form class="small-space" :model="temp" :rules="rules" ref="temp" label-position="left" label-width="100px" :inline="false"
                    

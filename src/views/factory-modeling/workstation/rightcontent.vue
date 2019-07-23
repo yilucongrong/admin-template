@@ -48,7 +48,7 @@
             :close-on-click-modal="false"
             :close-on-press-escape="false"
             :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')"
-            :visible.sync="dialogFormVisible"
+            :visible.sync="dialogFormVisible" v-dialogDrag
             @close="handleClose">
             <el-form
                 :inline="true"

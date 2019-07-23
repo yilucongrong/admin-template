@@ -77,7 +77,7 @@
     methods: {
       getOptions() {
         getRecord(this.dictCode).then(res => {
-          this.options = res.dictItemDTOs
+          this.options = res.data.dictItemDTOs
         })
       },
       changeSelect(val) {
