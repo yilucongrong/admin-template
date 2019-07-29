@@ -73,6 +73,7 @@ export function removeName() {
 }
 export function getPassWord() {
     
+    // this.Decrypt(word)
   return Cookies.get(passWord)
 }
 
@@ -80,9 +81,9 @@ export function setPassWord(passWords) {
     // cookie加密
     // passWords.split("").reverse().join("")
     
-//   return Cookies.set(passWord, passWords)
+  return Cookies.set(passWord, passWords)
 // alert(this.Encrypt(passWords))
-return Cookies.set(passWord, this.Encrypt(passWords))
+// return Cookies.set(passWord, this.Encrypt(passWords))
 }
 
 export function removePassWord() {

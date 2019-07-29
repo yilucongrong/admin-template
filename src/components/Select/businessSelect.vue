@@ -12,11 +12,11 @@
     export default {
         name: 'businessSelect',
         props: {
-            filterKey: {//过滤条件{key:'businessFunction',value:'"dt_org_function_rd"'},
+            filterKey: {//过滤条件字段'businessFunction',
                 type: String,
                 default: ''
             },
-            filterValue: {//过滤条件{key:'businessFunction',value:'"dt_org_function_rd"'},
+            filterValue: {//过滤条件值"dt_org_function_rd",
                 type: String,
                 default: ''
             },

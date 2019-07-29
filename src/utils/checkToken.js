@@ -10,40 +10,40 @@ export function checkToken(){
     
     let nowData=new Date().getTime() //当前时间转化为分钟
     let duringTime = (expire-nowData)/1000/60; //token剩余时间间隔 5min
-    if(duringTime>0&&duringTime<5){
+    if(duringTime>0&&duringTime<10){
         const auth={
-          "auth": {
-            "identity": {
-              "methods": [
-                "password"
-              ],
-              "password": {
-                "user": {
-                  "name": getName(),
-                  "password": getPassWord()
+            "auth": {
+                "identity": {
+                    "methods": [
+                        "password"
+                    ],
+                    "password": {
+                        "user": {
+                            "name": getName(),
+                            "password": getPassWord()
+                        }
+                    }
                 }
-              }
             }
-          }
         }
         return new Promise((resolve, reject) => {
             getTokenId(auth).then(res => {  //获取刷新token
                 const userToken={
-                "auth": {
-                    "identity": {
-                    "methods": [
-                        "token"
-                    ],
-                    "token": {
-                        "id": res.headers['x-subject-token']
+                    "auth": {
+                        "identity": {
+                            "methods": [
+                                "token"
+                            ],
+                            "token": {
+                                "id": res.headers['x-subject-token']
+                            }
+                        }
                     }
-                    }
-                }
                 }
                 getTokenId(userToken).then(response => {//获取访问token
-                setTokenTime(response.data.token.expireAt)
-                setToken(response.headers['x-subject-token'])
-                resolve()
+                    setTokenTime(response.data.token.expireAt)
+                    setToken(response.headers['x-subject-token'])
+                    resolve()
                 })
                 
             }).catch(error => {
@@ -58,7 +58,7 @@ export function checkToken(){
             removeToken();
             return false;
         }else{
-            return true;
+            return true
         }
     }
 }

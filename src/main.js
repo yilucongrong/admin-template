@@ -32,6 +32,8 @@ Vue.use(Element, {
 })
 Vue.prototype.$myFun=myFun;  //其中$xx为新命的名。
 
+
+
 Object.keys(filters).forEach(key => {
     Vue.filter(key, filters[key])
 })

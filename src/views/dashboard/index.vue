@@ -29,50 +29,50 @@ import * as api from '@/api/data-base/dict.js';
 import { mapState } from 'vuex'
 import businessSelect from '@/components/Select/businessSelect.vue';
 import dictSelect from '@/components/Select/dictSelect.vue';
-    export default {
-        components:{businessSelect,dictSelect},
-        data() {
-            return {
-                listquery: {
-                    currentPage: 1,
-                    pageSize: 10,
-                },
-                list: null,
-                a:null,
-                b:null,
-                c:null,
-                d:null,
-                e:null,
-                f:null,
-            }
-        },
-        computed: {
-            ...mapState({
-                // dt_org_data:state=>state.businessComponent.dt_org_data
-            }),
-        },
-        mounted () {
-            // this.$store.dispatch('businessComponent/getBusinessComponentData',['dt_org_data']);
-            this.getList();
-        },
-        // created () {
-        //     this.getList();
-        // },
-        methods: {
-            getList() {
-                api.queryRecords(this.listquery).then(res =>{
-                    
-                    this.list = res.data.list
-                })
+export default {
+    components:{businessSelect,dictSelect},
+    data() {
+        return {
+            listquery: {
+                currentPage: 1,
+                pageSize: 10,
             },
-            name(){
-                console.log(this.a)
-                console.log(this.b)
-                console.log(this.c)
-                console.log(this.d)
-            }
+            list: null,
+            a:null,
+            b:null,
+            c:null,
+            d:null,
+            e:null,
+            f:null,
+        }
+    },
+    computed: {
+        ...mapState({
+            // dt_org_data:state=>state.businessComponent.dt_org_data
+        }),
+    },
+    mounted () {
+        // this.$store.dispatch('businessComponent/getBusinessComponentData',['dt_org_data']);
+        this.getList();
+    },
+    // created () {
+    //     this.getList();
+    // },
+    methods: {
+        getList() {
+            api.queryRecords(this.listquery).then(res =>{
+                
+                this.list = res.data.list
+            })
         },
-    }
+        name(){
+            console.log(this.a)
+            console.log(this.b)
+            console.log(this.c)
+            console.log(this.d)
+        }
+    },
+}
 </script>
 
 <style lang="scss" scoped>
