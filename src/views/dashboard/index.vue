@@ -2,7 +2,8 @@
     <div>
         <!-- <el-button size="mini" @click="name">测试</el-button>
         <el-button size="small" @click="name">测试</el-button> -->
-        <el-button @click="name">测试</el-button>
+        <el-link href="http://localhost:9528">wms</el-link>
+        <el-button @click="name">wms</el-button>
         <el-select v-model="a">
             <el-option label="1" value="dt_org_function_group" key="dt_org_function_group"></el-option>
             <el-option label="2" value="dt_org_function_rd" key="dt_org_function_rd"></el-option>

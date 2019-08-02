@@ -140,7 +140,6 @@ const actions = {
     GetMenu({ commit }){
         return new Promise((resolve, reject) => {
             getCatalog(auth.getName()).then(response => {
-                // commit('SET_MENU', response.data.catalogVMs)
                 // console.log(response.data.catalogVMs[0])
                 // auth.setCatalogs(response.data.catalogVMs[0])
                 // console.log(auth.getCatalogs())

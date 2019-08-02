@@ -141,14 +141,14 @@
                     <div class="table-items table-items-top">
                         <el-button class="filter-item" size="small" type="primary" @click="handleCreate1" icon="el-icon-plus">{{$t('table.add')}}</el-button>
                         <el-button class="filter-item" size="small" type="primary" @click="handleUpdate1" icon="el-icon-edit">{{$t('table.edit')}}</el-button>
-                        <el-button class="filter-item" size="small" type="primary" @click="handleDelete1()" icon="el-icon-delete">{{$t('table.delete')}}</el-button>
+                        <el-button class="filter-item" size="small" type="primary" @click="handleDelete1" icon="el-icon-delete">{{$t('table.delete')}}</el-button>
                     </div>
                     <el-table
                         :key="tableKey"
                         :data="list1"
                         border
                         fit
-                        height="285px"
+                        height="315"
                         highlight-current-row
                         style="width: 100%;"
                         @selection-change="selectRow1"
@@ -160,7 +160,7 @@
                         <el-table-column show-overflow-tooltip width="200" align="left" :label="$t('dict.dictItemKey')" prop="dictItemKey"></el-table-column>
                         <el-table-column show-overflow-tooltip min-width="140" align="left" :label="$t('dict.dictItemValue')" prop="dictItemValue"></el-table-column>
                     </el-table>
-                    <pagination :total="total1" :page.sync="listQuery1.currentPage" :limit.sync="listQuery1.pageSize" @pagination="getList"/>
+                    <!-- <pagination :total="total1" :page.sync="listQuery1.currentPage" :limit.sync="listQuery1.pageSize" @pagination="getList1"/> -->
                 </div>
             </el-col>
         </el-row>
@@ -249,7 +249,7 @@ export default {
         getList1() {//查询明细
             api.getRecord(this.selectlistRow.dictCode).then(res => {
                 this.list1 = res.data.dictItemDTOs;
-                this.total1 = res.data.dictItemDTOs.length;
+                // this.total1 = res.data.dictItemDTOs.length;
             });
         },
         handleQuery() { 

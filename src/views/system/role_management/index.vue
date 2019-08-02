@@ -155,10 +155,10 @@ import { getRecord as getGict } from "@/api/data-base/dict";
 import { mapState } from "vuex";
 import { selectDatas } from "@/api/system/menu";
 import { codeToName } from "@/utils/codeToName";
-import { log } from 'util';
 export default {
     name: "Role",
     components: { Pagination },
+    inject:['reload'],
     data() {
         return {
             data1: [],
@@ -244,7 +244,8 @@ export default {
                 setTimeout(() => {
                 this.listLoading = false;
                 }, 1.5 * 100);
-            });
+            })
+
         },
         handleCheckChange() {
             return this.$refs.tree
@@ -333,15 +334,14 @@ export default {
                 this.dialogStatus = "create";
                 this.listQuery3.roleCode = this.selectedrow[0].roleCode;
                 api.roleToUser(this.listQuery3).then(res => {
-                console.log(res);
-                this.list2 = res.data.list;
-                this.total = res.data.pages.count;
+                    this.list2 = res.data.list;
+                    this.total = res.data.pages.count;
                 });
             } else {
                 this.$message({
-                title: "警告",
-                message: "请选择一条信息",
-                type: "warning"
+                    title: "警告",
+                    message: "请选择一条信息",
+                    type: "warning"
                 });
             }
         },
@@ -349,15 +349,15 @@ export default {
             if (this.selectedrow && this.selectedrow.length == 1) {
                 this.roleCode = this.selectedrow[0].roleCode;
                 api.getRecord(this.selectedrow[0].roleCode).then(res => {
-                this.temp = res.data;
-                this.dialogStatus = "update";
-                this.dialogFormVisible = true;
+                    this.temp = res.data;
+                    this.dialogStatus = "update";
+                    this.dialogFormVisible = true;
                 });
             } else {
                 this.$message({
-                title: "警告",
-                message: "请选择一条信息",
-                type: "warning"
+                    title: "警告",
+                    message: "请选择一条信息",
+                    type: "warning"
                 });
             }
         },
@@ -432,14 +432,13 @@ export default {
             this.$refs.temp.validate(valid => {
                 if (valid) {
                 api.addRecord(this.temp).then(res => {
-                    console.log(res);
                     this.getList();
                     this.dialogFormVisible = false;
                     this.$notify({
-                    title: "成功",
-                    message: "新增成功",
-                    type: "success",
-                    duration: 2000
+                        title: "成功",
+                        message: "新增成功",
+                        type: "success",
+                        duration: 2000
                     });
                 });
                 } else {
@@ -451,7 +450,6 @@ export default {
             let catalogs = this.handleCheckChange().map(function(item, index, array) {
                 return item.catalogCode;
             });
-            console.log(catalogs)
             api.addMenu(this.selectedrow[0].roleCode, { catalogCodes: catalogs }).then(res => {
                 this.$notify({
                     title: "成功",
@@ -459,6 +457,8 @@ export default {
                     type: "success",
                     duration: 2000
                 });
+                // this.reload()//允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次有多深，并在起上下游关系成立的时间里始终生效
+                this.$router.go(0)//刷新当前体验不好，会出现空白
             });
 
             this.dialogFormVisible1 = false;
