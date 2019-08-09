@@ -71,21 +71,21 @@ const state={
 
     }
 const mutations={
-        getDicData(state,dicCodes){
-            for(let i=0;i<dicCodes.length;i++){
-                if(state[dicCodes[i]].length == 0){
-                    getRecord(dicCodes[i]).then(res => {
-                        state[dicCodes[i]] = res.data.dictItemDTOs;
-                    })
-                }
-            }
-            
+        getDicData(state,data){
+            state[data.dicCodes] = data.res
         }
     }
 const actions={
         getDicData(context,dicCodes){
+            for(let i=0;i<dicCodes.length;i++){
+                if(state[dicCodes[i]].length == 0){
+                    getRecord(dicCodes[i]).then(res => {
+                        res = res.data.dictItemDTOs;
+                        context.commit('getDicData',{dicCodes:dicCodes[i],res:res});
+                    })
+                }
+            }
             
-            context.commit('getDicData',dicCodes);
         }
     }
 export default {
