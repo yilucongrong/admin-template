@@ -158,7 +158,6 @@ import { codeToName } from "@/utils/codeToName";
 export default {
     name: "Role",
     components: { Pagination },
-    inject:['reload'],
     data() {
         return {
             data1: [],

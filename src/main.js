@@ -4,14 +4,11 @@ import Cookies from 'js-cookie'
 
 import 'normalize.css/normalize.css' // a modern alternative to CSS resets
 
+//使用element图标
 import Element from 'element-ui'
 import './styles/element-variables.scss'
 
 import '@/styles/index.scss' // global css
-
-// 一次引入全部图标
-import 'vue-awesome/icons'
-import Icon from 'vue-awesome/components/Icon'
 
 import App from './App.vue'
 import router from './router'
@@ -44,5 +41,3 @@ new Vue({
     i18n,
     render: h => h(App)
 }).$mount('#app')
-
-Vue.component('v-icon', Icon)

@@ -24,7 +24,7 @@
                     </el-select>
                     <!-- 组织编码 -->
                     <el-select size="small" v-model="listQueryMain_a.businessType1" @keyup.enter.native="getListMain_a" placeholder="组织编码" clearable >
-                        <el-option v-for="item in dt_org_data" 
+                        <el-option v-for="item in dt_org_data.options" 
                             :key="item.organizationCode" :label="item.organizationName" :value="item.organizationCode">
                         </el-option>
                     </el-select>
@@ -82,12 +82,15 @@
                 dt_org_type:state=>state.dict.dt_org_type,
                 dt_ckyw_tpye:state=>state.dict.dt_ckyw_tpye,
                 dt_org_data:state=>state.businessComponent.dt_org_data
-            }),
+            })
         },
         mounted () {
             this.$store.dispatch('dict/getDicData',['dt_org_type','dt_ckyw_tpye']);
             this.$store.dispatch('businessComponent/getBusinessComponentData',['dt_org_data']);
-            this.getListMain_a()
+            setTimeout(() => {
+              this.getListMain_a()  
+            }, 0);
+            
         },
         data() {
             return {
@@ -108,11 +111,17 @@
         methods: {
             // 查询bom主表
             getListMain_a() {
-                api.getMain_a(this.listQueryMain_a).then(res => {
-                    this.listMain_a=res.data.list
-                    this.totalMain_a=res.data.pages.count
-                    console.log(this.dt_org_data)
-                })
+                console.log(this.dt_org_data)
+                console.log(this.dt_org_data.options)
+                
+                
+                
+                // api.getMain_a(this.listQueryMain_a).then(res => {
+                //     this.listMain_a=res.data.list
+                //     this.totalMain_a=res.data.pages.count
+                    
+                // })
+
                 
             },
             // 查询bom从表
