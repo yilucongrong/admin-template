@@ -182,6 +182,7 @@ import {mapState} from 'vuex';
 import { codeToName} from '@/utils/codeToName'
 
   export default {
+    name:"zzjg",
     components:{Pagination},
     data(){
       return{

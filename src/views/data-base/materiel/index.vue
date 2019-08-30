@@ -200,7 +200,7 @@ import { DICT_CODE, TWO_STATE_OPTIONS } from "@/utils/constant";
 import { parseTime } from "@/utils";
 
 export default {
-    name: "Materiel",
+    name: "materiel",
     components: { Pagination, dictItemSelect, measureUnitTable,ImportFile },
     data() {
         return {

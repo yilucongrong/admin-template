@@ -12,10 +12,10 @@ const mutations = {
       })
     )
   },
-  ADD_CACHED_VIEW: (state, view) => {
-    if (state.cachedViews.includes(view.name)) return
+  ADD_CACHED_VIEW: (state, view) => {//keep-alive缓存组件name取router中mete.title,
+    if (state.cachedViews.includes(view.meta.title)) return
     if (!view.meta.noCache) {
-      state.cachedViews.push(view.name)
+      state.cachedViews.push(view.meta.title)
     }
   },
 
@@ -27,9 +27,9 @@ const mutations = {
       }
     }
   },
-  DEL_CACHED_VIEW: (state, view) => {
+  DEL_CACHED_VIEW: (state, view) => {//keep-alive删除缓存组件name取router中mete.title,
     for (const i of state.cachedViews) {
-      if (i === view.name) {
+      if (i === view.meta.title) {
         const index = state.cachedViews.indexOf(i)
         state.cachedViews.splice(index, 1)
         break
@@ -42,9 +42,9 @@ const mutations = {
       return v.meta.affix || v.path === view.path
     })
   },
-  DEL_OTHERS_CACHED_VIEWS: (state, view) => {
+  DEL_OTHERS_CACHED_VIEWS: (state, view) => {//keep-alive关闭其他缓存组件name取router中mete.title
     for (const i of state.cachedViews) {
-      if (i === view.name) {
+      if (i === view.meta.title) {
         const index = state.cachedViews.indexOf(i)
         state.cachedViews = state.cachedViews.slice(index, index + 1)
         break

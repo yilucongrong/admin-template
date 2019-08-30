@@ -27,7 +27,7 @@ import { queryRecords as listWorkCenter } from '@/api/data-base/work-center'
 import orgSelect from '@/components/Select/orgSelect.vue'
 
 export default {
-  name: 'work-center',
+  name: 'gzzxzsj',
   components: { RightContent,orgSelect },
   data() {
     return {

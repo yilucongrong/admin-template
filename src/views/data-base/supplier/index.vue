@@ -110,7 +110,7 @@ import { validatorContactNumber,validatorEmail } from '@/utils/validate'
 import {mapState} from 'vuex';
 
 export default {
-  name: 'Supplier',
+  name: 'gyszsj',
   components: { Pagination},
   data() {
     return {

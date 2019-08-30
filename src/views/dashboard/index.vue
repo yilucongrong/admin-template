@@ -1,12 +1,10 @@
 <template>
     <div>
-        <div>{{getTime}}</div>
-        <div>{{getTime}}</div>
         <!-- <el-button size="mini" @click="name">测试</el-button>
-        <el-button size="small" @click="name">测试</el-button>
+        <el-button size="small" @click="name">测试</el-button> -->
         <el-link href="http://localhost:9528">wms</el-link>
         <el-button @click="name">wms</el-button>
-        <el-select v-model="a" clearable>
+        <el-select v-model="a">
             <el-option label="1" value="dt_org_function_group" key="dt_org_function_group"></el-option>
             <el-option label="2" value="dt_org_function_rd" key="dt_org_function_rd"></el-option>
             <el-option label="3" value=dt_org_function_produce key="dt_org_function_produce"></el-option>
@@ -23,11 +21,84 @@
             <el-table-column type="selection" width="30"></el-table-column>
             <el-table-column show-overflow-tooltip width="200" align="left" :label="$t('dict.dictCode')" prop="dictCode"></el-table-column>
             <el-table-column show-overflow-tooltip width="140" align="left" :label="$t('dict.dictName')" prop="dictName"></el-table-column>
-        </el-table> -->
+        </el-table>
     </div>
 </template>
 
-<script/>
+<script>
+import * as api from '@/api/data-base/dict.js';
+import * as  auth from '@/utils/auth'
+import { mapState } from 'vuex'
+import businessSelect from '@/components/Select/businessSelect.vue';
+import dictSelect from '@/components/Select/dictSelect.vue';
+export default {
+    components:{businessSelect,dictSelect},
+    data() {
+        return {
+            listquery: {
+                currentPage: 1,
+                pageSize: 10,
+            },
+            list: null,
+            total:0,
+            a:null,
+            b:null,
+            c:null,
+            d:null,
+            e:null,
+            f:null,
+        }
+    },
+    computed: {
+        ...mapState({
+            // dt_org_data:state=>state.businessComponent.dt_org_data
+        }),
+    },
+    mounted () {
+        // this.$store.dispatch('businessComponent/getBusinessComponentData',['dt_org_data']);
+        this.getList();
+    },
+    // created () {
+    //     this.getList();
+    // },
+    methods: {
+         getList() {
+            
+            let p1=new Promise((resolve, reject)=>{
+                api.queryRecords(this.listquery).then(res =>{
+                    resolve(res.data.list)
+                })
+            })
+            let p2=new Promise((resolve, reject)=>{
+                setTimeout(() => {
+                    api.queryRecords(this.listquery).then(res =>{
+                    resolve(res.data.pages.count)
+                })
+                    
+                }, 8000);
+                
+            })
+            Promise.all([p1,p2]).then(function(res){
+                console.log(res)//所有异步执行完成后返回所有结果res=[p1,p2]
+            })
+            // Promise.race([p2,p1]).then(function(res){
+            //     console.log(res)//返回最先完成函数的值
+            // })
+            // p2.then(p1).then(function(res){
+            //     console.log(res)//返回第一个异步函数的值
+            // })
+           
+           
+        },
+        name(){
+            console.log(this.a)
+            console.log(this.b)
+            console.log(this.c)
+            console.log(this.d)
+        }
+    },
+}
+</script>
 
 <style lang="scss" scoped>
 

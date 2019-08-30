@@ -76,6 +76,7 @@
     import * as api from '@/api/data-base/bom';
     import Pagination from "@/components/Pagination";
     export default {
+        name:"bom",
         components:{Pagination},
         computed: {
             ...mapState({

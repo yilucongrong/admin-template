@@ -171,7 +171,7 @@
 import * as api from "@/api/data-base/dict";
 import Pagination from "@/components/Pagination";
 export default {
-    name: "Dict",
+    name: "sjzd",
     components: { Pagination },
     data() {
         return {
