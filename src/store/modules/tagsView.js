@@ -1,6 +1,6 @@
 const state = {
   visitedViews: [],
-  cachedViews: []
+  cachedViews: ['EmptyTemplate']
 }
 
 const mutations = {

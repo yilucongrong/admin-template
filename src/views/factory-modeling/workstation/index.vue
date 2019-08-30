@@ -28,7 +28,7 @@
     import orgSelect from "@/components/Select/orgSelect.vue";
 
     export default {
-        name: "workstation",
+        name: "gw",
         components: { RightContent, orgSelect },
         data() {
             return {

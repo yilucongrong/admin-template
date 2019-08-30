@@ -6,6 +6,7 @@
 <script>
 import { AppMain} from './components'
 export default {
+    name:'EmptyTemplate',
     components:{AppMain}
     
 }
