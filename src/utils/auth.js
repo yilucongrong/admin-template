@@ -31,6 +31,7 @@ const Catalog = 'Catalog'
 const TokenTime = 'TokenTime'
 const DomainName = 'DomainName'
 const DomainId = 'DomainId'
+const Theme = 'Theme'
 // export function setCookie(cname, cvalue, exdays) {//以分钟为基数
 //         var d = new Date();
 //         d.setTime(d.getTime() + (exdays * 60 * 1000));
@@ -133,6 +134,18 @@ export function setDomainName(DomainNames) {
 
 export function removeDomainName() {
     return Cookies.remove(DomainName)
+}
+//获取设置主题
+export function getTheme() {
+    return Cookies.get(Theme)
+}
+
+export function setTheme(data) {
+    return Cookies.set(Theme, data)
+}
+
+export function removeTheme() {
+    return Cookies.remove(Theme)
 }
 export function removeAll() {
     removeDomainName()

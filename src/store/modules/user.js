@@ -2,6 +2,7 @@
 import { getTokenId, logout,getCatalog} from '@/api/login'
 import * as  auth from '@/utils/auth'
 import router, { resetRouter } from '@/router'
+import {changeUserInfo,relation} from '@/api/system/user'
 
 const state = {
     user: '',
@@ -15,13 +16,15 @@ const state = {
     menu:auth.getCatalogs(),
     avatar: '',
     introduction: '',
+    superRoles:false,
     roles: [],
     domainId:auth.getDomainId(),
     domainName:auth.getDomainName(),
     setting: {
       articlePlatform: []
     },
-    roles: []
+    roles: [],
+    theme:auth.getTheme()
 }
 
 const mutations = {
@@ -55,6 +58,9 @@ const mutations = {
     SET_AVATAR: (state, avatar) => {
       state.avatar = avatar
     },
+    SET_SUPER_ROLES: (state, superRoles) => {
+        state.superRoles = superRoles
+      },
     SET_ROLES: (state, roles) => {
       state.roles = roles
     },
@@ -64,6 +70,9 @@ const mutations = {
     SET_DOMAINNAME: (state, domainName) => {
       state.domainName = domainName
     },
+    SET_THEME:(state,theme)=>{
+        state.theme = theme
+    }
 }
 
 const actions = {
@@ -106,8 +115,10 @@ const actions = {
             getTokenId(auths).then(res => {  
                 commit('SET_DOMAINID', res.data.token.domainId)
                 commit('SET_DOMAINNAME', res.data.token.domainName)
+                commit('SET_THEME', res.data.token.theme)
                 auth.setDomainId(res.data.token.domainId)
                 auth.setDomainName(res.data.token.domainName)
+                auth.setTheme(res.data.token.theme)
                 const userToken={
                     "auth": {
                         "identity": {
@@ -128,6 +139,27 @@ const actions = {
                     auth.setToken(response.headers['x-subject-token'])
                     auth.setName(userInfo.username)
                     auth.setPassWord(userInfo.password)
+
+                    let queryRole = {
+                        type:1,
+                        currentPage: 1,
+                        pageSize: 1000,
+                        page: 1
+                      }
+                      relation(userInfo.username,queryRole).then(resr =>{
+                        console.log(resr);
+                        // commit('SET_ROLES', resr.data.list);
+                        let superRole = false;
+                        resr.data.list.forEach(item=>{
+                            if(item.roleCode==="WMS-SUPER"){
+                              commit('SET_SUPER_ROLES', true);
+                              superRole = true
+                            }
+                        });
+                        if(!superRole){
+                          commit('SET_SUPER_ROLES', false);
+                        }
+                      })
                     resolve()
                 })
                 
@@ -208,7 +240,17 @@ const actions = {
 
             resolve()
         })
-    }
+    },
+    //修改用户信息
+    ChangeUserInfo({ commit }, userDTO){
+        return new Promise((resolve, reject) => {
+            changeUserInfo(userDTO).then(res => {
+                resolve(res)
+            }).catch(error => {
+                reject(error)
+            })
+        })
+    },
 }
 
 export default {

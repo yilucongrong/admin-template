@@ -60,6 +60,30 @@ export function relation(userName,query) {//查询关联的角色记录 query.ty
       params:query
     })
 }
+export function changeUserInfo(userDTO) {//修改用户信息
+    return request({
+      url: `/keyguard/users/info`,
+      method: 'patch',
+      data:userDTO
+    })
+}
+export function userAvatar(fileFormData){//上传用户头像
+    return request({
+        url: `/keyguard/users/avatar`,
+        method: 'POST',
+        headers: {
+            'Content-Type': 'multipart/form-data'
+            },
+        data:fileFormData
+      })
+}
+export function getUserAvatar(){//获取用户头像
+    return request({
+        url: `/keyguard/users/avatar`,
+        method: 'get',
+        responseType: 'arraybuffer',
+      })
+}
 
 
 

@@ -2,13 +2,14 @@
   <div :class="{'has-logo':showLogo}">
     <logo v-if="showLogo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
+        <!-- :active-text-color="variables.menuActiveText" 动态配置颜色删掉这个属性 -->
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
         :background-color="variables.menuBg"
         :text-color="variables.menuText"
         :unique-opened="false"
-        :active-text-color="variables.menuActiveText"
+        
         :collapse-transition="false"
         mode="vertical"
       >
