@@ -186,7 +186,7 @@ import {getDomainName} from '@/utils/auth'
 import {mapState} from 'vuex'
 
 export default {
-  name: 'ComplexTable',
+  name: 'yhgl',
   components: { Pagination },
     data() {
       return {

@@ -253,7 +253,7 @@ import { selecttree} from '@/api/system/organization'
 import { loadtreeDates} from '@/utils/treeDate'
 import { validatePhone,validateTelphone,validateIdNo,validateEMail} from '@/utils/validate'
 export default {
-  name: 'ComplexTable',
+  name: 'yggl',
   components: { Pagination },
     data() {
       return {

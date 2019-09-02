@@ -41,6 +41,9 @@
             <!-- bom主表 -->
             <div class="main-body">
                 <div class="btn">
+                        <el-button class="filter-item" size="small" type="primary"  icon="el-icon-plus">{{$t('table.add')}}</el-button>
+                        <el-button class="filter-item" size="small" type="primary"  icon="el-icon-edit">{{$t('table.edit')}}</el-button>
+                        <el-button class="filter-item" size="small" type="primary"  icon="el-icon-delete">{{$t('table.delete')}}</el-button>
                 </div>
                 <el-table border fit highlight-current-row  width='100%' height="315" ref="tbMain_a"
                     header-cell-class-name="header-cell"  cell-class-name="table-cell"

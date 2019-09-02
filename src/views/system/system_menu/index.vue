@@ -272,7 +272,7 @@ import SelectTree from '@/components/SelectTree/index.vue';
 import { selectAllCatalogs} from '@/api/system/menu'
 import { loadtreeDates } from '@/utils/treeDate'
 export default {
-  name: 'ComplexTable',
+  name: 'xtcd',
   components: { Pagination,SelectTree},
     data() {
       return {

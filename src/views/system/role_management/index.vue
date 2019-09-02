@@ -156,7 +156,7 @@ import { mapState } from "vuex";
 import { selectDatas } from "@/api/system/menu";
 import { codeToName } from "@/utils/codeToName";
 export default {
-    name: "Role",
+    name: "jsgl",
     components: { Pagination },
     data() {
         return {

@@ -465,7 +465,6 @@ import { codeToName} from '@/utils/codeToName'
 </script>
 <style scoped>
     .btn,.select-title{
-      border: solid 1px #d5d8da;
       border-top: solid 5px #d5d8da;
       padding:8px 10px;
     }
