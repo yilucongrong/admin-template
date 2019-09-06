@@ -18,6 +18,7 @@
 
 <script>
 import { getTheme, setTheme } from "@/utils/auth"; // getToken from cookie
+import { mapMutations } from "vuex";//设置tagview主题颜色
 const version = require("element-ui/package.json").version; // element-ui version from node_modules
 const ORIGINAL_THEME = "#409EFF"; // default color
 

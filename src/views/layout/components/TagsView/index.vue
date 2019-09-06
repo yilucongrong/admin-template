@@ -18,6 +18,7 @@
                     ref="tag"
                     :key="tag.path"
                     :class="isActive(tag) ? 'active' : ''"
+                    :style="{'background-color':isActive(tag)?defaultTheme:'','border-color':isActive(tag)?defaultTheme:''}"
                     :to="{
                         path: tag.path,
                         query: tag.query,
@@ -81,10 +82,14 @@ export default {
             top: 0,
             left: 0,
             selectedTag: {},
-            affixTags: []
+            affixTags: [],
+            
         };
     },
     computed: {
+        defaultTheme() {
+            return this.$store.state.settings.theme;
+        },
         visitedViews() {
             return this.$store.state.tagsView.visitedViews;
         },

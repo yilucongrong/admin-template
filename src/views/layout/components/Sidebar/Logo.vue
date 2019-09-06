@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar-logo-container" :class="{'collapse':collapse}">
+  <div class="sidebar-logo-container" :class="{'collapse':collapse}" :style="{'background-color':defaultTheme}">
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo">
@@ -21,6 +21,11 @@ export default {
       type: Boolean,
       required: true
     }
+  },
+  computed: {
+      defaultTheme() {
+            return this.$store.state.settings.theme;
+        },
   },
   data() {
     return {
