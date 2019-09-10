@@ -11,6 +11,23 @@ const name = defaultSettings.title || 'DTGD MES' // page title
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run
 const port = 7953 // 端口号
+// 生成代理配置对象
+let proxyObj = {};
+let obj = process.env
+for (let key in obj) {
+    if (obj[key + "_URL"]) {
+        proxyObj[obj[key]]={
+                target: obj[key + "_URL"],
+                changeOrigin: true,
+                ws: true,
+                pathRewrite: {
+                    ['^' + obj[key]]: ''
+                }
+            }
+        
+        
+    }
+}
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -28,9 +45,9 @@ module.exports = {
     // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建
     // productionSourceMap: process.env.NODE_ENV === 'development',
     // 在vue cli3.0版本，新建vue.config.js文件在其中配置  css:{ sourceMap: true }老版本：设置 cssSourceMap:true
-    css:{
+    css: {
         // 开发环境为true生产环境false
-        sourceMap:process.env.NODE_ENV === 'development'
+        sourceMap: process.env.NODE_ENV === 'development'
     },
     productionSourceMap: false,
     // 如果你的前端应用和后端 API 服务器没有运行在同一个主机上，
@@ -47,48 +64,49 @@ module.exports = {
         disableHostCheck: true,
         // proxy: 'http://localhost:6666', //这会告诉开发服务器将任何未知请求 (没有匹配到静态文件的请求) 代理到http://localhost:6666
         // 如果你想要更多的代理控制行为，也可以使用一个 path: options 成对的对象。 
-        proxy: {
-            // '/keyguard': {
-            //     target: 'http://172.30.248.74:2001/keyguard/v1', //对应自己的接口
-            //     changeOrigin: true,
-            //     ws: true,
-            //     pathRewrite: {
-            //       '^/keyguard': ''
-            //     }
-            //   },
-            [process.env.VUE_APP_BASE_API1]: {
-                target: `${process.env.VUE_APP_BASE_API1_URL}`,
-                changeOrigin: true,
-                ws: true,
-                pathRewrite: {
-                  ['^' + process.env.VUE_APP_BASE_API1]: ''
-                }
-              },
-              [process.env.VUE_APP_BASE_API2]: {
-                target: `${process.env.VUE_APP_BASE_API2_URL}`,
-                changeOrigin: true,
-                ws: true,
-                pathRewrite: {
-                  ['^' + process.env.VUE_APP_BASE_API2]: ''
-                }
-              },
-              [process.env.VUE_APP_BASE_API3]: {
-                target: `${process.env.VUE_APP_BASE_API3_URL}`,
-                changeOrigin: true,
-                ws: true,
-                pathRewrite: {
-                  ['^' + process.env.VUE_APP_BASE_API3]: ''
-                }
-              },
-              [process.env.VUE_APP_BASE_API4]: {
-                target: `${process.env.VUE_APP_BASE_API4_URL}`,
-                changeOrigin: true,
-                ws: true,
-                pathRewrite: {
-                  ['^' + process.env.VUE_APP_BASE_API4]: ''
-                }
-              },
-        },
+        proxy:proxyObj
+        // proxy: {
+        //     // '/keyguard': {
+        //     //     target: 'http://172.30.248.74:2001/keyguard/v1', //对应自己的接口
+        //     //     changeOrigin: true,
+        //     //     ws: true,
+        //     //     pathRewrite: {
+        //     //       '^/keyguard': ''
+        //     //     }
+        //     //   },
+        //     [process.env.VUE_APP_BASE_API1]: {
+        //         target: `${process.env.VUE_APP_BASE_API1_URL}`,
+        //         changeOrigin: true,
+        //         ws: true,
+        //         pathRewrite: {
+        //             ['^' + process.env.VUE_APP_BASE_API1]: ''
+        //         }
+        //     },
+        //     [process.env.VUE_APP_BASE_API2]: {
+        //         target: `${process.env.VUE_APP_BASE_API2_URL}`,
+        //         changeOrigin: true,
+        //         ws: true,
+        //         pathRewrite: {
+        //             ['^' + process.env.VUE_APP_BASE_API2]: ''
+        //         }
+        //     },
+        //     [process.env.VUE_APP_BASE_API3]: {
+        //         target: `${process.env.VUE_APP_BASE_API3_URL}`,
+        //         changeOrigin: true,
+        //         ws: true,
+        //         pathRewrite: {
+        //             ['^' + process.env.VUE_APP_BASE_API3]: ''
+        //         }
+        //     },
+        //     [process.env.VUE_APP_BASE_API4]: {
+        //         target: `${process.env.VUE_APP_BASE_API4_URL}`,
+        //         changeOrigin: true,
+        //         ws: true,
+        //         pathRewrite: {
+        //             ['^' + process.env.VUE_APP_BASE_API4]: ''
+        //         }
+        //     },
+        // },
         // 在服务内部的所有其他中间件之后， 提供执行自定义中间件的功能。
         // after: require('./mock/mock-server.js')
     },
@@ -182,11 +200,11 @@ module.exports = {
     //favicon.ico图标设置
     pwa: {
         iconPaths: {
-          favicon32: 'favicon.ico',
-          favicon16: 'favicon.ico',
-          appleTouchIcon: 'favicon.ico',
-          maskIcon: 'favicon.ico',
-          msTileImage: 'favicon.ico'
+            favicon32: 'favicon.ico',
+            favicon16: 'favicon.ico',
+            appleTouchIcon: 'favicon.ico',
+            maskIcon: 'favicon.ico',
+            msTileImage: 'favicon.ico'
         }
-      }
+    }
 }
