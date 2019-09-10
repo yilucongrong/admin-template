@@ -44,6 +44,7 @@ module.exports = {
             warnings: false,
             errors: true
         },
+        disableHostCheck: true,
         // proxy: 'http://localhost:6666', //这会告诉开发服务器将任何未知请求 (没有匹配到静态文件的请求) 代理到http://localhost:6666
         // 如果你想要更多的代理控制行为，也可以使用一个 path: options 成对的对象。 
         proxy: {
