@@ -24,7 +24,7 @@ import '@/utils/directives.js' //弹窗可以拖拽组件
 import myFun from '@/utils/myFun.js' //myFun封装方法
 
 Vue.use(Element, {
-    size: Cookies.get('size') || 'medium', // set element-ui default size
+    size: Cookies.get('size') || 'mini', // set element-ui default size
     i18n: (key, value) => i18n.t(key, value)
 })
 Vue.prototype.$myFun=myFun;  //其中$xx为新命的名。
