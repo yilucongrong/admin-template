@@ -59,7 +59,7 @@
                   </template>
                 </el-table-column>
               </el-table>
-              <pagination v-show="total>0" :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.size" @pagination="getList" />
+              <pagination v-show="total>0" :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageSize" @pagination="getList" />
             </div>
           </div>
            <!-- 用户维护弹窗 -->

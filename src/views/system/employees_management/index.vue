@@ -240,7 +240,7 @@
                             v-show="total > 0"
                             :total="total"
                             :page.sync="listQuery.currentPage"
-                            :limit.sync="listQuery.size"
+                            :limit.sync="listQuery.pageSize"
                             @pagination="getList"
                         />
                     </div>
@@ -549,7 +549,7 @@
                             v-show="total > 0"
                             :total="total"
                             :page.sync="listQuery.currentPage"
-                            :limit.sync="listQuery.size"
+                            :limit.sync="listQuery.pageSize"
                             @pagination="getUserList"
                         />
                     </div>
