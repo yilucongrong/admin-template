@@ -2,146 +2,243 @@
     <div class="app-container calendar-list-container">
         <div class="filter-container">
             <div class="filter-items">
-                <el-input @keyup.enter.native="handleQuery" :placeholder="$t('roleManagement.roleCode')" class="filter-item" size="small"
-                    v-model="listQuery.roleCode"
-                ></el-input>
-                <el-input  @keyup.enter.native="handleQuery" :placeholder="$t('roleManagement.roleName')" class="filter-item" size="small"
-                    v-model="listQuery.roleName"
-                ></el-input>
-                <el-select size="small" v-model="listQuery.roleType" :placeholder="$t('roleManagement.roleType')" clearable>
-                    <el-option
-                        v-for="item in dt_role_type"
-                        :key="item.dictItemKey"
-                        :label="item.dictItemValue"
-                        :value="item.dictItemKey"
-                    ></el-option>
+                <el-input @keyup.enter.native="handleQuery"
+                          :placeholder="$t('roleManagement.roleCode')"
+                          class="filter-item"
+                          size="small"
+                          v-model="listQuery.roleCode"></el-input>
+                <el-input @keyup.enter.native="handleQuery"
+                          :placeholder="$t('roleManagement.roleName')"
+                          class="filter-item"
+                          size="small"
+                          v-model="listQuery.roleName"></el-input>
+                <el-select size="small"
+                           v-model="listQuery.roleType"
+                           :placeholder="$t('roleManagement.roleType')"
+                           clearable>
+                    <el-option v-for="item in dt_role_type"
+                               :key="item.dictItemKey"
+                               :label="item.dictItemValue"
+                               :value="item.dictItemKey"></el-option>
                 </el-select>
-                <el-button class="filter-item" size="small" type="primary" icon="search" @click="handleQuery">{{$t('table.search')}}</el-button>
+                <el-button class="filter-item"
+                           size="small"
+                           type="primary"
+                           icon="search"
+                           @click="handleQuery">{{$t('table.search')}}</el-button>
             </div>
         </div>
         <div class="table-container">
             <div class="btn">
-                <el-button size="small" class="filter-item" type="primary" icon="el-icon-plus" @click="handleCreate">{{ $t('table.add') }}</el-button>
-                <el-button size="small" class="filter-item" type="primary" icon="el-icon-edit" @click="handleUpdate">{{ $t('table.edit') }}</el-button>
-                <el-button size="small" class="filter-item" type="primary" icon="el-icon-delete" @click="handleDelete">{{ $t('table.delete') }}</el-button>
-                <el-button size="small" class="filter-item" type="primary" icon="el-icon-edit-outline" @click="handleCreate1">{{ $t('userManagement.functionAuthorization') }}</el-button>
-                <el-button size="small" class="filter-item" type="primary" icon="el-icon-edit-outline" @click="handleCreate2">{{ $t('userManagement.userAuthorization') }}</el-button>
+                <el-button size="small"
+                           class="filter-item"
+                           type="primary"
+                           icon="el-icon-plus"
+                           @click="handleCreate">{{ $t('table.add') }}</el-button>
+                <el-button size="small"
+                           class="filter-item"
+                           type="primary"
+                           icon="el-icon-edit"
+                           @click="handleUpdate">{{ $t('table.edit') }}</el-button>
+                <el-button size="small"
+                           class="filter-item"
+                           type="primary"
+                           icon="el-icon-delete"
+                           @click="handleDelete">{{ $t('table.delete') }}</el-button>
+                <el-button size="small"
+                           class="filter-item"
+                           type="primary"
+                           icon="el-icon-edit-outline"
+                           @click="handleCreate1">{{ $t('userManagement.functionAuthorization') }}</el-button>
+                <el-button size="small"
+                           class="filter-item"
+                           type="primary"
+                           icon="el-icon-edit-outline"
+                           @click="handleCreate2">{{ $t('userManagement.userAuthorization') }}</el-button>
             </div>
-            <el-table
-                :key="tableKey"
-                :data="list"
-                border
-                fit
-                highlight-current-row
-                style="width: 100%"
-                cell-class-name="table-cell"
-                height="315"
-                header-cell-class-name="header-cell"
-                @selection-change="selected" @row-click="rowClick"  ref="tb_a"
-            >
+            <el-table :key="tableKey"
+                      :data="list"
+                      border
+                      fit
+                      highlight-current-row
+                      style="width: 100%"
+                      cell-class-name="table-cell"
+                      height="315"
+                      header-cell-class-name="header-cell"
+                      @selection-change="selected"
+                      @row-click="rowClick"
+                      ref="tb_a">
                 <!-- <el-table-column type="selection" align="center" width="40" fixed></el-table-column> -->
-                <el-table-column type="selection" width="30"></el-table-column>
-                <el-table-column show-overflow-tooltip width="120" align="center" :label="$t('roleManagement.roleCode')" prop="roleCode"></el-table-column>
-                <el-table-column show-overflow-tooltip width="200" align="center" :label="$t('roleManagement.roleName')" prop="roleName"></el-table-column>
-                <el-table-column show-overflow-tooltip width="200" align="center" :label="$t('roleManagement.roleType')" prop="roleType">
+                <el-table-column type="selection"
+                                 width="30"></el-table-column>
+                <el-table-column show-overflow-tooltip
+                                 width="120"
+                                 align="center"
+                                 :label="$t('roleManagement.roleCode')"
+                                 prop="roleCode"></el-table-column>
+                <el-table-column show-overflow-tooltip
+                                 width="200"
+                                 align="center"
+                                 :label="$t('roleManagement.roleName')"
+                                 prop="roleName"></el-table-column>
+                <el-table-column show-overflow-tooltip
+                                 width="200"
+                                 align="center"
+                                 :label="$t('roleManagement.roleType')"
+                                 prop="roleType">
                     <template slot-scope="scope">
                         <span>{{ scope.row.roleTypeCN}}</span>
                     </template>
                 </el-table-column>
-                <el-table-column show-overflow-tooltip width="120" align="center" label="角色域" prop="domainScope"></el-table-column>
-                <el-table-column show-overflow-tooltip min-width="100" align="center" :label="$t('roleManagement.remark')" prop="remark"></el-table-column>
+                <el-table-column show-overflow-tooltip
+                                 width="120"
+                                 align="center"
+                                 label="角色域"
+                                 prop="domainScope"></el-table-column>
+                <el-table-column show-overflow-tooltip
+                                 min-width="100"
+                                 align="center"
+                                 :label="$t('roleManagement.remark')"
+                                 prop="remark"></el-table-column>
             </el-table>
-            <pagination :total="total" :page.sync="listQuery.currentPage" :limit.sync="listQuery.pageSize" @pagination="getList"/>
+            <pagination :total="total"
+                        :page.sync="listQuery.currentPage"
+                        :limit.sync="listQuery.pageSize"
+                        @pagination="getList" />
         </div>
 
         <!--新增编辑弹窗 -->
-        <el-dialog :close-on-click-modal="false" custom-class="dialog-custom" :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')" :visible.sync="dialogFormVisible" v-dialogDrag
-            @close="handleClose">
-            <el-form
-                class="small-space"
-                :model="temp"
-                :rules="rules"
-                ref="temp"
-                label-position="left"
-                label-width="100px"
-                style="max-width: 400px; "
-            >
-                <el-form-item :label="$t('roleManagement.roleCode')" prop="roleCode">
-                    <el-input v-if="dialogStatus=='update'" v-model="temp.roleCode" disabled="disabled"/>
-                    <el-input v-else v-model="temp.roleCode"/>
+        <el-dialog :close-on-click-modal="false"
+                   custom-class="dialog-custom"
+                   :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')"
+                   :visible.sync="dialogFormVisible"
+                   v-dialogDrag
+                   @close="handleClose">
+            <el-form class="small-space"
+                     :model="temp"
+                     :rules="rules"
+                     ref="temp"
+                     label-position="left"
+                     label-width="100px"
+                     style="max-width: 400px; ">
+                <el-form-item :label="$t('roleManagement.roleCode')"
+                              prop="roleCode">
+                    <el-input v-if="dialogStatus=='update'"
+                              v-model="temp.roleCode"
+                              disabled="disabled" />
+                    <el-input v-else
+                              v-model="temp.roleCode" />
                 </el-form-item>
-                <el-form-item :label="$t('roleManagement.roleName')" prop="roleName">
+                <el-form-item :label="$t('roleManagement.roleName')"
+                              prop="roleName">
                     <el-input v-model="temp.roleName"></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('roleManagement.roleType')" prop="roleType">
-                    <el-select size="small" v-model="temp.roleType" :placeholder="$t('roleManagement.roleType')" clearable>
-                        <el-option
-                            v-for="item in dt_role_type"
-                            :key="item.dictItemKey"
-                            :label="item.dictItemValue"
-                            :value="item.dictItemKey"
-                        ></el-option>
+                <el-form-item :label="$t('roleManagement.roleType')"
+                              prop="roleType">
+                    <el-select size="small"
+                               v-model="temp.roleType"
+                               :placeholder="$t('roleManagement.roleType')"
+                               clearable>
+                        <el-option v-for="item in dt_role_type"
+                                   :key="item.dictItemKey"
+                                   :label="item.dictItemValue"
+                                   :value="item.dictItemKey"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="角色域" prop="domainScope">
-                    <el-select size="small" v-model="temp.domainScope" laceholder="请选择">
-                        <el-option label="供应商" value="SUPPLIER"></el-option>
-                        <el-option label="员工" value="EMPLOYEE"></el-option>
-                        <el-option label="客户" value="CUSTOMER"></el-option>
+                <el-form-item label="角色域"
+                              prop="domainScope">
+                    <el-select size="small"
+                               v-model="temp.domainScope"
+                               laceholder="请选择">
+                        <el-option label="供应商"
+                                   value="SUPPLIER"></el-option>
+                        <el-option label="员工"
+                                   value="EMPLOYEE"></el-option>
+                        <el-option label="客户"
+                                   value="CUSTOMER"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item :label="$t('roleManagement.remark')" prop="remark">
-                    <el-input type="textarea" :rows="2" v-model="temp.remark"></el-input>
+                <el-form-item :label="$t('roleManagement.remark')"
+                              prop="remark">
+                    <el-input type="textarea"
+                              :rows="2"
+                              v-model="temp.remark"></el-input>
                 </el-form-item>
             </el-form>
-            <div slot="footer" class="dialog-footer">
+            <div slot="footer"
+                 class="dialog-footer">
                 <el-button @click="cancel()">{{$t('table.cancel')}}</el-button>
-                <el-button v-if="dialogStatus=='create'" type="primary" @click="create">{{$t('table.confirm')}}</el-button>
-                <el-button v-else type="primary" @click="update">{{$t('table.confirm')}}</el-button>
+                <el-button v-if="dialogStatus=='create'"
+                           type="primary"
+                           @click="create">{{$t('table.confirm')}}</el-button>
+                <el-button v-else
+                           type="primary"
+                           @click="update">{{$t('table.confirm')}}</el-button>
             </div>
         </el-dialog>
 
         <!--功能授权弹窗 -->
-        <el-dialog :close-on-click-modal="false" custom-class="dialog-custom" :title="$t('userManagement.functionAuthorization')" :visible.sync="dialogFormVisible1" v-dialogDrag
-            @close="handleClose">
-            <el-tree
-                :data="data1"
-                default-expand-all
-                :props="defaultProps"
-                :default-checked-keys="checkeddatas"
-                show-checkbox
-                node-key="rowId"
-                ref="tree"
-                @check-change="handleCheckChange"
-            ></el-tree>
-            <div slot="footer" class="dialog-footer">
+        <el-dialog :close-on-click-modal="false"
+                   custom-class="dialog-custom"
+                   :title="$t('userManagement.functionAuthorization')"
+                   :visible.sync="dialogFormVisible1"
+                   v-dialogDrag
+                   @close="handleClose">
+            <el-tree :data="data1"
+                     default-expand-all
+                     :props="defaultProps"
+                     :default-checked-keys="checkeddatas"
+                     show-checkbox
+                     node-key="rowId"
+                     ref="tree"
+                     @check-change="handleCheckChange"></el-tree>
+            <div slot="footer"
+                 class="dialog-footer">
                 <el-button @click="cancel()">{{$t('table.cancel')}}</el-button>
-                <el-button type="primary" @click="create1">{{$t('table.confirm')}}</el-button>
+                <el-button type="primary"
+                           @click="create1">{{$t('table.confirm')}}</el-button>
             </div>
         </el-dialog>
 
         <!--授权用户弹窗 -->
-        <el-dialog :close-on-click-modal="false" custom-class="dialog-custom" :title="$t('userManagement.userAuthorization')" :visible.sync="dialogFormVisible2" @close="handleClose" v-dialogDrag>
+        <el-dialog :close-on-click-modal="false"
+                   custom-class="dialog-custom"
+                   :title="$t('userManagement.userAuthorization')"
+                   :visible.sync="dialogFormVisible2"
+                   @close="handleClose"
+                   v-dialogDrag>
             <div class="btn">
-                <el-button size="small" class="filter-item" type="primary" icon="el-icon-delete" @click="handleDelete1">{{ $t('table.delete') }}</el-button>
+                <el-button size="small"
+                           class="filter-item"
+                           type="primary"
+                           icon="el-icon-delete"
+                           @click="handleDelete1">{{ $t('table.delete') }}</el-button>
             </div>
-            <el-table
-                :key="tableKey"
-                :data="list2"
-                border
-                fit
-                highlight-current-row
-                style="width: 100%"
-                cell-class-name="table-cell"
-                height="200"
-                header-cell-class-name="header-cell"
-                @selection-change="selected1"
-            >
+            <el-table :key="tableKey"
+                      :data="list2"
+                      border
+                      fit
+                      highlight-current-row
+                      style="width: 100%"
+                      cell-class-name="table-cell"
+                      height="200"
+                      header-cell-class-name="header-cell"
+                      @selection-change="selected1">
                 <!-- <el-table-column type="selection" align="center" width="40" fixed></el-table-column> -->
-                <el-table-column type="selection" width="30"></el-table-column>
-                <el-table-column show-overflow-tooltip align="center" :label="'所属组织'" prop="orgName"></el-table-column>
-                <el-table-column show-overflow-tooltip align="center" :label="$t('roleManagement.userName')" prop="userName"></el-table-column>
-                <el-table-column show-overflow-tooltip align="center" :label="$t('roleManagement.realName')" prop="realName"></el-table-column>
+                <el-table-column type="selection"
+                                 width="30"></el-table-column>
+                <el-table-column show-overflow-tooltip
+                                 align="center"
+                                 :label="'所属组织'"
+                                 prop="orgName"></el-table-column>
+                <el-table-column show-overflow-tooltip
+                                 align="center"
+                                 :label="$t('roleManagement.userName')"
+                                 prop="userName"></el-table-column>
+                <el-table-column show-overflow-tooltip
+                                 align="center"
+                                 :label="$t('roleManagement.realName')"
+                                 prop="realName"></el-table-column>
             </el-table>
         </el-dialog>
     </div>
@@ -206,18 +303,42 @@ export default {
             tableKey: 0,
             rules: {
                 roleCode: [
-                {required: true,message: this.$t("validate.required"),trigger: "blur"},
-                { max: 30, message: this.$t("validate.max32"), trigger: "blur" }
+                    {
+                        required: true,
+                        message: this.$t("validate.required"),
+                        trigger: "blur"
+                    },
+                    {
+                        max: 30,
+                        message: this.$t("validate.max32"),
+                        trigger: "blur"
+                    }
                 ],
                 roleName: [
-                {required: true,message: this.$t("validate.required"),trigger: "blur"},
-                { max: 100, message: this.$t("validate.max32"), trigger: "blur" }
+                    {
+                        required: true,
+                        message: this.$t("validate.required"),
+                        trigger: "blur"
+                    },
+                    {
+                        max: 100,
+                        message: this.$t("validate.max32"),
+                        trigger: "blur"
+                    }
                 ],
                 roleType: [
-                { max: 100, message: this.$t("validate.max32"), trigger: "blur" }
+                    {
+                        max: 100,
+                        message: this.$t("validate.max32"),
+                        trigger: "blur"
+                    }
                 ],
                 remark: [
-                { max: 200, message: this.$t("validate.max200"), trigger: "blur" }
+                    {
+                        max: 200,
+                        message: this.$t("validate.max200"),
+                        trigger: "blur"
+                    }
                 ]
             }
         };
@@ -236,15 +357,16 @@ export default {
         getList() {
             api.selectrole(this.listQuery).then(response => {
                 let options = [this.dt_role_type];
-                response.data = codeToName(response.data, options, ["dt_role_type"]);
+                response.data = codeToName(response.data, options, [
+                    "dt_role_type"
+                ]);
                 this.list = response.data.list;
                 this.total = response.data.pages.count;
                 // Just to simulate the time of the request
                 setTimeout(() => {
-                this.listLoading = false;
+                    this.listLoading = false;
                 }, 1.5 * 100);
-            })
-
+            });
         },
         handleCheckChange() {
             return this.$refs.tree
@@ -270,29 +392,33 @@ export default {
             this.listQuery.currentPage = val;
             this.getList();
         },
-        handleCreate() {//新增按钮单击事件方法
+        handleCreate() {
+            //新增按钮单击事件方法
             this.resetTemp();
             this.dialogStatus = "create";
             this.dialogFormVisible = true;
         },
-        handleCreate1() {//功能授权按钮单击事件方法
+        handleCreate1() {
+            //功能授权按钮单击事件方法
             if (this.selectedrow && this.selectedrow.length == 1) {
                 this.listQuery2.roleCodes = this.selectedrow[0].roleCode;
                 let dd = [];
                 selectDatas(this.listQuery2).then(res => {
-                    this.checkeddatas = loadtreeDate(res.data).filter(function(items) {
+                    this.checkeddatas = loadtreeDate(res.data).filter(function(
+                        items
+                    ) {
                         //默认选中项,解决多层级父节点半选中问题
-                        if (items.children){
-                            function getSelectTree(v){
+                        if (items.children) {
+                            function getSelectTree(v) {
                                 v.filter(function(em) {
-                                    if(em.children){
-                                        getSelectTree(em.children)
-                                    }else{
-                                        dd.push(em.rowId); 
+                                    if (em.children) {
+                                        getSelectTree(em.children);
+                                    } else {
+                                        dd.push(em.rowId);
                                     }
                                 });
                             }
-                            getSelectTree(items.children)
+                            getSelectTree(items.children);
                         }
                         return dd;
                     });
@@ -305,29 +431,33 @@ export default {
                 });
             } else {
                 this.$message({
-                title: "警告",
-                message: "请选择一条信息",
-                type: "warning"
+                    title: "警告",
+                    message: "请选择一条信息",
+                    type: "warning"
                 });
             }
         },
         // 获取表格选中时的数据
-        selected (val) {
+        selected(val) {
             if (val.length > 1) {
-                this.$refs.tb_a.clearSelection()//清除其他行的选中
-                this.$refs.tb_a.toggleRowSelection(val[val.length-1],'selected')//单击行绑定点击事件
-            }else if(val.length===1){
-                this.selectedrow = val
+                this.$refs.tb_a.clearSelection(); //清除其他行的选中
+                this.$refs.tb_a.toggleRowSelection(
+                    val[val.length - 1],
+                    "selected"
+                ); //单击行绑定点击事件
+            } else if (val.length === 1) {
+                this.selectedrow = val;
             }
         },
-        rowClick(val){
-            this.$refs.tb_a.clearSelection()//清除其他行的选中
-            this.$refs.tb_a.toggleRowSelection(val)//单击行绑定点击事件
+        rowClick(val) {
+            this.$refs.tb_a.clearSelection(); //清除其他行的选中
+            this.$refs.tb_a.toggleRowSelection(val); //单击行绑定点击事件
         },
         selected1(val) {
             this.selectedrow1 = val;
         },
-        handleCreate2() {//授权用户按钮单击事件方法
+        handleCreate2() {
+            //授权用户按钮单击事件方法
             if (this.selectedrow && this.selectedrow.length == 1) {
                 this.dialogFormVisible2 = true;
                 this.dialogStatus = "create";
@@ -344,7 +474,8 @@ export default {
                 });
             }
         },
-        handleUpdate() {//编辑按钮单击事件方法
+        handleUpdate() {
+            //编辑按钮单击事件方法
             if (this.selectedrow && this.selectedrow.length == 1) {
                 this.roleCode = this.selectedrow[0].roleCode;
                 api.getRecord(this.selectedrow[0].roleCode).then(res => {
@@ -360,30 +491,31 @@ export default {
                 });
             }
         },
-        handleDelete() {//表格删除按钮单击事件方法
+        handleDelete() {
+            //表格删除按钮单击事件方法
             if (this.selectedrow && this.selectedrow.length == 1) {
                 let codes = [];
                 codes.push(this.selectedrow[0].roleCode);
                 this.delete(codes);
             } else {
                 this.$message({
-                title: "警告",
-                message: "请选择一条信息",
-                type: "warning"
+                    title: "警告",
+                    message: "请选择一条信息",
+                    type: "warning"
                 });
             }
         },
         //删除用户授权
         handleDelete1() {
             let userNames = [];
-            this.selectedrow1.forEach(item=>{
+            this.selectedrow1.forEach(item => {
                 userNames.push(item.userName);
             });
             let data = {
                 methods: "USER",
-                userNames:userNames
-            }
-            api.addMenu(this.selectedrow[0].roleCode,data).then(response =>{
+                userNames: userNames
+            };
+            api.addMenu(this.selectedrow[0].roleCode, data).then(response => {
                 this.handleCreate2();
                 this.$notify({
                     title: "成功",
@@ -417,39 +549,47 @@ export default {
                 type: "warning"
             }).then(() => {
                 api.deleteRecord(codes).then(res => {
-                this.getList();
-                this.$notify({
-                    title: "成功",
-                    message: "删除成功",
-                    type: "success",
-                    duration: 2000
-                });
-                });
-            });
-        },
-        create() {//新增弹窗确定按钮单击事件方法
-            this.$refs.temp.validate(valid => {
-                if (valid) {
-                api.addRecord(this.temp).then(res => {
                     this.getList();
-                    this.dialogFormVisible = false;
                     this.$notify({
                         title: "成功",
-                        message: "新增成功",
+                        message: "删除成功",
                         type: "success",
                         duration: 2000
                     });
                 });
+            });
+        },
+        create() {
+            //新增弹窗确定按钮单击事件方法
+            this.$refs.temp.validate(valid => {
+                if (valid) {
+                    api.addRecord(this.temp).then(res => {
+                        this.getList();
+                        this.dialogFormVisible = false;
+                        this.$notify({
+                            title: "成功",
+                            message: "新增成功",
+                            type: "success",
+                            duration: 2000
+                        });
+                    });
                 } else {
-                return false;
+                    return false;
                 }
             });
         },
-        create1() {//功能授权弹窗确定按钮单击事件方法
-            let catalogs = this.handleCheckChange().map(function(item, index, array) {
+        create1() {
+            //功能授权弹窗确定按钮单击事件方法
+            let catalogs = this.handleCheckChange().map(function(
+                item,
+                index,
+                array
+            ) {
                 return item.catalogCode;
             });
-            api.addMenu(this.selectedrow[0].roleCode, { catalogCodes: catalogs }).then(res => {
+            api.addMenu(this.selectedrow[0].roleCode, {
+                catalogCodes: catalogs
+            }).then(res => {
                 this.$notify({
                     title: "成功",
                     message: "授权成功",
@@ -457,30 +597,32 @@ export default {
                     duration: 2000
                 });
                 // this.reload()//允许一个祖先组件向其所有子孙后代注入一个依赖，不论组件层次有多深，并在起上下游关系成立的时间里始终生效
-                this.$router.go(0)//刷新当前体验不好，会出现空白
+                this.$router.go(0); //刷新当前体验不好，会出现空白
             });
 
             this.dialogFormVisible1 = false;
-            },
-        create2() {//授权用户弹窗确定按钮单击事件方法
+        },
+        create2() {
+            //授权用户弹窗确定按钮单击事件方法
             this.dialogFormVisible2 = false;
         },
-        update() {//编辑弹窗确定按钮单击事件方法
+        update() {
+            //编辑弹窗确定按钮单击事件方法
             this.$refs.temp.validate(valid => {
                 if (valid) {
-                api.updateRecord(this.roleCode, this.temp).then(res => {
-                    this.getList();
-                    this.dialogFormVisible = false;
-                    this.$notify({
-                    title: "成功",
-                    message: "更新成功",
-                    type: "success",
-                    duration: 2000
+                    api.updateRecord(this.roleCode, this.temp).then(res => {
+                        this.getList();
+                        this.dialogFormVisible = false;
+                        this.$notify({
+                            title: "成功",
+                            message: "更新成功",
+                            type: "success",
+                            duration: 2000
+                        });
+                        this.$refs.temp.resetFields();
                     });
-                    this.$refs.temp.resetFields();
-                });
                 } else {
-                return false;
+                    return false;
                 }
             });
         },

@@ -1,16 +1,17 @@
 <template>
     <div>
-        <el-upload
-            class="avatar-uploader"
-            :headers="myHeader"
-            action=""
-            :http-request="upLoad"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-        >
-            <img v-if="imageUrl" :src="imageUrl" class="userpic" />
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        <el-upload class="avatar-uploader"
+                   :headers="myHeader"
+                   action=""
+                   :http-request="upLoad"
+                   :show-file-list="false"
+                   :on-success="handleAvatarSuccess"
+                   :before-upload="beforeAvatarUpload">
+            <img v-if="imageUrl"
+                 :src="imageUrl"
+                 class="userpic" />
+            <i v-else
+               class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
     </div>
 </template>
@@ -67,11 +68,11 @@ export default {
                 });
         },
         beforeAvatarUpload(file) {
-            console.log(file.type)
+            console.log(file.type);
             const isJPG = file.type === "image/jpeg";
             const isPNG = file.type === "image/png";
             const isGIF = file.type === "image/gif";
-            const isLt2M = file.size / 1024 < 200;//图片大小不能超过65k
+            const isLt2M = file.size / 1024 < 200; //图片大小不能超过65k
 
             if (!isJPG && !isPNG && !isGIF) {
                 this.$message.error("上传头像图片只能是 JPG/PNG/GIF 格式!");
@@ -80,7 +81,7 @@ export default {
                 this.$message.error("上传头像图片大小不能超过 200k!");
             }
             // return isJPG && isLt2M;
-            return isLt2M &&(isJPG||isPNG||isGIF);
+            return isLt2M && (isJPG || isPNG || isGIF);
         }
     }
 };

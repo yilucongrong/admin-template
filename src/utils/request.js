@@ -65,7 +65,7 @@ service.interceptors.response.use(
     //   }
     // },
     error => {
-        
+
         console.log('err' + error) // for debug
         Message({
             message: error.response.data.message,
@@ -84,9 +84,9 @@ service.interceptors.response.use(
         //     setTimeout(() => {
         //         location.reload()
         //     }, 3000);
-            
+
         // })
-        
+
         return Promise.reject(error)
     }
 )

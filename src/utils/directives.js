@@ -8,7 +8,7 @@ import Vue from 'vue';
 */
 // v-dialogDrag: 弹窗拖拽+水平方向伸缩
 Vue.directive('dialogDrag', {
-    bind(el, binding, vnode, oldVnode) {
+    bind (el, binding, vnode, oldVnode) {
         //弹框可拉伸最小宽高
         let minWidth = 400;
         let minHeight = 300;

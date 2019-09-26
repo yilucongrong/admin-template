@@ -6,7 +6,7 @@
 }
 
 .el-upload {
-  input[type="file"] {
+  input[type='file'] {
     display: none !important;
   }
 }
@@ -69,7 +69,7 @@
 // dropdown
 .el-dropdown-menu {
   a {
-    display: block
+    display: block;
   }
 }
 
@@ -78,16 +78,20 @@
   display: inline-flex !important;
 }
 
-.el-input{
-    max-width: 165px;
+.el-input {
+  max-width: 165px;
 }
-.el-date-editor{//时间控件最大宽度设置
-    max-width:300px;
+.el-date-editor {
+  //时间控件最大宽度设置
+  max-width: 300px;
 }
-.el-dialog__footer{
-    border-top: #f3f3f3 solid 2px
+.el-dialog__footer {
+  border-top: #f3f3f3 solid 2px;
 }
-.el-table .cell, .el-table th div, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell{
-    padding: 0px !important;
-    text-align: center;
+.el-table .cell,
+.el-table th div,
+.el-table--border td:first-child .cell,
+.el-table--border th:first-child .cell {
+  padding: 0px !important;
+  text-align: center;
 }

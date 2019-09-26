@@ -12,77 +12,94 @@
 -->
 
 <template>
-  <div>
-    <div v-if="isMutiple">
-      <el-select size="small" multiple clearable v-model="itemKey" @change="changeSelect" :disabled="disabled" :placeholder="placeholder">
-        <el-option v-for="item in options" :key="item.dictItemKey" :label="item.dictItemValue" :value="item.dictItemKey">
-        </el-option>
-      </el-select>
+    <div>
+        <div v-if="isMutiple">
+            <el-select size="small"
+                       multiple
+                       clearable
+                       v-model="itemKey"
+                       @change="changeSelect"
+                       :disabled="disabled"
+                       :placeholder="placeholder">
+                <el-option v-for="item in options"
+                           :key="item.dictItemKey"
+                           :label="item.dictItemValue"
+                           :value="item.dictItemKey">
+                </el-option>
+            </el-select>
+        </div>
+        <div v-else>
+            <el-select size="small"
+                       clearable
+                       v-model="itemKey"
+                       @change="changeSelect"
+                       :disabled="disabled"
+                       :placeholder="placeholder">
+                <el-option v-for="item in options"
+                           :key="item.dictItemKey"
+                           :label="item.dictItemValue"
+                           :value="item.dictItemKey">
+                </el-option>
+            </el-select>
+        </div>
     </div>
-    <div v-else>
-      <el-select size="small" clearable v-model="itemKey" @change="changeSelect" :disabled="disabled" :placeholder="placeholder">
-        <el-option v-for="item in options" :key="item.dictItemKey" :label="item.dictItemValue" :value="item.dictItemKey">
-        </el-option>
-      </el-select>
-    </div>
-  </div>
 </template>
 <script>
-  import { getRecord } from '@/api/data-base/dict'
+import { getRecord } from "@/api/data-base/dict";
 
-  export default {
-    name: 'DictItemSelect',
+export default {
+    name: "DictItemSelect",
     props: {
-      dictCode: {
-        required: true,
-        type: String
-      },
-      dictItemKey:'',
-      placeholder:{
-        type: String,
-        default: ''
-      },
-      disabled: {
-        type: Boolean,
-        default: false
-      },
-      placeholder: {
-        type: String,
-        default: '请选择'
-      },
-      isMutiple: {
-        type: Boolean,
-        default: false
-      }
+        dictCode: {
+            required: true,
+            type: String
+        },
+        dictItemKey: "",
+        placeholder: {
+            type: String,
+            default: ""
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+        placeholder: {
+            type: String,
+            default: "请选择"
+        },
+        isMutiple: {
+            type: Boolean,
+            default: false
+        }
     },
     model: {
-        prop: 'dictItemKey',
-        event: 'change'
+        prop: "dictItemKey",
+        event: "change"
     },
     data() {
-      return {
-        options: [],
-        // placeholder: this.placeholder,
-        itemKey: this.dictItemKey
-      }
+        return {
+            options: [],
+            // placeholder: this.placeholder,
+            itemKey: this.dictItemKey
+        };
     },
     watch: {
-      dictItemKey() {
-        this.itemKey = this.dictItemKey;
-      }
+        dictItemKey() {
+            this.itemKey = this.dictItemKey;
+        }
     },
     created() {
-      this.getOptions()
+        this.getOptions();
     },
     methods: {
-      getOptions() {
-        getRecord(this.dictCode).then(res => {
-          this.options = res.data.dictItemDTOs
-        })
-      },
-      changeSelect(val) {
-        this.$emit('change', val)
-      }
+        getOptions() {
+            getRecord(this.dictCode).then(res => {
+                this.options = res.data.dictItemDTOs;
+            });
+        },
+        changeSelect(val) {
+            this.$emit("change", val);
+        }
     }
-  }
+};
 </script>

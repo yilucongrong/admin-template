@@ -3,7 +3,8 @@
         <el-row :gutter="20">
             <el-col :span="6">
                 <el-row>
-                    <el-col :span="24" class="dashdiv">
+                    <el-col :span="24"
+                            class="dashdiv">
                         <el-col :span="12">
                             <UserAvatar></UserAvatar>
                         </el-col>
@@ -31,15 +32,10 @@
                             </div>
                             <div class="dash_ul">
                                 <ul>
-                                    <li
-                                        :key="item.id"
-                                        v-for="item in warningData"
-                                    >
-                                        <a href="#">{{ item.value }}</a
-                                        ><a
-                                            :class="item.color"
-                                            class="time"
-                                        ></a>
+                                    <li :key="item.id"
+                                        v-for="item in warningData">
+                                        <a href="#">{{ item.value }}</a><a :class="item.color"
+                                           class="time"></a>
                                     </li>
                                 </ul>
                             </div>
@@ -50,14 +46,13 @@
 
             <el-col :span="18">
                 <el-row>
-                    <el-col :span="24" class="dashdiv">
+                    <el-col :span="24"
+                            class="dashdiv">
                         <el-col :span="8">
                             <el-col :span="12">
                                 <div class="infopic">
                                     <div class="textdiv iconstyle">
-                                        <span
-                                            ><i class="el-icon-share"></i
-                                        ></span>
+                                        <span><i class="el-icon-share"></i></span>
                                     </div>
                                 </div>
                             </el-col>
@@ -73,9 +68,7 @@
                             <el-col :span="12">
                                 <div class="infopic">
                                     <div class="textdiv iconstyle">
-                                        <span
-                                            ><i class="el-icon-share"></i
-                                        ></span>
+                                        <span><i class="el-icon-share"></i></span>
                                     </div>
                                 </div>
                             </el-col>
@@ -91,9 +84,7 @@
                             <el-col :span="12">
                                 <div class="infopic">
                                     <div class="textdiv iconstyle">
-                                        <span
-                                            ><i class="el-icon-share"></i
-                                        ></span>
+                                        <span><i class="el-icon-share"></i></span>
                                     </div>
                                 </div>
                             </el-col>
@@ -108,28 +99,30 @@
                 </el-row>
 
                 <el-row>
-                    <el-col :span="24" class="dashdiv">
+                    <el-col :span="24"
+                            class="dashdiv">
                         <div class="title">
                             <span>待办事项</span>
                         </div>
                         <ul>
-                            <li :key="item.id" v-for="item in todoList">
-                                <a href="#">{{ item.value }}</a
-                                ><a class="time">{{ item.time }}</a>
+                            <li :key="item.id"
+                                v-for="item in todoList">
+                                <a href="#">{{ item.value }}</a><a class="time">{{ item.time }}</a>
                             </li>
                         </ul>
                     </el-col>
                 </el-row>
 
                 <el-row>
-                    <el-col :span="24" class="dashdiv">
+                    <el-col :span="24"
+                            class="dashdiv">
                         <div class="title">
                             <span>通知公告</span>
                         </div>
                         <ul>
-                            <li :key="item.id" v-for="item in infoList">
-                                <a href="#">{{ item.value }}</a
-                                ><a class="time">{{ item.time }}</a>
+                            <li :key="item.id"
+                                v-for="item in infoList">
+                                <a href="#">{{ item.value }}</a><a class="time">{{ item.time }}</a>
                             </li>
                         </ul>
                     </el-col>
@@ -143,14 +136,13 @@
 import { mapGetters } from "vuex";
 import UserAvatar from "@/components/UserAvatar";
 
-
 export default {
     name: "home",
     components: {
         UserAvatar
     },
     computed: {
-        ...mapGetters(["name", "domainName", "token", "addRouters", "passWord"]),
+        ...mapGetters(["name", "domainName", "token", "addRouters", "passWord"])
     },
     data() {
         return {
@@ -175,11 +167,8 @@ export default {
             ]
         };
     },
-    created() {
-        
-    },
-    methods: {
-    }
+    created() {},
+    methods: {}
 };
 </script>
 
@@ -318,5 +307,4 @@ export default {
         margin-top: 8px;
     }
 }
-
 </style>

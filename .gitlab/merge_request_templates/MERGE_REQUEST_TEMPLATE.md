@@ -8,7 +8,7 @@
 - [ ] refactor：重构（即不是新增功能，也不是修改bug的代码变动）
 - [ ] test：增加测试
 - [ ] chore：构建过程或辅助工具的变动
-
+- [ ] Plug-in: 插件变更
 subject是 commit 目的的简短描述，不超过50个字符。
 
 - 以动词开头，使用第一人称现在时，比如change，而不是changed或changes

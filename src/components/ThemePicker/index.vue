@@ -1,7 +1,6 @@
 <template>
-    <el-color-picker
-        v-model="theme"
-        :predefine="[
+    <el-color-picker v-model="theme"
+                     :predefine="[
             '#409EFF',
             '#1890ff',
             '#304156',
@@ -11,14 +10,13 @@
             '#6959CD',
             '#f5222d'
         ]"
-        class="theme-picker"
-        popper-class="theme-picker-dropdown"
-    />
+                     class="theme-picker"
+                     popper-class="theme-picker-dropdown" />
 </template>
 
 <script>
 import { getTheme, setTheme } from "@/utils/auth"; // getToken from cookie
-import { mapMutations } from "vuex";//设置tagview主题颜色
+import { mapMutations } from "vuex"; //设置tagview主题颜色
 const version = require("element-ui/package.json").version; // element-ui version from node_modules
 const ORIGINAL_THEME = "#409EFF"; // default color
 

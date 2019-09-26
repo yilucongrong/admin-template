@@ -1,76 +1,75 @@
 
-import { getTokenId, logout,getCatalog} from '@/api/login'
+import { getTokenId, getCatalog } from '@/api/login'
 import * as  auth from '@/utils/auth'
 import router, { resetRouter } from '@/router'
-import {changeUserInfo,relation} from '@/api/system/user'
+import { changeUserInfo, relation } from '@/api/system/user'
 
 const state = {
     user: '',
     status: '',
     code: '',
-    tokenTime:auth.getTokenTime(),
+    tokenTime: auth.getTokenTime(),
     token: auth.getToken(),
-    addRouters:'',
+    addRouters: '',
     name: auth.getName(),
-    passWord:auth.getPassWord(),
-    menu:auth.getCatalogs(),
+    passWord: auth.getPassWord(),
+    menu: auth.getCatalogs(),
     avatar: '',
     introduction: '',
-    superRoles:false,
+    superRoles: false,
     roles: [],
-    domainId:auth.getDomainId(),
-    domainName:auth.getDomainName(),
+    domainId: auth.getDomainId(),
+    domainName: auth.getDomainName(),
     setting: {
-      articlePlatform: []
+        articlePlatform: []
     },
-    roles: [],
-    theme:auth.getTheme()
+    theme: auth.getTheme()
 }
 
 const mutations = {
     SET_CODE: (state, code) => {
-      state.code = code
+        state.code = code
     },
     SET_TOKEN: (state, token) => {
-      state.token = token
+        state.token = token
     },
     SET_TOKENTIME: (state, tokenTime) => {
-      state.tokenTime = tokenTime
+        state.tokenTime = tokenTime
     },
     SET_MENU: (state, menu) => {
-      state.menu = menu
+        state.menu = menu
     },
     SET_INTRODUCTION: (state, introduction) => {
-      state.introduction = introduction
+        state.introduction = introduction
     },
     SET_SETTING: (state, setting) => {
-      state.setting = setting
+        state.setting = setting
     },
     SET_STATUS: (state, status) => {
-      state.status = status
+        state.status = status
     },
     SET_NAME: (state, name) => {
-      state.name = name
+        state.name = name
     },
     SET_PASSWORD: (state, password) => {
-      state.passWord = password
+        state.passWord = password
     },
     SET_AVATAR: (state, avatar) => {
-      state.avatar = avatar
+        state.avatar = avatar
     },
     SET_SUPER_ROLES: (state, superRoles) => {
         state.superRoles = superRoles
-      },
+    },
     SET_ROLES: (state, roles) => {
-      state.roles = roles
+        state.roles = roles
     },
     SET_DOMAINID: (state, domainId) => {
-      state.domainId = domainId
+        state.domainId = domainId
     },
     SET_DOMAINNAME: (state, domainName) => {
-      state.domainName = domainName
+        state.domainName = domainName
     },
-    SET_THEME:(state,theme)=>{
+    SET_THEME: (state, theme) => {
         state.theme = theme
     }
 }
@@ -91,8 +90,8 @@ const actions = {
     //     })
     // },
     //用户登录
-    LoginByUsername({ commit }, userInfo) {
-        const auths={
+    LoginByUsername ({ commit }, userInfo) {
+        const auths = {
             "auth": {
                 "identity": {
                     "methods": [
@@ -109,17 +108,17 @@ const actions = {
         }
         commit('SET_NAME', userInfo.username)
         commit('SET_PASSWORD', userInfo.password)
-        
+
         return new Promise((resolve, reject) => {
             //获取刷新token
-            getTokenId(auths).then(res => {  
+            getTokenId(auths).then(res => {
                 commit('SET_DOMAINID', res.data.token.domainId)
                 commit('SET_DOMAINNAME', res.data.token.domainName)
                 commit('SET_THEME', res.data.token.theme)
                 auth.setDomainId(res.data.token.domainId)
                 auth.setDomainName(res.data.token.domainName)
                 auth.setTheme(res.data.token.theme)
-                const userToken={
+                const userToken = {
                     "auth": {
                         "identity": {
                             "methods": [
@@ -141,42 +140,42 @@ const actions = {
                     auth.setPassWord(userInfo.password)
 
                     let queryRole = {
-                        type:1,
+                        type: 1,
                         currentPage: 1,
                         pageSize: 1000,
                         page: 1
-                      }
-                      relation(userInfo.username,queryRole).then(resr =>{
+                    }
+                    relation(userInfo.username, queryRole).then(resr => {
                         console.log(resr);
                         // commit('SET_ROLES', resr.data.list);
                         let superRole = false;
-                        resr.data.list.forEach(item=>{
-                            if(item.roleCode==="WMS-SUPER"){
-                              commit('SET_SUPER_ROLES', true);
-                              superRole = true
+                        resr.data.list.forEach(item => {
+                            if (item.roleCode === "WMS-SUPER") {
+                                commit('SET_SUPER_ROLES', true);
+                                superRole = true
                             }
                         });
-                        if(!superRole){
-                          commit('SET_SUPER_ROLES', false);
+                        if (!superRole) {
+                            commit('SET_SUPER_ROLES', false);
                         }
-                      })
+                    })
                     resolve()
                 })
-                
+
             }).catch(error => {
                 reject(error)
             })
         })
     },
     //获取菜单资源
-    GetMenu({ commit }){
+    GetMenu () {
         return new Promise((resolve, reject) => {
             getCatalog(auth.getName()).then(response => {
                 // console.log(response.data.catalogVMs[0])
                 // auth.setCatalogs(response.data.catalogVMs[0])
                 // console.log(auth.getCatalogs())
                 // console.log('SET_MENU存在')
-                
+
                 resolve(response.data.catalogVMs)
             }).catch(error => {
                 auth.removeToken()
@@ -187,28 +186,28 @@ const actions = {
     },
 
     // 用户退出
-    logout({ commit, state }) {
-        return new Promise((resolve, reject) => {
+    logout ({ commit }) {
+        return new Promise((resolve) => {
 
             commit('SET_TOKEN', '')
             commit('SET_ROLES', [])
             auth.removeToken()
             resetRouter()
             resolve()
-        //   logout(state.token).then(() => {
-        //     commit('SET_TOKEN', '')
-        //     commit('SET_ROLES', [])
-        //     removeToken()
-        //     resetRouter()
-        //     resolve()
-        //   }).catch(error => {
-        //     reject(error)
-        //   })
+            //   logout(state.token).then(() => {
+            //     commit('SET_TOKEN', '')
+            //     commit('SET_ROLES', [])
+            //     removeToken()
+            //     resetRouter()
+            //     resolve()
+            //   }).catch(error => {
+            //     reject(error)
+            //   })
         })
     },
 
     // 删除token
-    resetToken({ commit }) {
+    resetToken ({ commit }) {
         return new Promise(resolve => {
             commit('SET_TOKEN', '')
             commit('SET_ROLES', [])
@@ -218,7 +217,7 @@ const actions = {
     },
 
     // 动态修改权限
-    changeRoles({ commit, dispatch }, role) {
+    changeRoles ({ commit, dispatch }, role) {
         return new Promise(async resolve => {
             const token = role + '-token'
 
@@ -242,7 +241,7 @@ const actions = {
         })
     },
     //修改用户信息
-    ChangeUserInfo({ commit }, userDTO){
+    ChangeUserInfo (userDTO) {
         return new Promise((resolve, reject) => {
             changeUserInfo(userDTO).then(res => {
                 resolve(res)
@@ -254,8 +253,8 @@ const actions = {
 }
 
 export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions
+    namespaced: true,
+    state,
+    mutations,
+    actions
 }

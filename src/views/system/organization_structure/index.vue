@@ -1,13 +1,13 @@
 <template>
     <el-row>
-        <el-col :span="3" class="left-trees">
+        <el-col :span="3"
+                class="left-trees">
             <div class="left-tree">
-                <el-tree
-                    :data="treeData"
-                    :props="defaultProps"
-                    @node-click="handleNodeClick"
-                    :style="contentStyleObj"
-                ></el-tree>
+                <el-tree :data="treeData"
+                         :props="defaultProps"
+                         @node-click="handleNodeClick"
+                         :style="contentStyleObj">
+                </el-tree>
             </div>
         </el-col>
         <el-col :span="21">
@@ -15,129 +15,104 @@
                 <div class="filter-container">
                     <div class="main-header">
                         <div class="select-content">
-                            <el-input
-                                size="small"
-                                :placeholder="$t('table.organizationNum')"
-                                v-model="listQuery.organizationCode"
-                                class="filter-item"
-                                @keyup.enter.native="handleFilter"
-                            />
-                            <el-input
-                                size="small"
-                                :placeholder="$t('table.organizationName')"
-                                v-model="listQuery.organizationName"
-                                class="filter-item"
-                                @keyup.enter.native="handleFilter"
-                            />
+                            <el-input size="small"
+                                      :placeholder="$t('table.organizationNum')"
+                                      v-model="listQuery.organizationCode"
+                                      class="filter-item"
+                                      @keyup.enter.native="handleFilter" />
+                            <el-input size="small"
+                                      :placeholder="$t('table.organizationName')"
+                                      v-model="listQuery.organizationName"
+                                      class="filter-item"
+                                      @keyup.enter.native="handleFilter" />
 
-                            <el-button
-                                type="primary"
-                                size="small"
-                                icon="el-icon-search"
-                                @click="handleFilter"
-                                >{{ $t("table.search") }}</el-button
-                            >
+                            <el-button type="primary"
+                                       size="small"
+                                       icon="el-icon-search"
+                                       @click="handleFilter">
+                                {{ $t("table.search") }}</el-button>
                         </div>
                     </div>
                     <div class="main-body">
                         <div class="btn">
-                            <el-button
-                                size="small"
-                                class="filter-item"
-                                type="primary"
-                                icon="el-icon-plus"
-                                @click="handleCreate"
-                                >{{ $t("table.add") }}</el-button
-                            >
-                            <el-button
-                                size="small"
-                                class="filter-item"
-                                type="primary"
-                                icon="el-icon-download"
-                                @click="handleDownload"
-                                >{{ $t("table.export") }}</el-button
-                            >
-                            <el-button
-                                size="small"
-                                class="filter-item"
-                                type="primary"
-                                icon="el-icon-edit"
-                                @click="handleUpdate"
-                                >{{ $t("table.edit") }}</el-button
-                            >
-                            <el-button
-                                size="small"
-                                class="filter-item"
-                                type="primary"
-                                icon="el-icon-delete"
-                                @click="handleDelete"
-                                >{{ $t("table.delete") }}</el-button
-                            >
+                            <el-button size="small"
+                                       class="filter-item"
+                                       type="primary"
+                                       icon="el-icon-plus"
+                                       @click="handleCreate">
+                                {{ $t("table.add") }}
+                            </el-button>
+                            <el-button size="small"
+                                       class="filter-item"
+                                       type="primary"
+                                       icon="el-icon-download"
+                                       @click="handleDownload">
+                                {{ $t("table.export") }}</el-button>
+                            <el-button size="small"
+                                       class="filter-item"
+                                       type="primary"
+                                       icon="el-icon-edit"
+                                       @click="handleUpdate">
+                                {{ $t("table.edit") }}</el-button>
+                            <el-button size="small"
+                                       class="filter-item"
+                                       type="primary"
+                                       icon="el-icon-delete"
+                                       @click="handleDelete">
+                                {{ $t("table.delete") }}</el-button>
                         </div>
-                        <el-table
-                            :key="tableKey"
-                            :data="list"
-                            border
-                            fit
-                            height="315"
-                            highlight-current-row
-                            style="width: 100%;"
-                            cell-class-name="table-cell"
-                            header-cell-class-name="header-cell"
-                            @selection-change="selectRow"
-                            @row-click="rowClick"
-                            ref="tb_a"
-                        >
-                            <el-table-column
-                                type="selection"
-                                fixed
-                                width="30"
-                                align="center"
-                            >
+                        <el-table :key="tableKey"
+                                  :data="list"
+                                  border
+                                  fit
+                                  height="315"
+                                  highlight-current-row
+                                  style="width: 100%;"
+                                  cell-class-name="table-cell"
+                                  header-cell-class-name="header-cell"
+                                  @selection-change="selectRow"
+                                  @row-click="rowClick"
+                                  ref="tb_a">
+                            <el-table-column type="selection"
+                                             fixed
+                                             width="30"
+                                             align="center">
                             </el-table-column>
-                            <el-table-column
-                                show-overflow-tooltip
-                                :label="$t('table.organizationNum')"
-                                fixed
-                                prop="organizationCode"
-                                align="center"
-                                width="120"
-                            >
+                            <el-table-column show-overflow-tooltip
+                                             :label="$t('table.organizationNum')"
+                                             fixed
+                                             prop="organizationCode"
+                                             align="center"
+                                             width="120">
                                 <template slot-scope="scope">
                                     <span>{{
                                         scope.row.organizationCode
                                     }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column
-                                show-overflow-tooltip
-                                :label="$t('table.organizationName')"
-                                fixed
-                                width="120px"
-                                align="center"
-                            >
+                            <el-table-column show-overflow-tooltip
+                                             :label="$t('table.organizationName')"
+                                             fixed
+                                             width="120px"
+                                             align="center">
                                 <template slot-scope="scope">
                                     <span>{{
                                         scope.row.organizationName
                                     }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column
-                                show-overflow-tooltip
-                                :label="$t('table.organizationType')"
-                                fixed
-                                min-width="140px"
-                            >
+                            <el-table-column show-overflow-tooltip
+                                             :label="$t('table.organizationType')"
+                                             fixed
+                                             min-width="140px">
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.typeCN }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column
-                                show-overflow-tooltip
-                                :label="$t('table.parentId')"
-                                width="120px"
-                                align="center"
-                            >
+                            <el-table-column show-overflow-tooltip
+                                             :label="$t('table.parentId')"
+                                             width="120px"
+                                             align="center">
                                 <template slot-scope="scope">
                                     <span>{{
                                         scope.row.parentId
@@ -145,192 +120,150 @@
                                     }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column
-                                show-overflow-tooltip
-                                :label="$t('table.contacts')"
-                                align="center"
-                                width="120px"
-                            >
+                            <el-table-column show-overflow-tooltip
+                                             :label="$t('table.contacts')"
+                                             align="center"
+                                             width="120px">
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.contact }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column
-                                show-overflow-tooltip
-                                :label="$t('table.address')"
-                                width="120px"
-                                align="center"
-                            >
+                            <el-table-column show-overflow-tooltip
+                                             :label="$t('table.address')"
+                                             width="120px"
+                                             align="center">
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.adress }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column
-                                show-overflow-tooltip
-                                :label="$t('table.email')"
-                                width="150px"
-                            >
+                            <el-table-column show-overflow-tooltip
+                                             :label="$t('table.email')"
+                                             width="150px">
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.email }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column
-                                show-overflow-tooltip
-                                :label="$t('table.businessFunction')"
-                                width="150px"
-                            >
+                            <el-table-column show-overflow-tooltip
+                                             :label="$t('table.businessFunction')"
+                                             width="150px">
                                 <template slot-scope="scope">
                                     <span>{{
                                         scope.row.businessFunctionCN
                                     }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column
-                                show-overflow-tooltip
-                                :label="$t('table.mobile')"
-                                width="150px"
-                            >
+                            <el-table-column show-overflow-tooltip
+                                             :label="$t('table.mobile')"
+                                             width="150px">
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.mobile }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column
-                                show-overflow-tooltip
-                                :label="$t('table.remarks')"
-                                width="150px"
-                            >
+                            <el-table-column show-overflow-tooltip
+                                             :label="$t('table.remarks')"
+                                             width="150px">
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.remark }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column
-                                show-overflow-tooltip
-                                :label="$t('table.state')"
-                                width="80px"
-                            >
+                            <el-table-column show-overflow-tooltip
+                                             :label="$t('table.state')"
+                                             width="80px">
                                 <template slot-scope="scope">
                                     <span>{{
                                         scope.row.state | stateFilter
                                     }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column
-                                show-overflow-tooltip
-                                :label="$t('table.postalCode')"
-                                class-name="status-col"
-                                width="120px"
-                            >
+                            <el-table-column show-overflow-tooltip
+                                             :label="$t('table.postalCode')"
+                                             class-name="status-col"
+                                             width="120px">
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.postalCode }}</span>
                                 </template>
                             </el-table-column>
                         </el-table>
-                        <pagination
-                            v-show="total > 0"
-                            :total="total"
-                            :page.sync="listQuery.currentPage"
-                            :limit.sync="listQuery.pageSize"
-                            @pagination="getList"
-                        />
+                        <pagination v-show="total > 0"
+                                    :total="total"
+                                    :page.sync="listQuery.currentPage"
+                                    :limit.sync="listQuery.pageSize"
+                                    @pagination="getList" />
                     </div>
                 </div>
-                <el-dialog
-                    custom-class="dialog-custom"
-                    :title="
+                <el-dialog custom-class="dialog-custom"
+                           :title="
                         dialogStatus == 'create'
                             ? $t('table.add')
                             : $t('table.edit')
                     "
-                    :visible.sync="dialogFormVisible"
-                    v-dialogDrag
-                    :close-on-click-modal="false"
-                >
-                    <el-form
-                        class="small-space"
-                        ref="dataForm"
-                        :inline="true"
-                        :rules="rules"
-                        :model="temp"
-                        label-width="120px"
-                    >
-                        <el-form-item
-                            :label="$t('table.organizationNum')"
-                            prop="organizationCode"
-                        >
-                            <el-input
-                                v-if="dialogStatus == 'update'"
-                                v-model="temp.organizationCode"
-                                disabled="disabled"
-                            />
-                            <el-input v-else v-model="temp.organizationCode" />
+                           :visible.sync="dialogFormVisible"
+                           v-dialogDrag
+                           :close-on-click-modal="false">
+                    <el-form class="small-space"
+                             ref="dataForm"
+                             :inline="true"
+                             :rules="rules"
+                             :model="temp"
+                             label-width="120px">
+                        <el-form-item :label="$t('table.organizationNum')"
+                                      prop="organizationCode">
+                            <el-input v-if="dialogStatus == 'update'"
+                                      v-model="temp.organizationCode"
+                                      disabled="disabled" />
+                            <el-input v-else
+                                      v-model="temp.organizationCode" />
                         </el-form-item>
-                        <el-form-item
-                            :label="$t('table.organizationName')"
-                            prop="organizationName"
-                        >
+                        <el-form-item :label="$t('table.organizationName')"
+                                      prop="organizationName">
                             <el-input v-model="temp.organizationName" />
                         </el-form-item>
-                        <el-form-item
-                            :label="$t('table.parentId')"
-                            prop="parentId"
-                        >
-                            <el-input
-                                v-model="temp.parentId"
-                                disabled="disabled"
-                            />
+                        <el-form-item :label="$t('table.parentId')"
+                                      prop="parentId">
+                            <el-input v-model="temp.parentId"
+                                      disabled="disabled" />
                         </el-form-item>
-                        <el-form-item
-                            :label="$t('table.organizationType')"
-                            prop="type"
-                        >
-                            <el-select
-                                size="small"
-                                v-model="temp.type"
-                                :placeholder="$t('table.select')"
-                            >
-                                <el-option
-                                    v-for="item in dt_org_type"
-                                    :key="item.dictItemKey"
-                                    :label="item.dictItemValue"
-                                    :value="item.dictItemKey"
-                                >
+                        <el-form-item :label="$t('table.organizationType')"
+                                      prop="type">
+                            <el-select size="small"
+                                       v-model="temp.type"
+                                       :placeholder="$t('table.select')">
+                                <el-option v-for="item in dt_org_type"
+                                           :key="item.dictItemKey"
+                                           :label="item.dictItemValue"
+                                           :value="item.dictItemKey">
                                 </el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item :label="$t('table.contacts')">
                             <el-input v-model="temp.contact" />
                         </el-form-item>
-                        <el-form-item :label="$t('table.email')" prop="email">
+                        <el-form-item :label="$t('table.email')"
+                                      prop="email">
                             <el-input v-model="temp.email" />
                         </el-form-item>
-                        <el-form-item
-                            :label="$t('table.postalCode')"
-                            prop="postalCode"
-                        >
+                        <el-form-item :label="$t('table.postalCode')"
+                                      prop="postalCode">
                             <el-input v-model="temp.postalCode" />
                         </el-form-item>
-                        <el-form-item
-                            :label="$t('table.businessFunction')"
-                            prop="businessFunction"
-                        >
-                            <el-select
-                                size="small"
-                                v-model="temp.businessFunction"
-                                :placeholder="$t('table.select')"
-                            >
-                                <el-option
-                                    v-for="item in dt_org_function"
-                                    :key="item.dictItemKey"
-                                    :label="item.dictItemValue"
-                                    :value="item.dictItemKey"
-                                >
+                        <el-form-item :label="$t('table.businessFunction')"
+                                      prop="businessFunction">
+                            <el-select size="small"
+                                       v-model="temp.businessFunction"
+                                       :placeholder="$t('table.select')">
+                                <el-option v-for="item in dt_org_function"
+                                           :key="item.dictItemKey"
+                                           :label="item.dictItemValue"
+                                           :value="item.dictItemKey">
                                 </el-option>
                             </el-select>
                         </el-form-item>
-                        <el-form-item :label="$t('table.mobile')" prop="mobile">
+                        <el-form-item :label="$t('table.mobile')"
+                                      prop="mobile">
                             <el-input v-model="temp.mobile" />
                         </el-form-item>
-                        <el-form-item :label="$t('table.state')" prop="state">
+                        <el-form-item :label="$t('table.state')"
+                                      prop="state">
                             <el-radio-group v-model="temp.state">
                                 <el-radio :label="1">{{
                                     $t("table.enable")
@@ -341,67 +274,49 @@
                             </el-radio-group>
                         </el-form-item>
                         <el-form-item :label="$t('table.address')">
-                            <el-input
-                                type="textarea"
-                                :rows="2"
-                                v-model="temp.adress"
-                            ></el-input>
+                            <el-input type="textarea"
+                                      :rows="2"
+                                      v-model="temp.adress"></el-input>
                         </el-form-item>
-                        <el-form-item
-                            :label="$t('table.remarks')"
-                            prop="remark"
-                        >
-                            <el-input
-                                type="textarea"
-                                :rows="2"
-                                v-model="temp.remark"
-                            ></el-input>
+                        <el-form-item :label="$t('table.remarks')"
+                                      prop="remark">
+                            <el-input type="textarea"
+                                      :rows="2"
+                                      v-model="temp.remark"></el-input>
                         </el-form-item>
                     </el-form>
-                    <div slot="footer" class="dialog-footer">
+                    <div slot="footer"
+                         class="dialog-footer">
                         <el-button @click="dialogFormVisible = false">{{
                             $t("table.cancel")
                         }}</el-button>
-                        <el-button
-                            type="primary"
-                            @click="
+                        <el-button type="primary"
+                                   @click="
                                 dialogStatus === 'create'
                                     ? createData()
                                     : updateData()
-                            "
-                            >{{ $t("table.confirm") }}</el-button
-                        >
+                            ">{{ $t("table.confirm") }}</el-button>
                     </div>
                 </el-dialog>
 
-                <el-dialog
-                    :visible.sync="dialogPvVisible"
-                    title="Reading statistics"
-                >
-                    <el-table
-                        :data="pvData"
-                        border
-                        fit
-                        highlight-current-row
-                        style="width: 100%"
-                    >
-                        <el-table-column
-                            show-overflow-tooltip
-                            prop="key"
-                            label="Channel"
-                        />
-                        <el-table-column
-                            show-overflow-tooltip
-                            prop="pv"
-                            label="Pv"
-                        />
+                <el-dialog :visible.sync="dialogPvVisible"
+                           title="Reading statistics">
+                    <el-table :data="pvData"
+                              border
+                              fit
+                              highlight-current-row
+                              style="width: 100%">
+                        <el-table-column show-overflow-tooltip
+                                         prop="key"
+                                         label="Channel" />
+                        <el-table-column show-overflow-tooltip
+                                         prop="pv"
+                                         label="Pv" />
                     </el-table>
-                    <span slot="footer" class="dialog-footer">
-                        <el-button
-                            type="primary"
-                            @click="dialogPvVisible = false"
-                            >{{ $t("table.confirm") }}</el-button
-                        >
+                    <span slot="footer"
+                          class="dialog-footer">
+                        <el-button type="primary"
+                                   @click="dialogPvVisible = false">{{ $t("table.confirm") }}</el-button>
                     </span>
                 </el-dialog>
             </div>
