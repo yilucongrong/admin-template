@@ -39,12 +39,13 @@ export default {
 body .el-table th.gutter {
     display: table-cell !important;
 }
-body .el-table th,
-body .el-table td {
-    border: 1px solid #d5d8da;
-}
+// body .el-table th,
+// body .el-table td {
+//     border: 1px solid #d5d8da;
+// }
 body .el-table .header-cell {
-    border: solid 1px #d5d8da;
+    // border-top: solid 1px #d5d8da;
+    // border-bottom: solid 1px #d5d8da;
     background: #eef2f8;
     color: #474747;
 }
