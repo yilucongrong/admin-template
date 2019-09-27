@@ -2,7 +2,7 @@
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
 
-function resolve(dir) {
+function resolve (dir) {
     return path.join(__dirname, dir)
 }
 
@@ -16,16 +16,14 @@ let proxyObj = {};
 let obj = process.env
 for (let key in obj) {
     if (obj[key + "_URL"]) {
-        proxyObj[obj[key]]={
-                target: obj[key + "_URL"],
-                changeOrigin: true,
-                ws: true,
-                pathRewrite: {
-                    ['^' + obj[key]]: ''
-                }
+        proxyObj[obj[key]] = {
+            target: obj[key + "_URL"],
+            changeOrigin: true,
+            ws: true,
+            pathRewrite: {
+                ['^' + obj[key]]: ''
             }
-        
-        
+        }
     }
 }
 
@@ -64,7 +62,7 @@ module.exports = {
         disableHostCheck: true,
         // proxy: 'http://localhost:6666', //这会告诉开发服务器将任何未知请求 (没有匹配到静态文件的请求) 代理到http://localhost:6666
         // 如果你想要更多的代理控制行为，也可以使用一个 path: options 成对的对象。 
-        proxy:proxyObj
+        proxy: proxyObj
         // proxy: {
         //     // '/keyguard': {
         //     //     target: 'http://172.30.248.74:2001/keyguard/v1', //对应自己的接口
@@ -120,7 +118,7 @@ module.exports = {
             }
         }
     },
-    chainWebpack(config) {
+    chainWebpack (config) {
         config.plugins.delete('preload') // TODO: need test
         config.plugins.delete('prefetch') // TODO: need test
 
