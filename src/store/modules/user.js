@@ -241,7 +241,8 @@ const actions = {
         })
     },
     //修改用户信息
-    ChangeUserInfo (userDTO) {
+    ChangeUserInfo ({ commit }, userDTO) {
+        console.log(commit)
         return new Promise((resolve, reject) => {
             changeUserInfo(userDTO).then(res => {
                 resolve(res)

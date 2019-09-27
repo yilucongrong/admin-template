@@ -248,14 +248,13 @@
 import * as api from "@/api/system/role";
 import Pagination from "@/components/Pagination";
 import { loadtreeDates, loadtreeDate } from "@/utils/treeDate";
-import { getRecord as getGict } from "@/api/data-base/dict";
 import { mapState } from "vuex";
 import { selectDatas } from "@/api/system/menu";
 import { codeToName } from "@/utils/codeToName";
 export default {
     name: "jsgl",
     components: { Pagination },
-    data() {
+    data () {
         return {
             data1: [],
             defaultProps: {
@@ -343,18 +342,18 @@ export default {
             }
         };
     },
-    created() {},
+    created () { },
     computed: {
         ...mapState({
             dt_role_type: state => state.dict.dt_role_type
         })
     },
-    mounted() {
+    mounted () {
         this.$store.dispatch("dict/getDicData", ["dt_role_type"]);
         this.getList();
     },
     methods: {
-        getList() {
+        getList () {
             api.selectrole(this.listQuery).then(response => {
                 let options = [this.dt_role_type];
                 response.data = codeToName(response.data, options, [
@@ -368,49 +367,50 @@ export default {
                 }, 1.5 * 100);
             });
         },
-        handleCheckChange() {
+        handleCheckChange () {
             return this.$refs.tree
                 .getCheckedNodes()
                 .concat(this.$refs.tree.getHalfCheckedNodes()); //获取选中和半选中状态下的数据
         },
-        getList1() {
+        getList1 () {
             api.authorizationRecord(this.selectedrow.roleCode).then(res => {
                 this.list2 = res.data;
                 this.total = res.data.pages.count;
             });
         },
 
-        handleQuery() {
+        handleQuery () {
             this.listQuery.currentPage = 1;
             this.getList();
         },
-        handleSizeChange(val) {
+        handleSizeChange (val) {
             this.listQuery.pageSize = val;
             this.getList();
         },
-        handleCurrentChange(val) {
+        handleCurrentChange (val) {
             this.listQuery.currentPage = val;
             this.getList();
         },
-        handleCreate() {
+        handleCreate () {
             //新增按钮单击事件方法
             this.resetTemp();
             this.dialogStatus = "create";
             this.dialogFormVisible = true;
         },
-        handleCreate1() {
+        handleCreate1 () {
             //功能授权按钮单击事件方法
             if (this.selectedrow && this.selectedrow.length == 1) {
                 this.listQuery2.roleCodes = this.selectedrow[0].roleCode;
                 let dd = [];
                 selectDatas(this.listQuery2).then(res => {
-                    this.checkeddatas = loadtreeDate(res.data).filter(function(
+                    this.checkeddatas = loadtreeDate(res.data).filter(function (
                         items
                     ) {
                         //默认选中项,解决多层级父节点半选中问题
                         if (items.children) {
-                            function getSelectTree(v) {
-                                v.filter(function(em) {
+
+                            let getSelectTree = function (v) {
+                                v.filter(function (em) {
                                     if (em.children) {
                                         getSelectTree(em.children);
                                     } else {
@@ -418,6 +418,7 @@ export default {
                                     }
                                 });
                             }
+
                             getSelectTree(items.children);
                         }
                         return dd;
@@ -438,7 +439,7 @@ export default {
             }
         },
         // 获取表格选中时的数据
-        selected(val) {
+        selected (val) {
             if (val.length > 1) {
                 this.$refs.tb_a.clearSelection(); //清除其他行的选中
                 this.$refs.tb_a.toggleRowSelection(
@@ -449,14 +450,14 @@ export default {
                 this.selectedrow = val;
             }
         },
-        rowClick(val) {
+        rowClick (val) {
             this.$refs.tb_a.clearSelection(); //清除其他行的选中
             this.$refs.tb_a.toggleRowSelection(val); //单击行绑定点击事件
         },
-        selected1(val) {
+        selected1 (val) {
             this.selectedrow1 = val;
         },
-        handleCreate2() {
+        handleCreate2 () {
             //授权用户按钮单击事件方法
             if (this.selectedrow && this.selectedrow.length == 1) {
                 this.dialogFormVisible2 = true;
@@ -474,7 +475,7 @@ export default {
                 });
             }
         },
-        handleUpdate() {
+        handleUpdate () {
             //编辑按钮单击事件方法
             if (this.selectedrow && this.selectedrow.length == 1) {
                 this.roleCode = this.selectedrow[0].roleCode;
@@ -491,7 +492,7 @@ export default {
                 });
             }
         },
-        handleDelete() {
+        handleDelete () {
             //表格删除按钮单击事件方法
             if (this.selectedrow && this.selectedrow.length == 1) {
                 let codes = [];
@@ -506,7 +507,7 @@ export default {
             }
         },
         //删除用户授权
-        handleDelete1() {
+        handleDelete1 () {
             let userNames = [];
             this.selectedrow1.forEach(item => {
                 userNames.push(item.userName);
@@ -515,7 +516,7 @@ export default {
                 methods: "USER",
                 userNames: userNames
             };
-            api.addMenu(this.selectedrow[0].roleCode, data).then(response => {
+            api.addMenu(this.selectedrow[0].roleCode, data).then(() => {
                 this.handleCreate2();
                 this.$notify({
                     title: "成功",
@@ -525,13 +526,13 @@ export default {
                 });
             });
         },
-        deleteUsers(codes) {
+        deleteUsers (codes) {
             this.$confirm("此操作将永久删除记录, 是否继续?", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
             }).then(() => {
-                api.deleteUser(codes).then(res => {
+                api.deleteUser(codes).then(() => {
                     this.handleCreate2();
                     this.$notify({
                         title: "成功",
@@ -542,13 +543,13 @@ export default {
                 });
             });
         },
-        delete(codes) {
+        delete (codes) {
             this.$confirm("此操作将永久删除记录, 是否继续?", "提示", {
                 confirmButtonText: "确定",
                 cancelButtonText: "取消",
                 type: "warning"
             }).then(() => {
-                api.deleteRecord(codes).then(res => {
+                api.deleteRecord(codes).then(() => {
                     this.getList();
                     this.$notify({
                         title: "成功",
@@ -559,11 +560,11 @@ export default {
                 });
             });
         },
-        create() {
+        create () {
             //新增弹窗确定按钮单击事件方法
             this.$refs.temp.validate(valid => {
                 if (valid) {
-                    api.addRecord(this.temp).then(res => {
+                    api.addRecord(this.temp).then(() => {
                         this.getList();
                         this.dialogFormVisible = false;
                         this.$notify({
@@ -578,18 +579,16 @@ export default {
                 }
             });
         },
-        create1() {
+        create1 () {
             //功能授权弹窗确定按钮单击事件方法
-            let catalogs = this.handleCheckChange().map(function(
-                item,
-                index,
-                array
+            let catalogs = this.handleCheckChange().map(function (
+                item
             ) {
                 return item.catalogCode;
             });
             api.addMenu(this.selectedrow[0].roleCode, {
                 catalogCodes: catalogs
-            }).then(res => {
+            }).then(() => {
                 this.$notify({
                     title: "成功",
                     message: "授权成功",
@@ -602,15 +601,15 @@ export default {
 
             this.dialogFormVisible1 = false;
         },
-        create2() {
+        create2 () {
             //授权用户弹窗确定按钮单击事件方法
             this.dialogFormVisible2 = false;
         },
-        update() {
+        update () {
             //编辑弹窗确定按钮单击事件方法
             this.$refs.temp.validate(valid => {
                 if (valid) {
-                    api.updateRecord(this.roleCode, this.temp).then(res => {
+                    api.updateRecord(this.roleCode, this.temp).then(() => {
                         this.getList();
                         this.dialogFormVisible = false;
                         this.$notify({
@@ -626,12 +625,12 @@ export default {
                 }
             });
         },
-        cancel() {
+        cancel () {
             this.dialogFormVisible = false;
             this.dialogFormVisible1 = false;
             this.dialogFormVisible2 = false;
         },
-        resetTemp() {
+        resetTemp () {
             this.temp = {
                 roleCode: undefined,
                 roleName: undefined,
@@ -639,11 +638,11 @@ export default {
                 remark: undefined
             };
         },
-        handleClose() {
+        handleClose () {
             this.resetTemp();
             // this.$refs.temp.resetFields()
         },
-        handleSelectionChange(selection) {
+        handleSelectionChange (selection) {
             this.selectCode = selection.map(v => v.roleCode);
         }
     }

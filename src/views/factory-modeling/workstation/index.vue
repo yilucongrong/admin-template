@@ -19,12 +19,12 @@
         </el-col>
         <el-col :span="21">
             <right-content @fresh="handleFresh"
-                           ref="uploadRef"></right-content>
+                           ref="uploadRef">
+            </right-content>
         </el-col>
     </el-row>
 </template>
 <script>
-import Pagination from "@/components/Pagination"; // Secondary package based on el-pagination
 import RightContent from "./rightcontent";
 import { buildTree } from "@/utils";
 import { selectlists as listOrg } from "@/api/system/organization";
@@ -34,7 +34,7 @@ import orgSelect from "@/components/Select/orgSelect.vue";
 export default {
     name: "gw",
     components: { RightContent, orgSelect },
-    data() {
+    data () {
         return {
             data: [],
             defaultProps: {
@@ -48,13 +48,13 @@ export default {
             DT_ORG_TYPE: "dt_org_type_factory"
         };
     },
-    created() {
+    created () {
         window.addEventListener("resize", this.getHeight);
         this.getHeight();
         this.initTree();
     },
     methods: {
-        initTree() {
+        initTree () {
             const orgQuery = {
                 type: this.DT_ORG_TYPE,
                 organizationCode: this.orgCode,
@@ -92,25 +92,25 @@ export default {
                 });
             });
         },
-        handleFresh(val) {
+        handleFresh (val) {
             if (val) {
                 this.initTree();
             }
         },
-        handleChange(val) {
+        handleChange (val) {
             this.orgCode = val;
             this.initTree();
             this.$refs.uploadRef.list = [];
         },
-        handleNodeClick(data) {
+        handleNodeClick (data) {
             this.$refs.uploadRef.getList(data);
         },
-        getHeight() {
+        getHeight () {
             this.contentStyleObj.height =
                 document.body.scrollHeight - 197 + "px";
         }
     },
-    destroyed() {
+    destroyed () {
         window.removeEventListener("resize", this.getHeight);
     }
 };
