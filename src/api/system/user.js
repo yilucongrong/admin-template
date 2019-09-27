@@ -61,7 +61,6 @@ export function relation (userName, query) {//查询关联的角色记录 query.
     })
 }
 export function changeUserInfo (userDTO) {//修改用户信息
-    console.log(userDTO, 22222)
     return request({
         url: `/keyguard/users/info`,
         method: 'patch',
