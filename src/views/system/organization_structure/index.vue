@@ -326,12 +326,9 @@
 </template>
 <script>
 import Pagination from "@/components/Pagination"; // Secondary package based on el-pagination
-import axios from "axios";
-import { stateFilter, organizationFilter, organizationTypes } from "@/filters";
 import {
     selectlists,
     creat,
-    selectlist,
     deletelist,
     updatalist,
     selecttree
@@ -344,7 +341,7 @@ import { codeToName } from "@/utils/codeToName";
 export default {
     name: "zzjg",
     components: { Pagination },
-    data() {
+    data () {
         return {
             treeData: [],
             defaultProps: {
@@ -441,7 +438,7 @@ export default {
             dt_org_function: state => state.dict.dt_org_function
         })
     },
-    mounted() {
+    mounted () {
         this.$store.dispatch("dict/getDicData", [
             "dt_org_type",
             "dt_org_function"
@@ -450,14 +447,14 @@ export default {
         this.getHeight();
     },
     methods: {
-        treeGetList() {
+        treeGetList () {
             //点击树查询
             selectlists(this.listQuery).then(response => {
                 this.list = response.data.list;
                 this.total = response.data.pages.count;
             });
         },
-        getList() {
+        getList () {
             //查询组织列表
             setTimeout(() => {
                 selectlists(this.listQuery).then(response => {
@@ -472,16 +469,13 @@ export default {
                     selecttree().then(response => {
                         //获取树数据
                         this.treeData = loadtreeDates(response.data);
-                        this.orgName = response.data.map(function(
-                            itmes,
-                            index
-                        ) {
+                        this.orgName = response.data.map(function (itmes) {
                             return [itmes.rowId, itmes.organizationName];
                         });
                     });
             }, 1.5 * 100);
         },
-        handleFilter() {
+        handleFilter () {
             //查询
             this.listQuery.page = 1;
 
@@ -494,14 +488,14 @@ export default {
                 this.list = response.data.list;
             });
         },
-        resetTemp() {
+        resetTemp () {
             //重置temp
             this.temp = {
                 state: 1,
                 parentId: this.temp.parentId
             };
         },
-        filertOrgName(val) {
+        filertOrgName (val) {
             for (let i = 0; i < this.orgName.length; i++) {
                 if (this.orgName[i][0] == val) {
                     return this.orgName[i][1];
@@ -511,7 +505,7 @@ export default {
                 }
             }
         },
-        handleCreate() {
+        handleCreate () {
             //新增弹窗调用
             if (this.temp.parentId || this.temp.parentId == 0) {
                 this.resetTemp();
@@ -528,7 +522,7 @@ export default {
                 });
             }
         },
-        createData() {
+        createData () {
             //新增
             this.$refs["dataForm"].validate(valid => {
                 if (valid) {
@@ -545,7 +539,7 @@ export default {
                 }
             });
         },
-        handleUpdate() {
+        handleUpdate () {
             if (this.selectlistRow && this.selectlistRow.length == 1) {
                 this.temp = this.selectlistRow[0]; // copy obj
                 this.dialogStatus = "update";
@@ -561,7 +555,7 @@ export default {
                 });
             }
         },
-        updateData() {
+        updateData () {
             this.$refs["dataForm"].validate(valid => {
                 if (valid) {
                     updatalist(this.temp.organizationCode, this.temp).then(
@@ -580,7 +574,7 @@ export default {
             });
         },
         // 获取表格选中时的数据
-        selectRow(val) {
+        selectRow (val) {
             if (val.length > 1) {
                 this.$refs.tb_a.clearSelection(); //清除其他行的选中
                 this.$refs.tb_a.toggleRowSelection(
@@ -591,11 +585,11 @@ export default {
                 this.selectlistRow = val;
             }
         },
-        rowClick(val) {
+        rowClick (val) {
             this.$refs.tb_a.clearSelection(); //清除其他行的选中
             this.$refs.tb_a.toggleRowSelection(val); //单击行绑定点击事件
         },
-        handleDelete() {
+        handleDelete () {
             //删除列表
             if (this.selectlistRow && this.selectlistRow.length == 1) {
                 this.$confirm("此操作将删除所选中数据, 是否继续?", "提示", {
@@ -609,7 +603,7 @@ export default {
                         this.selectlistRow.forEach((val, index) => {
                             ids[index] = val.organizationCode;
                         });
-                        deletelist(ids).then(response => {
+                        deletelist(ids).then(() => {
                             this.getList(),
                                 this.$message({
                                     title: "成功",
@@ -633,7 +627,7 @@ export default {
                 });
             }
         },
-        handleDownload() {
+        handleDownload () {
             this.downloadLoading = true;
             import("@/vendor/Export2Excel").then(excel => {
                 const tHeader = [
@@ -673,7 +667,7 @@ export default {
                 this.downloadLoading = false;
             });
         },
-        formatJson(filterVal, jsonData) {
+        formatJson (filterVal, jsonData) {
             return jsonData.map(v =>
                 filterVal.map(j => {
                     if (j === "timestamp") {
@@ -684,11 +678,11 @@ export default {
                 })
             );
         },
-        getHeight() {
+        getHeight () {
             this.contentStyleObj.height =
                 document.body.scrollHeight - 110 + "px";
         },
-        handleNodeClick(data) {
+        handleNodeClick (data) {
             //点击树查询
             this.temp.parentId = data.rowId;
             this.listQuery.parentOrgCode = data.rowId;

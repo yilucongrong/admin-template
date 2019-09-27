@@ -177,10 +177,9 @@
 </template>
 <script>
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
-import { selectlists,authorizationfun,authorizationrole,selectuser,relation,unrelation } from '@/api/system/user'
-import { parseTime } from '@/utils'
+import { selectlists,authorizationrole,relation } from '@/api/system/user'
 import { selecttree} from '@/api/system/organization'
-import { selectrole,addMenu,selectRecord} from '@/api/system/role'
+import { selectrole} from '@/api/system/role'
 import { loadtreeDates} from '@/utils/treeDate'
 import {getDomainName} from '@/utils/auth'
 import {mapState} from 'vuex'
@@ -248,9 +247,9 @@ export default {
           children: 'children',
           label: 'catalogName'
         },
-        contentStyleObj:{
-　　　　　　height:''
-　　　　}
+        contentStyleObj: {
+                height: null,
+        },
       };
     },
     computed:{
@@ -324,7 +323,7 @@ export default {
               this.total1 = response.data.pages.count
             })
         },
-        handleTabClick(tab, event){//选项卡切换
+        handleTabClick(tab){//选项卡切换
           if(tab.name=="first"){
             this.getListUnelation()
           }else{
@@ -383,7 +382,7 @@ export default {
             for(let i=0;i<this.selectlistRowUser1.length;i++){
                 roleCodes[i]=this.selectlistRowUser1[i].roleCode
             }
-            authorizationrole(this.selectlistRow[0].userName,roleCodes,fun).then(response =>{
+            authorizationrole(this.selectlistRow[0].userName,roleCodes,fun).then(() =>{
                   this.getListRelation()
             })
             this.dialogFormUser = true
@@ -452,7 +451,7 @@ export default {
                 roleCodes[i]=this.selectlistRowUser[i].roleCode
             }
      
-            authorizationrole(this.selectlistRow[0].userName,roleCodes,fun).then(response =>{
+            authorizationrole(this.selectlistRow[0].userName,roleCodes,fun).then(() =>{
                   this.handleUser()
             })
             this.dialogFormUser = true
@@ -494,15 +493,6 @@ export default {
               let ids=[]
               this.selectlistRow.forEach((val,index) => {
                 ids[index]=val.employeeCode
-              })
-              deletelist(ids).then(response => {
-                this.getList(),
-                this.$message({
-                    title: '成功',
-                    message: '删除成功',
-                    type: 'success',
-                    duration: 2000
-                  })
               })
             }else{
               this.$message({

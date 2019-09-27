@@ -238,7 +238,7 @@ import { mapState } from "vuex";
 export default {
     name: "gyszsj",
     components: { Pagination },
-    data() {
+    data () {
         return {
             list: null,
             total: 0,
@@ -315,7 +315,7 @@ export default {
             dt_materiel_classify: state => state.dict.dt_materiel_classify
         })
     },
-    mounted() {
+    mounted () {
         this.$store.dispatch("dict/getDicData", [
             "dt_supplier_type",
             "dt_supplier_level",
@@ -324,30 +324,30 @@ export default {
         this.getList();
     },
     methods: {
-        getList() {
+        getList () {
             api.queryRecords(this.listQuery).then(res => {
                 this.list = res.data.list;
                 this.total = res.data.pages.count;
             });
         },
-        handleQuery() {
+        handleQuery () {
             this.listQuery.currentPage = 1;
             this.getList();
         },
-        handleSizeChange(val) {
+        handleSizeChange (val) {
             this.listQuery.pageSize = val;
             this.getList();
         },
-        handleCurrentChange(val) {
+        handleCurrentChange (val) {
             this.listQuery.currentPage = val;
             this.getList();
         },
-        handleCreate() {
+        handleCreate () {
             this.resetTemp();
             this.dialogStatus = "create";
             this.dialogFormVisible = true;
         },
-        selectRow(val) {
+        selectRow (val) {
             if (val.length > 1) {
                 this.$refs.tb_a.clearSelection(); //清除其他行的选中
                 this.$refs.tb_a.toggleRowSelection(
@@ -358,11 +358,11 @@ export default {
                 this.selectlistRow = val;
             }
         },
-        rowClick(val) {
+        rowClick (val) {
             this.$refs.tb_a.clearSelection(); //清除其他行的选中
             this.$refs.tb_a.toggleRowSelection(val); //单击行绑定点击事件
         },
-        handleUpdate() {
+        handleUpdate () {
             if (this.selectlistRow && this.selectlistRow.length == 1) {
                 this.readonly = true; //组织编码不可以编写
                 this.temp = this.selectlistRow[0]; // copy obj
@@ -383,7 +383,7 @@ export default {
                 });
             }
         },
-        update() {
+        update () {
             this.$refs["temp"].validate(valid => {
                 if (valid) {
                     api.updateRecord(this.temp.supplierCode, this.temp).then(
@@ -401,7 +401,7 @@ export default {
                 }
             });
         },
-        handleDelete() {
+        handleDelete () {
             //删除列表
             if (this.selectlistRow && this.selectlistRow.length == 1) {
                 this.$confirm("此操作将删除所选中数据, 是否继续?", "提示", {
@@ -414,7 +414,7 @@ export default {
                         this.selectlistRow.forEach((val, index) => {
                             ids[index] = val.supplierCode;
                         });
-                        api.deleteRecord(ids).then(response => {
+                        api.deleteRecord(ids).then(() => {
                             this.getList(),
                                 this.$message({
                                     title: "成功",
@@ -438,10 +438,10 @@ export default {
                 });
             }
         },
-        create() {
+        create () {
             this.$refs.temp.validate(valid => {
                 if (valid) {
-                    api.addRecord(this.temp).then(res => {
+                    api.addRecord(this.temp).then(() => {
                         this.getList();
                         this.dialogFormVisible = false;
                         this.$notify({
@@ -456,7 +456,7 @@ export default {
                 }
             });
         },
-        resetTemp() {
+        resetTemp () {
             this.temp = {
                 supplierCode: undefined,
                 supplierName: undefined,
@@ -470,7 +470,7 @@ export default {
                 remark: undefined
             };
         },
-        handleClose() {
+        handleClose () {
             this.resetTemp();
             this.$refs.temp.resetFields();
         }

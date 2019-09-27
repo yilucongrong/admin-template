@@ -39,7 +39,7 @@ module.exports = {
     // 放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录
     assetsDir: 'static',
     // lintOnSave: process.env.NODE_ENV === 'development',
-    lintOnSave: false,//关闭eslint检查
+    lintOnSave: true,//关闭eslint检查
     // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建
     // productionSourceMap: process.env.NODE_ENV === 'development',
     // 在vue cli3.0版本，新建vue.config.js文件在其中配置  css:{ sourceMap: true }老版本：设置 cssSourceMap:true

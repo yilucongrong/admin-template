@@ -144,7 +144,7 @@ export default {
     computed: {
         ...mapGetters(["name", "domainName", "token", "addRouters", "passWord"])
     },
-    data() {
+    data () {
         return {
             warningData: [
                 { id: 1, value: "安全库存预警", color: "red" },
@@ -167,7 +167,7 @@ export default {
             ]
         };
     },
-    created() {},
+    created () { },
     methods: {}
 };
 </script>
