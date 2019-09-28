@@ -117,7 +117,6 @@ export default {
             };
             let dd = await this.$store.dispatch("user/ChangeUserInfo", userDTO);
             console.log(dd)
-
             $message.close();
         }
     },

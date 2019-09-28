@@ -15,9 +15,7 @@
                     <div class="main-header">
                         <div class="select-content">
                             <el-input size="small"
-                                      :placeholder="
-                                    $t('employeesManagement.employeeCode')
-                                "
+                                      :placeholder="$t('employeesManagement.employeeCode')"
                                       v-model="listQuery.employeeCode"
                                       class="filter-item"
                                       @keyup.enter.native="handleFilter" />
@@ -57,9 +55,7 @@
                                        class="filter-item"
                                        type="primary"
                                        icon="el-icon-edit-outline"
-                                       @click="handleUser">{{
-                                    $t("employeesManagement.userMaintain")
-                                }}</el-button>
+                                       @click="handleUser">{{$t("employeesManagement.userMaintain")}}</el-button>
                         </div>
                         <el-table v-loading="listLoading"
                                   :key="tableKey"
@@ -95,15 +91,11 @@
                                 </template>
                             </el-table-column>
                             <el-table-column show-overflow-tooltip
-                                             :label="
-                                    $t('employeesManagement.organizationId')
-                                "
+                                             :label="$t('employeesManagement.organizationId')"
                                              min-width="80">
                                 <template slot-scope="scope">
                                     <!-- <span>{{ scope.row.organizationId }}</span> -->
-                                    <span>{{
-                                        filertOrgName(scope.row.organizationId)
-                                    }}</span>
+                                    <span>{{filertOrgName(scope.row.organizationId)}}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column show-overflow-tooltip
@@ -141,9 +133,7 @@
                                              :label="$t('employeesManagement.state')"
                                              width="80">
                                 <template slot-scope="scope">
-                                    <span>{{
-                                        scope.row.state?'启用':'停止'
-                                    }}</span>
+                                    <span>{{scope.row.state?'启用':'停止'}}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column show-overflow-tooltip
@@ -465,7 +455,6 @@ import {
     selectuser,
     deleteuser
 } from "@/api/system/employees";
-
 
 import { selecttree } from "@/api/system/organization";
 import { loadtreeDates } from "@/utils/treeDate";
