@@ -41,7 +41,7 @@ export default {
         prop: "warehouseCode",
         event: "change"
     },
-    data() {
+    data () {
         return {
             options: [],
             selectValue: this.warehouseCode
@@ -49,13 +49,13 @@ export default {
     },
     watch: {
         warehouseCode: {
-            handler: function(val, oldVal) {
+            handler: function () {
                 this.selectValue = this.warehouseCode;
             },
             immediate: true
         },
         orgCode: {
-            handler: function(val, oldVal) {
+            handler: function (val, oldVal) {
                 if (val) {
                     this.getOptions();
                 } else {
@@ -70,7 +70,7 @@ export default {
         }
     },
     methods: {
-        getOptions() {
+        getOptions () {
             return request({
                 url: "/iwms/warehouses",
                 method: "get",
@@ -81,12 +81,12 @@ export default {
                 this.options = res;
             });
         },
-        changeSelect(val) {
+        changeSelect (val) {
             this.$emit("change", val);
             let name = "";
             let org = this.options
                 .filter(v => v.warehouseCode == val)
-                .find((value, index, arr) => value);
+                .find((value) => value);
             if (org) {
                 name = org.warehouseName;
             }
