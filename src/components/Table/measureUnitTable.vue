@@ -82,7 +82,7 @@ import { DICT_CODE, TWO_STATE_OPTIONS } from "@/utils/constant";
 export default {
     name: "measure-unit-table",
     components: { dictItemSelect },
-    data() {
+    data () {
         return {
             list: null,
             listQuery: {
@@ -96,16 +96,16 @@ export default {
             TWO_STATE_OPTIONS: TWO_STATE_OPTIONS
         };
     },
-    created() {
+    created () {
         this.handleQuery();
     },
     methods: {
-        handleQuery() {
+        handleQuery () {
             queryRecords(this.listQuery).then(res => {
                 this.list = res;
             });
         },
-        handleDblclick(row, event) {
+        handleDblclick (row) {
             this.$emit("dblclick", row);
         }
     }

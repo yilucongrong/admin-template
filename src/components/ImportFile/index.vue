@@ -61,13 +61,13 @@
 <script>
 import * as importApi from "@/api/import/index";
 import Pagination from "@/components/Pagination";
-import orgSelect from "@/components/Select/orgSelect.vue";
+
 
 export default {
     name: "Customer",
-    components: { Pagination, orgSelect },
+    components: { Pagination },
     props: ["modalNo"], //导入弹框名称,模板号
-    data() {
+    data () {
         return {
             listData: {},
             listQuery: {
@@ -80,16 +80,16 @@ export default {
             uploadurl: ""
         };
     },
-    mounted() {},
+    mounted () { },
     computed: {
-        myHeader() {
+        myHeader () {
             return {
                 authToken: window.sessionStorage.getItem("authToken")
             };
         }
     },
     methods: {
-        getList() {
+        getList () {
             this.listData = {
                 title: [
                     { id: 0, name: "行号", prop: "rowId" },
@@ -110,11 +110,11 @@ export default {
                 ]
             };
         },
-        fileExceed(files, fileList) {
+        fileExceed (files, fileList) {
             console.log(files, fileList, "fileExceed");
             this.$message.error("一次只能上传一个文件");
         },
-        beforeUpload(file) {
+        beforeUpload (file) {
             this.files = file;
             const extension = file.name.split(".")[1] === "xls";
             const extension2 = file.name.split(".")[1] === "xlsx";
@@ -130,7 +130,7 @@ export default {
             this.fileName = file.name;
             return false; // 返回false不会自动上传
         },
-        submitUpload() {
+        submitUpload () {
             // this.uploadurl = process.env.IWMS_BASE_API_V1+`/excels/${this.modalNo}/template`
             // this.$refs.upload.submit();
             console.log(this.fileList[0]);
@@ -144,30 +144,30 @@ export default {
             importApi.uploadExcel(this.modalNo, this.fileList[0]);
         },
         // 自定义上传
-        uploadFile(item) {
+        uploadFile (item) {
             const form = new FormData();
             form.append("file", item.file);
-            importApi.uploadExcel(this.modalNo, fileFormData).then(res => {
+            importApi.uploadExcel(this.modalNo).then(res => {
                 console.log(res);
             });
         },
-        handleRemove(file, fileList) {
+        handleRemove (file, fileList) {
             console.log(file, fileList);
             this.fileList = fileList;
         },
-        handleChangeFile(file, fileList) {
+        handleChangeFile (file, fileList) {
             console.log(file, fileList);
             this.fileList = fileList;
         },
         //模板下载
-        handleDownload() {
+        handleDownload () {
             importApi.downloadModal(this.modalNo).then(res => {
                 console.log(1111, res);
                 this.download(res, "excel.xlsx");
             });
         },
         // 下载文件
-        download(data, filename) {
+        download (data, filename) {
             if (!data) {
                 return;
             }
@@ -181,7 +181,7 @@ export default {
             link.click();
         },
         //excel文件导出
-        handleExport() {
+        handleExport () {
             importApi.downloadExcel(this.modalNo, {}).then(res => {
                 console.log(res);
                 // let filename = decodeURI(res.headers['content-disposition'].split(';')[1].split('=')[1]) || 'excel.xlsx'

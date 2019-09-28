@@ -72,7 +72,7 @@ export default {
             let name = "";
             let org = this.options
                 .filter(v => v.organizationCode == val)
-                .find((value, index, arr) => value);
+                .find((value) => value);
             if (org) {
                 name = org.organizationName;
             }
