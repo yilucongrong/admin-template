@@ -9,12 +9,10 @@
         <el-option v-for="item in options"
                    :key="item.dictItemKey"
                    :label="item.dictItemValue"
-                   :value="item.dictItemKey">
-        </el-option>
+                   :value="item.dictItemKey"></el-option>
     </el-select>
 </template>
 <script>
-import { mapState } from "vuex";
 export default {
     name: "dictSelect",
     props: {
@@ -28,44 +26,48 @@ export default {
         },
         placeholder: {
             type: String,
-            default: "请选择"
+            default: "请选择",
         },
         dictItemKey: {
             type: String,
-            default: ""
+            default: "",
         }
     },
     computed: {
-        options() {
-            this.itemKey = undefined; //每次变化，先清空文本框数据
-            return this.$store.state.dict[this.selectType];
+        options () {
+            this.itemKey = null; //每次变化，先清空文本框数据
+            return this.$store.state.dict[this.selectType]
         }
     },
     model: {
         prop: "dictItemKey",
-        event: "change"
+        event: "change",
     },
     watch: {
-        dictItemKey() {
+        dictItemKey () {
             this.itemKey = this.dictItemKey;
+
         }
     },
-    mounted() {
-        this.$store.dispatch("dict/getDicData", [this.selectType]);
+    mounted () {
+        this.$store.dispatch("dict/getDicData", [this.selectType])
     },
-    data() {
+    data () {
         return {
             itemKey: this.dictItemKey
         };
+
     },
     methods: {
-        changeSelect(val) {
-            this.$emit("change", val);
+        changeSelect (val) {
+            this.$emit("change", val)
+
+
             let selectRow = this.options
                 .filter(v => v.dictItemKey == val)
-                .find((value, index, arr) => value);
+                .find((value) => value)
             this.$emit("getSelectRow", selectRow);
-            this.$emit("getSelectName", selectRow.dictItemValue);
+            this.$emit("getSelectName", selectRow.dictItemValue)
         }
     }
 };
