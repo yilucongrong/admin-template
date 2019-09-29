@@ -20,26 +20,26 @@
 import { getUserAvatar, userAvatar } from "@/api/system/user";
 export default {
     computed: {
-        myHeader() {
+        myHeader () {
             return {
                 authToken: window.sessionStorage.getItem("authToken")
             };
         }
     },
-    created() {
+    created () {
         this.handleAvatarSuccess();
     },
-    data() {
+    data () {
         return {
             imageUrl: null
         };
     },
     methods: {
-        upLoad(file) {
+        upLoad (file) {
             const formData = new FormData();
             formData.append("file", file.file);
             userAvatar(formData)
-                .then(res => {
+                .then(() => {
                     // console.log("上传图片接口-数据", res);
                     this.handleAvatarSuccess();
                 })
@@ -48,7 +48,7 @@ export default {
                     console.log("报错", err);
                 });
         },
-        handleAvatarSuccess() {
+        handleAvatarSuccess () {
             getUserAvatar()
                 .then(res => {
                     //获取用户头像信息
@@ -67,7 +67,7 @@ export default {
                     this.imageUrl = data || "";
                 });
         },
-        beforeAvatarUpload(file) {
+        beforeAvatarUpload (file) {
             console.log(file.type);
             const isJPG = file.type === "image/jpeg";
             const isPNG = file.type === "image/png";
