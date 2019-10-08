@@ -2,7 +2,7 @@
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
 
-function resolve (dir) {
+function resolve(dir) {
     return path.join(__dirname, dir)
 }
 
@@ -12,12 +12,12 @@ const name = defaultSettings.title || 'DTGD MES' // page title
 // For example, Mac: sudo npm run
 const port = 7953 // 端口号
 // 生成代理配置对象
-let proxyObj = {};
+let proxyObj = {}
 let obj = process.env
 for (let key in obj) {
-    if (obj[key + "_URL"]) {
+    if (obj[key + '_URL']) {
         proxyObj[obj[key]] = {
-            target: obj[key + "_URL"],
+            target: obj[key + '_URL'],
             changeOrigin: true,
             ws: true,
             pathRewrite: {
@@ -39,7 +39,7 @@ module.exports = {
     // 放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录
     assetsDir: 'static',
     // lintOnSave: process.env.NODE_ENV === 'development',
-    lintOnSave: true,//关闭eslint检查
+    lintOnSave: true, //关闭eslint检查
     // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建
     // productionSourceMap: process.env.NODE_ENV === 'development',
     // 在vue cli3.0版本，新建vue.config.js文件在其中配置  css:{ sourceMap: true }老版本：设置 cssSourceMap:true
@@ -54,14 +54,14 @@ module.exports = {
         //端口号
         port: port,
         //启动时是否自动默认浏览器
-        // open: true,
+        open: true,
         overlay: {
             warnings: false,
             errors: true
         },
         disableHostCheck: true,
         // proxy: 'http://localhost:6666', //这会告诉开发服务器将任何未知请求 (没有匹配到静态文件的请求) 代理到http://localhost:6666
-        // 如果你想要更多的代理控制行为，也可以使用一个 path: options 成对的对象。 
+        // 如果你想要更多的代理控制行为，也可以使用一个 path: options 成对的对象。
         proxy: proxyObj
         // proxy: {
         //     // '/keyguard': {
@@ -118,7 +118,7 @@ module.exports = {
             }
         }
     },
-    chainWebpack (config) {
+    chainWebpack(config) {
         config.plugins.delete('preload') // TODO: need test
         config.plugins.delete('prefetch') // TODO: need test
 
@@ -152,48 +152,46 @@ module.exports = {
 
         config
             // https://webpack.js.org/configuration/devtool/#development
-            .when(process.env.NODE_ENV === 'development',
-                config => config.devtool('cheap-source-map')
+            .when(process.env.NODE_ENV === 'development', config =>
+                config.devtool('cheap-source-map')
             )
 
-        config
-            .when(process.env.NODE_ENV !== 'development',
-                config => {
-                    config
-                        .plugin('ScriptExtHtmlWebpackPlugin')
-                        .after('html')
-                        .use('script-ext-html-webpack-plugin', [{
-                            // `runtime` must same as runtimeChunk name. default is `runtime`
-                            inline: /runtime\..*\.js$/
-                        }])
-                        .end()
-                    config
-                        .optimization.splitChunks({
-                            chunks: 'all',
-                            cacheGroups: {
-                                libs: {
-                                    name: 'chunk-libs',
-                                    test: /[\\/]node_modules[\\/]/,
-                                    priority: 10,
-                                    chunks: 'initial' // only package third parties that are initially dependent
-                                },
-                                elementUI: {
-                                    name: 'chunk-elementUI', // split elementUI into a single package
-                                    priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
-                                    test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
-                                },
-                                commons: {
-                                    name: 'chunk-commons',
-                                    test: resolve('src/components'), // can customize your rules
-                                    minChunks: 3, //  minimum common number
-                                    priority: 5,
-                                    reuseExistingChunk: true
-                                }
-                            }
-                        })
-                    config.optimization.runtimeChunk('single')
+        config.when(process.env.NODE_ENV !== 'development', config => {
+            config
+                .plugin('ScriptExtHtmlWebpackPlugin')
+                .after('html')
+                .use('script-ext-html-webpack-plugin', [
+                    {
+                        // `runtime` must same as runtimeChunk name. default is `runtime`
+                        inline: /runtime\..*\.js$/
+                    }
+                ])
+                .end()
+            config.optimization.splitChunks({
+                chunks: 'all',
+                cacheGroups: {
+                    libs: {
+                        name: 'chunk-libs',
+                        test: /[\\/]node_modules[\\/]/,
+                        priority: 10,
+                        chunks: 'initial' // only package third parties that are initially dependent
+                    },
+                    elementUI: {
+                        name: 'chunk-elementUI', // split elementUI into a single package
+                        priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
+                        test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
+                    },
+                    commons: {
+                        name: 'chunk-commons',
+                        test: resolve('src/components'), // can customize your rules
+                        minChunks: 3, //  minimum common number
+                        priority: 5,
+                        reuseExistingChunk: true
+                    }
                 }
-            )
+            })
+            config.optimization.runtimeChunk('single')
+        })
     },
     //favicon.ico图标设置
     pwa: {
