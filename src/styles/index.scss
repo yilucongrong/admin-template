@@ -257,10 +257,21 @@ aside {
     }
 
     .el-table--small th {
+        font-size: 12px;
         padding: 6px 0;
     }
 
     .el-table--small td {
+        font-size: 12px;
+        padding: 2px 0;
+    }
+
+    .el-table th {
+        font-size: 12px;
+        padding: 6px 0;
+    }
+    .el-table td {
+        font-size: 12px;
         padding: 2px 0;
     }
 
@@ -268,6 +279,14 @@ aside {
     .el-table__fixed-body-wrapper .el-table__body {
         padding-bottom: 20px;
     }
+}
+
+.nofilter.table-container {
+    margin-top: 0px;
+}
+
+.left_col {
+    padding-right: 10px;
 }
 
 //表格分页样式
@@ -282,4 +301,8 @@ aside {
 }
 .el-pagination {
     text-align: right;
+}
+
+.no_b_border {
+    border-bottom: none !important;
 }

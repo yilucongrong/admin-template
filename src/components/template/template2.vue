@@ -25,7 +25,29 @@
                                       v-model="listQuery.organizationName"
                                       class="filter-item"
                                       @keyup.enter.native="handleFilter" />
-
+                            <el-select v-model="modalnum"
+                                       @change="changeMoudle"
+                                       size="small"
+                                       placeholder="选择模板">
+                                <el-option key=0
+                                           label="模板1(查+表)"
+                                           value=0></el-option>
+                                <el-option key=1
+                                           label="模板2(左树+查+表)"
+                                           value=1></el-option>
+                                <el-option key=2
+                                           label="模板3(左右表)"
+                                           value=2></el-option>
+                                <el-option key=3
+                                           label="模板4(查+上下表)"
+                                           value=3></el-option>
+                                <el-option key=4
+                                           label="模板5(tab+左右表)"
+                                           value=4></el-option>
+                                <el-option key=5
+                                           label="模板6(tab+上下表)"
+                                           value=5></el-option>
+                            </el-select>
                             <el-button class="filter-item-btn"
                                        type="primary"
                                        size="small"
@@ -321,6 +343,7 @@
     </div>
 </template>
 <script>
+import global_valfn from '@/utils/global_valfn'
 import Pagination from "@/components/Pagination"; // Secondary package based on el-pagination
 import {
     selectlists,
@@ -339,6 +362,7 @@ export default {
     components: { Pagination },
     data () {
         return {
+            modalnum: null,//模板编号
             theight: 0,
             treeData: [],
             defaultProps: {
@@ -444,17 +468,19 @@ export default {
         //表格高度自适应
         window.onresize = () => {
             this.setTableHeight();
-            this.getHeight();
+            this.setTreeHeight();
         };
         this.getList();
-        this.getHeight();
+        this.setTreeHeight();
     },
     methods: {
+        //模板变化
+        changeMoudle (val) {
+            this.$emit('changeSelect', val)
+        },
         //表格高度计算
         setTableHeight () {
-            let wh = document.body.offsetHeight;
-            let th = wh - 272;
-            this.theight = th;
+            this.theight = global_valfn.getSingleTbHeight();
         },
         treeGetList () {
             //点击树查询
@@ -687,9 +713,9 @@ export default {
                 })
             );
         },
-        getHeight () {
-            this.contentStyleObj.height =
-                document.body.offsetHeight - 105 + "px";
+        //树高度设置
+        setTreeHeight () {
+            this.contentStyleObj.height = global_valfn.getTreehHeight();
         },
         handleNodeClick (data) {
             //点击树查询
