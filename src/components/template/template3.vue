@@ -28,29 +28,7 @@
                     </div>
                     <div class="table-container">
                         <div class="oprate_btn">
-                            <el-select v-model="modalnum"
-                                       @change="changeMoudle"
-                                       size="small"
-                                       placeholder="选择模板">
-                                <el-option key=0
-                                           label="模板1(查+表)"
-                                           value=0></el-option>
-                                <el-option key=1
-                                           label="模板2(左树+查+表)"
-                                           value=1></el-option>
-                                <el-option key=2
-                                           label="模板3(左右表)"
-                                           value=2></el-option>
-                                <el-option key=3
-                                           label="模板4(查+上下表)"
-                                           value=3></el-option>
-                                <el-option key=4
-                                           label="模板5(tab+左右表)"
-                                           value=4></el-option>
-                                <el-option key=5
-                                           label="模板6(tab+上下表)"
-                                           value=5></el-option>
-                            </el-select>
+                            <changeModuleSelect @changeMoudle="changeMoudle"></changeModuleSelect>
                             <el-button class="filter-item"
                                        size="small"
                                        type="primary"
@@ -305,6 +283,7 @@
     </div>
 </template>
 <script>
+import changeModuleSelect from '@/components/template/changeMoudleSelect'
 import global_valfn from '@/utils/global_valfn'
 import * as api from "@/api/data-base/dict";
 import Pagination from "@/components/Pagination";
@@ -312,7 +291,7 @@ import { DICT_TYPE_OPTIONS } from "@/utils/constant";
 
 export default {
     name: "dict",
-    components: { Pagination },
+    components: { changeModuleSelect, Pagination },
     data () {
         return {
             modalnum: null,//模板编号

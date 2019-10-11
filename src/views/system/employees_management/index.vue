@@ -10,6 +10,8 @@
                v-if="showTemp[2]"></temp3>
         <temp4 @changeSelect="changeSelect"
                v-if="showTemp[3]"></temp4>
+        <temp5 @changeSelect="changeSelect"
+               v-if="showTemp[4]"></temp5>
     </div>
 </template>
 <script>
@@ -17,11 +19,12 @@ import temp1 from "@/components/template/template1"; // 查询+单表
 import temp2 from "@/components/template/template2"; // 查询+单表
 import temp3 from "@/components/template/template3"; // 查询+单表
 import temp4 from "@/components/template/template4"; // 查询+单表
+import temp5 from "@/components/template/template5"; // tab+ 上下表 左右表
 
 
 export default {
     name: 'template1',
-    components: { temp1, temp2, temp3, temp4 },
+    components: { temp1, temp2, temp3, temp4, temp5 },
     data () {
         return {
             showTemp: [1, 0, 0, 0, 0]

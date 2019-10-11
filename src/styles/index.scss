@@ -125,10 +125,6 @@ aside {
 }
 
 //main-container全局样式
-.app-container {
-    background: #f3f3f3;
-    margin: 10px 10px 0px 10px;
-}
 
 .text-center {
     text-align: center;
@@ -170,6 +166,22 @@ aside {
 }
 
 //新模板 样式
+
+.app-container {
+    background: #f3f3f3;
+    margin: 10px;
+
+    //日期输入框样式
+    .el-date-editor.el-input,
+    .el-date-editor.el-input__inner {
+        width: 165px;
+    }
+
+    .range_date {
+        width: 210px !important;
+    }
+}
+
 .filter-container {
     border: solid 1px $border-color;
     border-top: solid 5px $border-color;
@@ -275,6 +287,12 @@ aside {
         padding: 2px 0;
     }
 
+    //悬浮列底边样式
+    .el-table__fixed-right::before,
+    .el-table__fixed::before {
+        background-color: $border-color;
+    }
+
     //解决上下错位
     .el-table__fixed-body-wrapper .el-table__body {
         padding-bottom: 20px;
@@ -305,4 +323,84 @@ aside {
 
 .no_b_border {
     border-bottom: none !important;
+}
+.no_b_padding {
+    padding-bottom: 0px !important;
+}
+
+.border_t_1 {
+    border-top: 1px solid $border-color !important;
+}
+
+.border_r_1 {
+    border-right: 1px solid $border-color !important;
+}
+.border_b_1 {
+    border-bottom: 1px solid $border-color !important;
+}
+.border_l_1 {
+    border-left: 1px solid $border-color !important;
+}
+
+//tab切换样式
+.app-container .el-tabs {
+    border-top: solid 5px $border-color;
+    .el-button + .el-button {
+        margin-left: 0px;
+    }
+}
+
+.tab_container {
+    .el-tabs--border-card > .el-tabs__content {
+        padding: 0px;
+    }
+
+    .filter-container {
+        border: none;
+
+        .filter-items {
+            height: auto;
+        }
+    }
+
+    .table-container {
+        border: none;
+        margin-top: 0px;
+
+        .oprate_btn {
+            padding: 5px;
+            border: none;
+            border-top: solid 1px $border-color;
+            border-bottom: solid 1px $border-color;
+        }
+
+        .el-table--border,
+        .el-table--group {
+            border: none;
+        }
+
+        .el-table--border::after,
+        .el-table--group::after {
+            width: 0px;
+        }
+    }
+
+    .pagination-container {
+        border: none;
+    }
+
+    .el-form--inline .el-form-item {
+        margin-right: 0px;
+        margin-bottom: 5px;
+    }
+
+    .left_content {
+        border-top: 1px solid $border-color;
+    }
+
+    .right_content {
+        border: 1px solid $border-color;
+        border-bottom: none;
+        border-right: none;
+    }
 }
