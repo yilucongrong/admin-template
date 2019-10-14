@@ -39,19 +39,4 @@ export default {
 body .el-table th.gutter {
     display: table-cell !important;
 }
-// body .el-table th,
-// body .el-table td {
-//     border: 1px solid #d5d8da;
-// }
-body .el-table .header-cell {
-    // border-top: solid 1px #d5d8da;
-    // border-bottom: solid 1px #d5d8da;
-    background: #eef2f8;
-    color: #474747;
-}
-.el-pagination--small button,
-.el-pagination--small span:not([class*="suffix"]) {
-    height: 28px;
-    line-height: 28px;
-}
 </style>

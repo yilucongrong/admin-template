@@ -1,14 +1,16 @@
 #### Pull request checklist
  Header部分只有一行，包括三个字段：type（必需）、scope（可选）和subject（必需）。
- type用于说明 commit 的类别，只允许使用下面7个标识。
+ type用于说明 commit 的类别，只允许使用下面7个标识。(根据情况可多选)
 - [ ] feat：新功能（feature）
+- [ ] change：需求变化相关代码修改（变量名称，样式，交互）
+- [ ] style： 样式修改（不影响代码运行的变动） 
+- [ ] refactor：重构（代码优化及重构）
+- [ ] extend:  扩展（即不是新增功能，也不是修改bug的代码变动，提高组件适用性）
 - [ ] fix：修补bug
 - [ ] docs：文档（documentation）
-- [ ] style： 格式（不影响代码运行的变动）
-- [ ] refactor：重构（即不是新增功能，也不是修改bug的代码变动）
 - [ ] test：增加测试
-- [ ] chore：构建过程或辅助工具的变动
-- [ ] Plug-in: 插件变更
+- [ ] versions：构建过程或辅助工具的变动（包含包版本的变动，配置变动）
+
 subject是 commit 目的的简短描述，不超过50个字符。
 
 - 以动词开头，使用第一人称现在时，比如change，而不是changed或changes
@@ -17,8 +19,8 @@ subject是 commit 目的的简短描述，不超过50个字符。
 
 #### Description of changes
 
-(give an overview)
+(代码变化说明)
 
 #### Focus areas to test
 
-(optional)
+(主要需测试修改页面及相关功能)
