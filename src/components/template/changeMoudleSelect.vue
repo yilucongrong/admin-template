@@ -24,6 +24,9 @@
         <el-option key=5
                    label="模板6(折叠面板)"
                    value=5></el-option>
+        <el-option key=6
+                   label="模板7(table内折叠信息显示)"
+                   value=6></el-option>
     </el-select>
 </template>
 <script>
