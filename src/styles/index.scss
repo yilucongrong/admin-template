@@ -28,6 +28,10 @@ html {
 
 #app {
     height: 100%;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
 }
 
 *,
@@ -232,6 +236,10 @@ aside {
         }
     }
 
+    .oprate_btn.no_t_border {
+        border-top: none;
+    }
+
     .el-table td,
     .el-table th.is-leaf {
         border-bottom: 1px solid $border-color;
@@ -288,10 +296,11 @@ aside {
         padding: 2px 0;
     }
 
-    //悬浮列底边样式
+    //悬浮列底边样式 fixed时只显示浮动的底边，因此设置为透明
     .el-table__fixed-right::before,
     .el-table__fixed::before {
-        background-color: $border-color;
+        // background-color: $border-color;
+        background-color: transparent;
     }
 
     //解决上下错位
@@ -414,4 +423,20 @@ aside {
 
 .left-trees .el-tree {
     background: $treeColor;
+}
+
+//折叠面板块样式,根据实际布局修改
+.collapse_div {
+    border: solid 1px $border-color;
+    border-top: solid 5px $border-color;
+    border-bottom: none;
+
+    .el-collapse-item__header {
+        padding: 0px 0px 0px 10px;
+        border-bottom: solid 1px $border-color;
+    }
+
+    .el-collapse-item__content {
+        padding: 0px 0px 10px 10px;
+    }
 }

@@ -283,6 +283,7 @@ export default {
         return {
             theight: 0,
             list: null,
+            isSingle: true,//表格是否单选 点击各按钮根据流程逻辑控制单多选
             listQuery: {
                 //查询
                 page: true,

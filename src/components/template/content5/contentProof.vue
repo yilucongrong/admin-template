@@ -252,6 +252,7 @@ export default {
         return {
             theight: 0,
             sheight: 0,
+            isSingle: true,//表格是否单选 点击各按钮根据流程逻辑控制单多选
             list: null,
             listDetail: null,
             listDetailSub: null,

@@ -99,7 +99,7 @@
                             <el-button class="filter-item"
                                        size="small"
                                        type="primary"
-                                       @click="handleUpdateSub"
+                                       @click="handleCreateSub"
                                        icon="el-icon-edit">{{$t('table.edit')}}</el-button>
                             <el-button class="filter-item"
                                        size="small"
@@ -132,9 +132,9 @@
                                              :label="$t('dict.dictItemValue')"
                                              prop="dictItemValue"></el-table-column>
                         </el-table>
-                        <pagination :total="total1"
-                                    :page.sync="listQuery1.currentPage"
-                                    :limit.sync="listQuery1.pageSize"
+                        <pagination :total="totalSub"
+                                    :page.sync="listQuerySub.currentPage"
+                                    :limit.sync="listQuerySub.pageSize"
                                     @pagination="getList" />
                     </div>
                 </el-col>
@@ -172,7 +172,7 @@ export default {
                 dictItemKey: undefined,
                 dictItemValue: undefined
             },
-            listQuery1: {
+            listQuerySub: {
                 page: true,
                 currentPage: 1,
                 pageSize: 10
