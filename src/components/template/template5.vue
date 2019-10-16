@@ -31,12 +31,6 @@ export default {
             activeContent: 'content1'
         };
     },
-    computed: {
-
-    },
-    mounted () {
-
-    },
     methods: {
         changeSelect (val) {
             this.$emit('changeSelect', val)

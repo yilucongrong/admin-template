@@ -6,6 +6,7 @@
 // @import './btn.scss';
 
 $border-color: #d3dae0;
+$treeColor: #e2e9ef;
 
 body {
     height: 100%;
@@ -403,4 +404,14 @@ aside {
         border-bottom: none;
         border-right: none;
     }
+}
+
+//树样式
+.left-trees {
+    padding-top: 20px;
+    background: $treeColor;
+}
+
+.left-trees .el-tree {
+    background: $treeColor;
 }
