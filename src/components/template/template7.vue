@@ -58,7 +58,6 @@
                           highlight-current-row
                           cell-class-name="table-cell"
                           header-cell-class-name="header-cell"
-                          @select="select"
                           @selection-change="selectChange"
                           @expand-change="expandChange"
                           ref="tb">
@@ -115,6 +114,8 @@ export default {
             modalnum: null,//模板编号，非模板页面可删
             theight: 0,//表格高度
             isSingle: true,//表格是否单选 点击各按钮根据流程逻辑控制单多选
+            currentSelectedRow: null,//当前选中的行
+            selectedRows: null,//多选时选中的所有行
             tableData: null,
             tableDataInner: [],
             total: 0,
@@ -206,17 +207,19 @@ export default {
         handleDelete () {
             //删除按钮单击事件方法
         },
-        //单选时执行
-        select (val) {
-            if (this.isSingle) {
-                this.$refs.tb.clearSelection(); //清除其他行的选中
-                this.$refs.tb.toggleRowSelection(val, "selected"); //单击行绑定点击事件
-            }
-        },
         // 表格选择框选中 注:参数为选中的所有行的数组
         selectChange (val) {
-            if (!this.isSingle) {
-                this.selectedrow = val;
+            if (this.isSingle) {
+                if (val.length > 1) {
+                    this.$refs.tb.clearSelection(); //清除其他行的选中
+                    this.$refs.tb.toggleRowSelection(val[val.length - 1], "selected"); //单击行绑定点击事件
+                } else if (val.length === 1) {
+                    this.selectedRows = val;
+                    this.currentSelectedRow = val[val.length - 1]
+                }
+            } else {
+                this.selectedRows = val;
+                this.currentSelectedRow = val[val.length - 1]
             }
         },
         //点击表格某一行

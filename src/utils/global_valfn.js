@@ -8,7 +8,6 @@ export default {
     getSingleTbHeight() {
         let wh = document.body.offsetHeight
         let th = wh - this.single_table_height
-        console.log(th)
         return th
     }
 }

@@ -67,7 +67,6 @@
                           highlight-current-row
                           cell-class-name="table-cell"
                           header-cell-class-name="header-cell"
-                          @select="select"
                           @selection-change="selectChange"
                           @row-click="rowClick"
                           ref="tb">
@@ -137,7 +136,8 @@ export default {
                 currentPage: 1,
                 pageSize: 15
             },
-            selectedrow: {},
+            currentSelectedRow: null,//当前选中的行
+            selectedRows: null,//多选时选中的所有行
             tableKey: 0 //表格索引
         };
     },
@@ -204,24 +204,23 @@ export default {
         handleDelete () {
             //删除按钮单击事件方法
         },
-        //单选时执行
-        select (val) {
-            if (this.isSingle) {
-                this.$refs.tb.clearSelection(); //清除其他行的选中
-                this.$refs.tb.toggleRowSelection(val, "selected"); //单击行绑定点击事件
-            }
-        },
         // 表格选择框选中 注:参数为选中的所有行的数组
         selectChange (val) {
-            if (!this.isSingle) {
-                this.selectedrow = val;
+            if (this.isSingle) {
+                if (val.length > 1) {
+                    this.$refs.tb.clearSelection(); //清除其他行的选中
+                    this.$refs.tb.toggleRowSelection(val[val.length - 1], "selected"); //单击行绑定点击事件
+                } else if (val.length === 1) {
+                    this.selectedRows = val;
+                    this.currentSelectedRow = val[val.length - 1]
+                }
+            } else {
+                this.selectedRows = val;
+                this.currentSelectedRow = val[val.length - 1]
             }
         },
         //点击表格某一行
         rowClick (val) {
-            if (this.isSingle) {
-                this.$refs.tb.clearSelection(); //清除其他行的选中
-            }
             this.$refs.tb.toggleRowSelection(val, "selected"); //单击行绑定点击事件
         }
     }
