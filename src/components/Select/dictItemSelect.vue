@@ -54,7 +54,7 @@ export default {
             required: true,
             type: String
         },
-        dictItemKey: "",
+        dictItemKey: null,
         placeholder: {
             type: String,
             default: ""
@@ -62,10 +62,6 @@ export default {
         disabled: {
             type: Boolean,
             default: false
-        },
-        placeholder: {
-            type: String,
-            default: "请选择"
         },
         isMutiple: {
             type: Boolean,
@@ -76,7 +72,7 @@ export default {
         prop: "dictItemKey",
         event: "change"
     },
-    data() {
+    data () {
         return {
             options: [],
             // placeholder: this.placeholder,
@@ -84,20 +80,20 @@ export default {
         };
     },
     watch: {
-        dictItemKey() {
+        dictItemKey () {
             this.itemKey = this.dictItemKey;
         }
     },
-    created() {
+    created () {
         this.getOptions();
     },
     methods: {
-        getOptions() {
+        getOptions () {
             getRecord(this.dictCode).then(res => {
                 this.options = res.data.dictItemDTOs;
             });
         },
-        changeSelect(val) {
+        changeSelect (val) {
             this.$emit("change", val);
         }
     }

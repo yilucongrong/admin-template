@@ -5,7 +5,7 @@ import { getToken } from '@/utils/auth'
 // create an axios instance
 const service = axios.create({
     // baseURL: process.env.SYSTEM_BASE_API, // api 的 base_url
-    timeout: 5000 // request timeout
+    timeout: 50000 // request timeout
 })
 // 请求拦截器
 service.interceptors.request.use(
@@ -65,13 +65,19 @@ service.interceptors.response.use(
     //   }
     // },
     error => {
+        console.log(error)
+        if (error) {
+            // console.log('err' + error) // for debug
+            if (error.response) {
+                Message({
+                    message: error,
+                    type: 'error',
+                    duration: 5 * 1000
+                })
+            }
 
-        console.log('err' + error) // for debug
-        Message({
-            message: error.response.data.message,
-            type: 'error',
-            duration: 5 * 1000
-        })
+        }
+
         // store.dispatch('user/logout').then(() => {
         //     let m=3
         //     setInterval(() => {

@@ -40,22 +40,22 @@ export default {
         prop: "organizationCode",
         event: "change"
     },
-    data() {
+    data () {
         return {
             options: [],
             itemKey: this.organizationCode
         };
     },
     watch: {
-        organizationCode() {
+        organizationCode () {
             this.itemKey = this.organizationCode;
         }
     },
-    created() {
-        this.getOptions();
+    created () {
+        this.getOptions()
     },
     methods: {
-        getOptions() {
+        getOptions () {
             const listQuery = {
                 type: this.orgType,
                 businessFunction: this.businessFunction,
@@ -67,12 +67,12 @@ export default {
                 this.$emit("org", this.options);
             });
         },
-        changeSelect(val) {
+        changeSelect (val) {
             this.$emit("change", val);
             let name = "";
             let org = this.options
                 .filter(v => v.organizationCode == val)
-                .find((value, index, arr) => value);
+                .find((value) => value);
             if (org) {
                 name = org.organizationName;
             }
