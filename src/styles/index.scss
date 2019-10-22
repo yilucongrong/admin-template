@@ -429,6 +429,10 @@ aside {
         border-bottom: none;
         border-right: none;
     }
+
+    .el-tabs--card > .el-tabs__header .el-tabs__item.is-active {
+        border-bottom-color: $border-color;
+    }
 }
 
 //树样式
@@ -454,5 +458,45 @@ aside {
 
     .el-collapse-item__content {
         padding: 0px 0px 10px 10px;
+    }
+}
+
+//弹框样式
+.el-dialog {
+    .el-dialog__header {
+        padding: 10px;
+        border-bottom: none;
+        margin: 0px;
+    }
+
+    .el-dialog__headerbtn {
+        top: 14px;
+        right: 15px;
+    }
+
+    .el-dialog__body {
+        padding: 0px;
+    }
+
+    .el-tabs__header {
+        margin: 0px;
+    }
+
+    //表头错乱问题
+    .el-table th.gutter {
+        display: table-cell !important;
+    }
+
+    .el-table colgroup.gutter {
+        display: table-cell !important;
+    }
+
+    .el-tabs__item {
+        height: 30px;
+        line-height: 30px;
+    }
+
+    .el-dialog__footer {
+        padding: 10px;
     }
 }

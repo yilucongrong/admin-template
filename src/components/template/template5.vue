@@ -1,20 +1,18 @@
 //tab+上下  左右表
 <template>
-    <div class="app-container">
-        <div class="tab_container">
-            <el-tabs v-model="activeContent"
-                     type="border-card">
-                <el-tab-pane label="登记"
-                             name="content1">
-                    <contentRegister @changeSelect="changeSelect"
-                                     ref="cregister"></contentRegister>
-                </el-tab-pane>
-                <el-tab-pane label="凭证"
-                             name="content2">
-                    <contentProof ref="cproof"></contentProof>
-                </el-tab-pane>
-            </el-tabs>
-        </div>
+    <div class="tab_container">
+        <el-tabs v-model="activeContent"
+                 type="border-card">
+            <el-tab-pane label="登记"
+                         name="content1">
+                <contentRegister @changeSelect="changeSelect"
+                                 ref="cregister"></contentRegister>
+            </el-tab-pane>
+            <el-tab-pane label="凭证"
+                         name="content2">
+                <contentProof ref="cproof"></contentProof>
+            </el-tab-pane>
+        </el-tabs>
     </div>
 </template>
 
