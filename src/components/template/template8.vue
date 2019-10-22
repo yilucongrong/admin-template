@@ -24,11 +24,13 @@
         <!--弹框-->
         <!-- table多选 -->
         <dialog1 @handleDialogClick="handleDialogClick"
+                 :title="'dialog1多选'"
                  ref="dialogRef1"
                  :unMutiple="unMutiple[0]"></dialog1>
 
         <!-- table单选 -->
         <dialog1 @handleDialogClick="handleDialogClick"
+                 :title="'dialog1单选'"
                  ref="dialogRef2"
                  :unMutiple="unMutiple[1]"></dialog1>
 
@@ -67,7 +69,7 @@ export default {
             this.$emit('changeSelect', val)
         },
         handleClick (val) {
-            console.log(this.$refs, 'dialogRef' + val, this.selectedInfos)
+            console.log(this.$refs, 'dialogRef' + val, this.selectedInfos);
             this.$refs['dialogRef' + val].dialogVisible = true;
             this.$nextTick(() => {
                 this.$refs['dialogRef' + val].initSelect(this.selectedInfos);

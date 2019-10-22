@@ -1,8 +1,9 @@
 //table dialog
 <template>
     <div>
-        <el-dialog custom-class="dialog-custom"
-                   title="dialog1 table多选"
+        <el-dialog class="table_dialog"
+                   custom-class="dialog-custom"
+                   :title="title"
                    :visible.sync="dialogVisible"
                    v-dialogDrag
                    :close-on-click-modal="false">
@@ -76,7 +77,8 @@
                             </el-table> -->
                         </div>
                     </el-tab-pane>
-                    <el-tab-pane :label="'已选项'"
+                    <el-tab-pane v-if="!unMutiple"
+                                 :label="'已选项'"
                                  name="second">
                         <div class="table-container">
                             <el-table :key="tableKey[2]"
@@ -117,7 +119,7 @@
 import Pagination from '@/components/Pagination' // 分页组件
 export default {
     components: { Pagination },
-    props: ['unMutiple'],
+    props: ['unMutiple', 'title'],
     data () {
         return {
             initSelected: null,//初始选中值
@@ -240,7 +242,8 @@ export default {
         },
         //弹框1点击确定
         dialogConfirm () {
-            this.$emit('handleDialogClick', this.listSelected, 1)
+            this.$emit('handleDialogClick', this.listSelected, 1);
+            this.dialogVisible = false;
         }
     }
 }
