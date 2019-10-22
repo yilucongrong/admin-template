@@ -210,7 +210,7 @@
 <script>
 import changeModuleSelect from '@/components/template/changeMoudleSelect'
 import global_valfn from '@/utils/global_valfn'
-import * as api from "@/api/purchase/delivery_Publish";
+// import * as api from "@/api/purchase/delivery_Publish";
 import Pagination from "@/components/Pagination";
 import { mapGetters } from 'vuex';
 
@@ -268,14 +268,14 @@ export default {
         //主表数据获取
         getDelivery () {
             if (this.listQuery.supplierCode) {
-                api.getDelivery(this.listQuery).then(res => {
-                    this.list = res.list;
-                    this.total = res.pages.count;
-                    this.setFirstLine();
-                    if (this.list[0]) {
-                        this.getSubList(this.list[0])
-                    }
-                });
+                // api.getDelivery(this.listQuery).then(res => {
+                //     this.list = res.list;
+                //     this.total = res.pages.count;
+                //     this.setFirstLine();
+                //     if (this.list[0]) {
+                //         this.getSubList(this.list[0])
+                //     }
+                // });
             }
         },
         //显示主表
@@ -286,9 +286,9 @@ export default {
         getSubList (row) {
             this.sublistQuery.supplierCode = row.supplierCode;
             this.sublistQuery.orderNumber = row.orderNumber;
-            api.getDeliveryDetail(this.sublistQuery).then(res => {
-                this.listSub = res.deliveryOrderItemDTOList;
-            });
+            // api.getDeliveryDetail(this.sublistQuery).then(res => {
+            //     this.listSub = res.deliveryOrderItemDTOList;
+            // });
         },
         //发布
         handlePublish () {
