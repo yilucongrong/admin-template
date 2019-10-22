@@ -1,4 +1,5 @@
-// 查询+单表
+//el-table内部折叠信息
+// 折叠面板
 <template>
     <div>
         <div class="app-container">
@@ -14,15 +15,6 @@
                               class="filter-item"
                               size="small"
                               v-model="listQuery.roleName"></el-input>
-                    <el-select size="small"
-                               v-model="listQuery.roleType"
-                               :placeholder="$t('roleManagement.roleType')"
-                               clearable>
-                        <el-option v-for="item in dt_role_type"
-                                   :key="item.dictItemKey"
-                                   :label="item.dictItemValue"
-                                   :value="item.dictItemKey"></el-option>
-                    </el-select>
                     <changeModuleSelect @changeMoudle="changeMoudle"></changeModuleSelect>
                     <el-button class="filter-item-btn"
                                type="primary"
@@ -59,8 +51,7 @@
                                icon="el-icon-edit-outline"
                                @click="handleCreate">{{ $t('userManagement.userAuthorization') }}</el-button>
                 </div>
-                <el-table :key="tableKey"
-                          :data="list"
+                <el-table :data="tableData"
                           :height="theight"
                           border
                           fit
@@ -68,39 +59,37 @@
                           cell-class-name="table-cell"
                           header-cell-class-name="header-cell"
                           @selection-change="selectChange"
-                          @row-click="rowClick"
+                          @expand-change="expandChange"
                           ref="tb">
-                    <el-table-column type="selection"
-                                     width="30"></el-table-column>
-                    <el-table-column show-overflow-tooltip
-                                     width="120"
-                                     align="center"
-                                     :label="$t('roleManagement.roleCode')"
-                                     prop="roleCode"></el-table-column>
-                    <el-table-column show-overflow-tooltip
-                                     width="200"
-                                     align="center"
-                                     :label="$t('roleManagement.roleName')"
-                                     prop="roleName"></el-table-column>
-                    <el-table-column show-overflow-tooltip
-                                     width="200"
-                                     align="center"
-                                     :label="$t('roleManagement.roleType')"
-                                     prop="roleType">
-                        <template slot-scope="scope">
-                            <span>{{ scope.row.roleTypeCN}}</span>
+                    <!-- 注：选择框不能设置width，否则可能造成样式错乱 -->
+                    <el-table-column type="expand">
+                        <template slot-scope="props">
+                            <el-table :data="tableDataInner[props.row.id]"
+                                      cell-class-name="table-cell-inner"
+                                      header-cell-class-name="header-cell-inner">
+                                <el-table-column label="商品 ID"
+                                                 prop="id">
+                                </el-table-column>
+                                <el-table-column label="商品名称"
+                                                 prop="name">
+                                </el-table-column>
+                                <el-table-column label="描述"
+                                                 prop="desc">
+                                </el-table-column>
+                            </el-table>
                         </template>
                     </el-table-column>
-                    <el-table-column show-overflow-tooltip
-                                     width="120"
-                                     align="center"
-                                     label="角色域"
-                                     prop="domainScope"></el-table-column>
-                    <el-table-column show-overflow-tooltip
-                                     min-width="100"
-                                     align="center"
-                                     :label="$t('roleManagement.remark')"
-                                     prop="remark"></el-table-column>
+                    <el-table-column type="selection"></el-table-column>
+
+                    <el-table-column label="商品 ID"
+                                     prop="id">
+                    </el-table-column>
+                    <el-table-column label="商品名称"
+                                     prop="name">
+                    </el-table-column>
+                    <el-table-column label="描述"
+                                     prop="desc">
+                    </el-table-column>
                 </el-table>
                 <pagination :total="total"
                             :size="15"
@@ -116,39 +105,28 @@
 <script>
 import changeModuleSelect from '@/components/template/changeMoudleSelect'
 import global_valfn from '@/utils/global_valfn'
-import * as api from "@/api/system/role";
 import Pagination from "@/components/Pagination";
-import { mapState } from "vuex";
-import { codeToName } from "@/utils/codeToName";
 export default {
-    name: "jsgl",
+    name: "zdmb",
     components: { changeModuleSelect, Pagination },
     data () {
         return {
             modalnum: null,//模板编号，非模板页面可删
             theight: 0,//表格高度
             isSingle: true,//表格是否单选 点击各按钮根据流程逻辑控制单多选
-            list: [],
-            total: 0,
-            listQuery: {
-                //查询
-                page: true,
-                currentPage: 1,
-                pageSize: 15
-            },
             currentSelectedRow: null,//当前选中的行
             selectedRows: null,//多选时选中的所有行
-            tableKey: 0 //表格索引
-        };
+            tableData: null,
+            tableDataInner: [],
+            total: 0,
+            listQuery: {
+                currentPage: 0,
+                pageSize: 15,
+            }
+        }
     },
     created () { },
-    computed: {
-        ...mapState({
-            dt_role_type: state => state.dict.dt_role_type
-        })
-    },
     mounted () {
-        this.$store.dispatch("dict/getDicData", ["dt_role_type"]);
         this.setTableHeight();
         //表格高度自适应
         window.onresize = () => {
@@ -167,18 +145,43 @@ export default {
         },
         //获取表格数据
         getList () {
-            api.selectrole(this.listQuery).then(response => {
-                let options = [this.dt_role_type];
-                response.data = codeToName(response.data, options, [
-                    "dt_role_type"
-                ]);
-                this.list = response.data.list;
-                this.total = response.data.pages.count;
-                // Just to simulate the time of the request
-                setTimeout(() => {
-                    this.listLoading = false;
-                }, 1.5 * 100);
-            });
+            this.tableData = [{
+                id: '0',
+                name: '第一张专辑',
+                category: '专辑',
+                desc: '第一张创作专辑',
+                address: '相信音乐',
+                shop: '相信音乐国际股份有限公司'
+            }, {
+                id: '1',
+                name: '第二张专辑',
+                category: '专辑',
+                desc: '爱情万岁',
+                address: '相信音乐',
+                shop: '相信音乐国际股份有限公司'
+            }, {
+                id: '2',
+                name: '第三张专辑',
+                category: '专辑',
+                desc: '人生海海',
+                address: '相信音乐',
+                shop: '相信音乐国际股份有限公司'
+            }, {
+                id: '3',
+                name: '第四张专辑',
+                category: '专辑',
+                desc: '时光机',
+                address: '相信音乐',
+                shop: '相信音乐国际股份有限公司'
+            }, {
+                id: '4',
+                name: '第五张专辑',
+                category: '专辑',
+                desc: '神的孩子都在跳舞',
+                address: '相信音乐',
+                shop: '相信音乐国际股份有限公司'
+            }
+            ]
         },
         //表格查询
         handleQuery () {
@@ -221,7 +224,30 @@ export default {
         },
         //点击表格某一行
         rowClick (val) {
+            if (this.isSingle) {
+                this.$refs.tb.clearSelection(); //清除其他行的选中
+            }
             this.$refs.tb.toggleRowSelection(val, "selected"); //单击行绑定点击事件
+        },
+        expandChange (row, expanded) {
+            console.log(row, expanded);
+            this.tableDataInner[row.id] = [{
+                id: '1',
+                name: '陈信宏',
+                category: 'mayday',
+                desc: '到前面来' + row.id,
+                address: '福建省泉州市',
+                shop: '相信音乐' + row.id,
+                shopId: '1'
+            }, {
+                id: '2',
+                name: '温尚翊',
+                category: 'mayday',
+                desc: '到前面来' + row.id,
+                address: '台湾省台北市',
+                shop: '相信音乐' + row.id,
+                shopId: '2'
+            }];
         }
     }
 };

@@ -54,21 +54,21 @@
                 <el-button class="filter-item"
                            size="small"
                            type="primary"
-                           @click="updateCar"
+                           @click="handlePublish"
                            icon="el-icon-truck">修改车辆</el-button>
             </div>
-            <el-table :key="tableKey"
+            <el-table :key="tableKey[0]"
                       :data="list"
                       border
                       fit
                       :height="theight"
                       highlight-current-row
                       style="width: 100%;"
-                      @selection-change='selectRow'
+                      @selection-change="selectChange"
+                      @row-click="rowClick"
                       size="mini"
                       cell-class-name="table-cell"
                       header-cell-class-name="header-cell"
-                      @row-click='showSubTable'
                       ref='tbmain'>
                 <el-table-column type="selection"
                                  fixed
@@ -118,7 +118,8 @@
                         :limit.sync="listQuery.pageSize"
                         @pagination="getList"
                         class="pagination-container no_b_border" />
-            <el-table :data="listRow"
+            <el-table :key="tableKey[1]"
+                      :data="listSub"
                       border
                       fit
                       :height="theight"
@@ -159,8 +160,11 @@
                                  prop="snp"></el-table-column>
             </el-table>
         </div>
-        <!-- <div class="table-container">
-            <el-table :data="listRow"
+
+        <!-- 
+            //分开表样式
+        <div class="table-container">
+            <el-table :data="listSub"
                       border
                       fit
                       :height="theight"
@@ -208,9 +212,7 @@ import changeModuleSelect from '@/components/template/changeMoudleSelect'
 import global_valfn from '@/utils/global_valfn'
 import * as api from "@/api/purchase/delivery_Publish";
 import Pagination from "@/components/Pagination";
-import { DICT_CODE, DT_ORG_TYPE, TWO_STATE_OPTIONS } from "@/utils/constant";
-import { codeToName } from '@/utils/codeToName'
-import { mapState, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
     name: "delivery_Publish",
@@ -219,92 +221,28 @@ export default {
         return {
             modalnum: null,//模板编号
             theight: 0,
+            isSingle: true,//表格是否单选 点击各按钮根据流程逻辑控制单多选
+            currentSelectedRow: null,//当前选中的行
+            selectedRows: null,//多选时选中的所有行
             list: null,
-            listRow: null,
-            packDataList: null,
-            packPrintList: [],
-            updatePacklist: {
-                barCode: [],
-                method: '',
-                supplierBatch: '',
-                supplierRemark: ''
-            },
+            listSub: null,
             total: 0,
-            rangeTime: "",
-            selectRows: [],
-            selectPackRows: [],
+            selectedrow: null,//主表选中行
             listQuery: {
                 page: true,
                 currentPage: 1,
-                pageSize: 10,
-                supplierCode: '',//供应商编号,
-                arrivalCompany: '',
-                orderNumber: undefined,//订单号
-                releaseDateStart: undefined,//订单状态
-                releaseDateEnd: undefined,
-                state: undefined//订单状态
+                pageSize: 10
             },
             sublistQuery: {
                 page: true,
                 currentPage: 1,
-                pageSize: 10,
-                supplierCode: '',//供应商编号
-                orderNumber: undefined//订单号
+                pageSize: 10
             },
-            listQueryPack: {
-                orderNumber: '',
-                materielCode: '',
-                orderNumbers: [],
-                barcodeRuleDetails: []
-            },
-            temp: {
-                supplierCode: '',
-                orderNumber: '',
-                contact: '',
-                mobile: '',
-                plateNumber: '',
-                method: ''
-            },
-            printData: {},//打印数据
-            selectCode: [],
-            dialogFormVisible: false,
-            dialogPrintVisible: false,
-            dialogPrintTagVisible: false,
-            dialogPack: false,//包装标签tag
-            dialogPackSet: false,//包装标签设置
-            dialogPackPrintVisible: false,//打印弹框显示
-            dialogGys: false,
-            dialogStatus: "",
-            parentsRows: [],
-            tableKey: 0,
-            DICT_CODE: DICT_CODE,
-            DT_ORG_TYPE: DT_ORG_TYPE,
-            TWO_STATE_OPTIONS: TWO_STATE_OPTIONS,
-            isPublish: true,
-            rules: {
-                contact: [
-                    { max: 32, message: this.$t('validate.max32'), trigger: 'blur' }
-                ],
-                mobile: [
-                    { max: 32, message: this.$t('validate.max32'), trigger: 'blur' }
-                ],
-                plateNumber: [
-                    { max: 32, message: this.$t('validate.max32'), trigger: 'blur' }
-                ]
-            },
-            packData: {
-                detailDTOS: [],
-                dicType: "LB01",
-                dicTypeName: "外购件",
-                sourceType: "source_type01",
-                sourceTypeName: "交货单"
-            }
+            tableKey: [0, 1]//表格索引，虚拟dom渲染表格时使用
+
         };
     },
     computed: {
-        ...mapState({
-            dt_delivery_state: state => state.dict.dt_delivery_state
-        }),
         ...mapGetters([
             'domainName',
             'domainId',
@@ -318,7 +256,6 @@ export default {
         };
         this.listQuery.state = 'CREATE';
         this.getDelivery();
-
     },
     methods: {
         changeMoudle (val) {
@@ -332,8 +269,6 @@ export default {
         getDelivery () {
             if (this.listQuery.supplierCode) {
                 api.getDelivery(this.listQuery).then(res => {
-                    let options = [this.dt_delivery_state];
-                    res = codeToName(res, options, ['state']);
                     this.list = res.list;
                     this.total = res.pages.count;
                     this.setFirstLine();
@@ -345,15 +280,6 @@ export default {
         },
         //显示主表
         getList () {
-            if (this.rangeTime) {
-                var d1 = this.rangeTime[0];
-                var d2 = this.rangeTime[1];
-                this.listQuery.releaseDateStart = d1;
-                this.listQuery.releaseDateEnd = d2;
-            } else {
-                this.listQuery.releaseDateStart = '';
-                this.listQuery.releaseDateEnd = '';
-            }
             this.getDelivery();
         },
         //显示从表
@@ -361,191 +287,20 @@ export default {
             this.sublistQuery.supplierCode = row.supplierCode;
             this.sublistQuery.orderNumber = row.orderNumber;
             api.getDeliveryDetail(this.sublistQuery).then(res => {
-                this.listRow = res.deliveryOrderItemDTOList;
+                this.listSub = res.deliveryOrderItemDTOList;
             });
         },
         //发布
         handlePublish () {
-            if (this.selectRows) {
-                if (this.selectRows.state) {
-                    this.$confirm(this.$t('message.isPublishOrder'), this.$t('message.prompt'), {
-                        confirmButtonText: this.$t('message.yes'),
-                        cancelButtonText: this.$t('message.no'),
-                        type: 'warning'
-                    }).then(() => {
-                        this.isPublish = true;
-                        this.resetTemp();
-                        this.dialogFormVisible = true;
-                        this.dialogStatus = "publish";
-                    }).catch(() => {
-                        this.$message({
-                            type: 'info',
-                            message: this.$t('message.canceledPublish')
-                        });
-                    });
-                } else {
-                    this.$message.warning(this.$t('message.checkedplease'));
-                    return false;
-                }
-            } else {
-                this.$message.warning(this.$t('message.checkedplease'));
-                return false;
-            }
-        },
-        //发布提交
-        publishConfirm () {
-            this.temp.supplierCode = this.selectRows.supplierCode;
-            this.temp.orderNumber = this.selectRows.orderNumber;
-            this.temp.state = 'RELEASE';
-            this.temp.method = 'RELEASE';
-            api.updateDelivery(this.temp).then(() => {
-                this.dialogFormVisible = false;
-                this.$message.success(this.$t('message.publishSuccess'));
-                this.getDelivery();
-            });
-        },
-        //发布前修改车辆信息
-        updateCar () {
-            this.isPublish = false;
-            this.dialogFormVisible = true;
-        },
-        updateCarConfirm () {
-            this.$confirm(this.$t('message.isDeleteContinue'), this.$t('message.prompt'), {
-                confirmButtonText: this.$t('message.confirm'),
-                cancelButtonText: this.$t('message.cancel'),
-                type: 'warning'
-            }).then(() => {
-                this.dialogFormVisible = true;
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: this.$t('message.deleteCanceled')
-                });
-            });
+
         },
         //删除
         handleDelete () {
-            if (this.selectRows) {
-                if (this.selectRows.state) {
-                    let state = this.selectRows.state;
-                    if (state !== 'CREATE') {
-                        this.$message({
-                            type: 'warning',
-                            message: this.$t('message.cannotDeleteUnCreateOrder')
-                        });
-                    } else {
-                        this.$confirm(this.$t('message.isDeleteContinue'), this.$t('message.prompt'), {
-                            confirmButtonText: this.$t('message.confirm'),
-                            cancelButtonText: this.$t('message.cancel'),
-                            type: 'warning'
-                        }).then(() => {
-                            let datas = {}
-                            datas.supplierCode = this.selectRows.supplierCode;
-                            datas.orderNumber = this.selectRows.orderNumber;
-                            api.deleteDelivery(datas).then(() => {
-                                this.getDelivery();
-                                this.$message({
-                                    type: 'success',
-                                    message: this.$t('message.deleteSuccessed')
-                                });
-                            });
-                        }).catch(() => {
-                            this.$message({
-                                type: 'info',
-                                message: this.$t('message.deleteCanceled')
-                            });
-                        });
-                    }
-                } else {
-                    this.$message.warning(this.$t('message.checkedplease'));
-                    return false;
-                }
-            } else {
-                this.$message.warning(this.$t('message.checkedplease'));
-                return false;
-            }
 
-        },
-        //单据打印
-        receiptPrint () {
-            if (this.selectRows) {
-                if (this.selectRows.state) {
-                    this.dialogPrintVisible = true;
-                    this.dialogStatus = "print";
-                    this.printData = this.selectRows;
-                    this.$nextTick(() => {
-                        this.$refs.childQRcode.qrCreate(this.printData.orderNumber)
-                    });
-                } else {
-                    this.$message.warning(this.$t('message.checkedplease'));
-                    return false;
-                }
-            } else {
-                this.$message.warning(this.$t('message.checkedplease'));
-                return false;
-            }
-
-        },
-        //单据打印执行
-        doReceiptPrint () {
-            let newWin = window.open("");
-            var newstr = document.getElementById('receipt').innerHTML;
-            newWin.document.write(newstr);
-            newWin.document.close();//IE添加
-
-            setTimeout(function () {
-                newWin.print();
-                newWin.close();
-            }, 100);
-        },
-        //关闭交货单
-        handleClose () {
-            if (this.selectRows) {
-                if (this.selectRows.state) {
-                    let state = this.selectRows.state;
-                    if (state !== 'RELEASE') {
-                        this.$message({
-                            type: 'warning',
-                            message: this.$t('message.cannotCloseUnPublishOrder')
-                        });
-                    } else {
-                        this.$confirm(this.$t('message.isCloseOrderContinue'), this.$t('message.prompt'), {
-                            confirmButtonText: this.$t('message.confirm'),
-                            cancelButtonText: this.$t('message.cancel'),
-                            type: 'warning'
-                        }).then(() => {
-                            let datas = {}
-                            datas.supplierCode = this.selectRows.supplierCode;
-                            datas.orderNumber = this.selectRows.orderNumber;
-                            datas.state = 'CLOSE';
-                            datas.method = 'CLOSE';
-                            api.updateDelivery(datas).then(() => {
-                                this.getDelivery();
-                                this.$message({
-                                    title: "",
-                                    message: this.$t('message.closed'),
-                                    type: "success"
-                                });
-                            });
-                        }).catch(() => {
-                            this.$message({
-                                type: 'info',
-                                message: this.$t('message.cancelClose')
-                            });
-                        });
-                    }
-                } else {
-                    this.$message.warning(this.$t('message.checkedplease'));
-                    return false;
-                }
-            } else {
-                this.$message.warning(this.$t('message.checkedplease'));
-                return false;
-            }
         },
         //查询
         handleQuery () {
-            this.listRow = [];
+            this.listSub = [];
             this.listQuery.currentPage = 1;
             this.getList();
         },
@@ -559,204 +314,36 @@ export default {
             this.listQuery.currentPage = val;
             this.getList();
         },
-        //主表勾选框选中
-        selectRow (val) {
-            this.selectRows = val[val.length - 1]
-            if (val.length > 1) {
-                this.$refs.tbmain.clearSelection()
-                this.$refs.tbmain.toggleRowSelection(val[val.length - 1], 'selected')
-            }
-            this.$refs.tbmain.setCurrentRow(this.selectRows);
-            if (val.length !== 0) {
-                this.getSubList(val[val.length - 1]);
-            }
-        },
-        //主表点击显示从表
-        showSubTable (val) {
-            this.selectRows = val;
-            this.$refs.tbmain.clearSelection()
-            this.$refs.tbmain.toggleRowSelection(val, 'selected')
-            this.getSubList(val);
-        },
-        //重置联系人输入框
-        resetTemp () {
-            this.temp = {
-                contact: '',
-                mobile: '',
-                plateNumber: ''
-            };
-        },
-        //供应商选择
-        handleDblclickgysxz (row) {
-            this.parentsRows = row;
-        },
-        //供应商选中弹窗确认按钮
-        update1 () {
-            if (!this.parentsRows[0]) {
-                this.$message({
-                    title: this.$t('message.warning'),
-                    message: this.$t('message.checkedoneplease'),
-                    type: "warning"
-                });
-            } else {
-                if (this.parentsRows.length && this.parentsRows.length == 1) {
-                    this.temp.supplierCode = this.parentsRows[0].supplierCode;
-                    this.temp.supplierName = this.parentsRows[0].supplierName;
-                    this.listQuery.supplierCode = this.parentsRows[0].supplierCode;
-                    this.listQuery.supplierName = this.parentsRows[0].supplierName;
-                    this.dialogGys = false;
-                } else {
-                    this.$message({
-                        title: this.$t('message.warning'),
-                        message: this.$t('message.checkedoneplease'),
-                        type: "warning"
-                    });
+        // 表格选择框选中 注:参数为选中的所有行的数组
+        selectChange (val) {
+            if (this.isSingle) {
+                if (val.length > 1) {
+                    this.$refs.tb.clearSelection(); //清除其他行的选中
+                    this.$refs.tb.toggleRowSelection(val[val.length - 1], "selected"); //单击行绑定点击事件
+                } else if (val.length === 1) {
+                    this.selectedRows = val;
+                    this.currentSelectedRow = val[val.length - 1]
                 }
+            } else {
+                this.selectedRows = val;
+                this.currentSelectedRow = val[val.length - 1]
             }
+        },
+        //点击表格某一行
+        rowClick (val) {
+            if (this.isSingle) {
+                this.$refs.tb.clearSelection(); //清除其他行的选中
+            }
+            this.$refs.tb.toggleRowSelection(val, "selected"); //单击行绑定点击事件
+            this.getSubList(val);
         },
         //加载时默认选中第一行
         setFirstLine () {
             this.$nextTick(() => {
                 this.$refs.tbmain.setCurrentRow(this.list[0]);
             });
-        },
-
-        //选中标签列表
-        selectPackRow (val) {
-            this.selectPackRows = val;
-        },
-        //标签打印设置
-        handlePackSetting () {
-            if (this.selectPackRows.length > 0) {
-                this.dialogPackSet = true;
-            } else {
-                this.$message({
-                    title: this.$t('message.warning'),
-                    message: this.$t('message.checkedoneplease'),
-                    type: "warning"
-                });
-            }
-        },
-        //批量打印
-        handleBulkPrint () {
-            if (this.selectPackRows.length === 0) {
-                this.$message({
-                    title: this.$t('message.warning'),
-                    message: '请选择要打印的标签',
-                    type: "warning"
-                });
-            } else {
-                let printable = true;
-                try {
-                    this.selectPackRows.forEach(item => {
-                        if (item.printSign === 1) {
-                            printable = false;
-                            this.$message({
-                                title: this.$t('message.warning'),
-                                message: '所选项包含已打印过的标签，不能进行批量打印',
-                                type: "warning"
-                            });
-                            throw ''
-                        }
-                    });
-                    if (printable) {
-                        this.updateMethod = 'batchPrint';
-                        this.createPrintPack();
-                    }
-                } catch (e) {
-                    console.log(e);
-                }
-            }
-        },
-        //补打
-        handleFillPrint () {
-            if (this.selectPackRows.length === 0) {
-                this.$message({
-                    title: this.$t('message.warning'),
-                    message: '请选择要打印的标签',
-                    type: "warning"
-                });
-            } else {
-                let printable = true;
-                try {
-                    this.selectPackRows.forEach(item => {
-                        if (item.printSign === 0) {
-                            printable = false;
-                            this.$message({
-                                title: this.$t('message.warning'),
-                                message: '所选项包含未打印过的标签，不能进行补打',
-                                type: "warning"
-                            });
-                        }
-                    });
-                    if (printable) {
-                        this.updateMethod = 'makeUpPrint';
-                        this.createPrintPack();
-                    }
-                } catch (e) {
-                    console.log(e);
-                }
-            }
-
-        },
-        initUpdatePacklist () {
-            let barcodes = new Array();
-            this.selectPackRows.forEach(item => {
-                barcodes.push(item.barCode);
-            });
-            this.updatePacklist.barCode = barcodes;
-            this.updatePacklist.method = this.updateMethod;
-            if (this.updateMethod !== 'setUp') {
-                this.updatePacklist.supplierBatch = '';
-                this.updatePacklist.supplierRemark = '';
-            }
-        },
-        //标签设置确认提交
-        confirmPackBatch () {
-            this.updateMethod = 'setUp';
-            this.initUpdatePacklist();
-            api.updatePackTag(this.updatePacklist).then(() => {
-                api.queryPackTag(this.listQueryPack).then(resq => {
-                    this.packDataList = resq;
-                });
-                this.$message.success('设置成功');
-            })
-        },
-        //执行包装标签打印
-        doPackPrint () {
-            this.$confirm('是否进行打印操作？', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning',
-            }).then(() => {
-                this.dialogPackPrintVisible = false;
-                this.initUpdatePacklist();
-                api.updatePackTag(this.updatePacklist).then(() => {
-                    api.queryPackTag(this.listQueryPack).then(resq => {
-                        this.packDataList = resq;
-                    });
-                    this.$message.success('设置成功');
-                });
-                let newWin = window.open("");
-                var newstr = document.getElementById('packprint').innerHTML;
-                newWin.document.write(newstr);
-                newWin.document.close();//IE添加
-
-                setTimeout(function () {
-                    newWin.print();
-                    newWin.close();
-                }, 100);
-            })
-
         }
     }
 };
 </script>
-<style scoped>
-/* 打印最后一行样式 */
-.tablelastrow {
-    border-bottom: 2px solid #d5d8da;
-    height: 24px;
-}
-</style>
 
