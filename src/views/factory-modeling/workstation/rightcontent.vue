@@ -1,28 +1,26 @@
 <template>
-    <div class="app-container calendar-list-container">
+    <div class="app-container">
         <div class="filter-container">
             <div class="filter-items">
-                <div class="select-element">
-                    <el-input size="small"
-                              :placeholder="$t('workstation.stationCode')"
-                              v-model="listQuery.stationCode"
-                              class="filter-item"
-                              @keyup.enter.native="handleQuery" />
-                    <el-input size="small"
-                              :placeholder="$t('workstation.stationName')"
-                              v-model="listQuery.stationName"
-                              class="filter-item"
-                              @keyup.enter.native="handleQuery" />
-                    <el-button class="filter-item"
-                               size="small"
-                               type="primary"
-                               icon="el-icon-search"
-                               @click="handleQuery">{{ $t('table.search') }}</el-button>
-                </div>
+                <el-input size="small"
+                          :placeholder="$t('workstation.stationCode')"
+                          v-model="listQuery.stationCode"
+                          class="filter-item"
+                          @keyup.enter.native="handleQuery" />
+                <el-input size="small"
+                          :placeholder="$t('workstation.stationName')"
+                          v-model="listQuery.stationName"
+                          class="filter-item"
+                          @keyup.enter.native="handleQuery" />
+                <el-button class="filter-item"
+                           size="small"
+                           type="primary"
+                           icon="el-icon-search"
+                           @click="handleQuery">{{ $t('table.search') }}</el-button>
             </div>
         </div>
         <div class="table-container">
-            <div class="table-items">
+            <div class="oprate_btn">
                 <el-button class="filter-item"
                            size="small"
                            type="primary"
@@ -43,7 +41,7 @@
                       :data="list"
                       border
                       fit
-                      height="315"
+                      :height="theight"
                       highlight-current-row
                       style="width: 100%;"
                       @selection-change="selectRow"
@@ -96,83 +94,83 @@
                         :page.sync="listQuery.currentPage"
                         :limit.sync="listQuery.pageSize"
                         @pagination="getList" />
+            <el-dialog custom-class="dialog-custom"
+                       :close-on-click-modal="false"
+                       :close-on-press-escape="false"
+                       :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')"
+                       :visible.sync="dialogFormVisible"
+                       v-dialogDrag
+                       @close="handleClose">
+                <el-form :inline="true"
+                         class="demo-form-inline"
+                         :model="temp"
+                         :rules="rules"
+                         ref="temp"
+                         label-width="120px"
+                         style="width:auto;">
+                    <el-form-item :label="$t('workstation.lineCode')"
+                                  prop="lineCode">
+                        <el-input v-model="temp.lineCode"
+                                  disabled></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('workstation.stationCode')"
+                                  prop="stationCode">
+                        <el-input v-model="temp.stationCode"></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('workstation.stationName')"
+                                  prop="stationName">
+                        <el-input v-model="temp.stationName"></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('workstation.stationNo')"
+                                  prop="stationNo">
+                        <el-input v-model="temp.stationNo"></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('workstation.stationType')"
+                                  prop="stationType">
+                        <el-select size="small"
+                                   v-model="temp.stationType"
+                                   :placeholder="$t('table.select')">
+                            <el-option v-for="item in dt_station_type"
+                                       :key="item.dictItemKey"
+                                       :label="item.dictItemValue"
+                                       :value="item.dictItemKey">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item :label="$t('workstation.feedArea')"
+                                  prop="feedArea">
+                        <el-input style="width: 165px"
+                                  v-model="temp.feedArea"
+                                  disabled>
+                            <el-button slot="append"
+                                       icon="el-icon-search"
+                                       @click="handlefeed"></el-button>
+                        </el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer"
+                     class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
+                    <el-button type="primary"
+                               @click="dialogStatus==='create'?create():update()">{{ $t('table.confirm') }}</el-button>
+                </div>
+            </el-dialog>
+            <el-dialog custom-class="dialog-custom"
+                       class="table-container spacing-one"
+                       :title="$t('workstation.feedArea')"
+                       :visible.sync="feedAreaDialogFormVisible"
+                       v-dialogDrag
+                       :close-on-click-modal="false">
+                <tkqy :warehouseCode="feedArea"
+                      @handSelectAreasRows="feedAreas"></tkqy>
+                <div slot="footer"
+                     class="dialog-footer">
+                    <el-button type="primary"
+                               @click="update3">{{$t('table.confirm')}}</el-button>
+                </div>
+            </el-dialog>
         </div>
 
-        <el-dialog custom-class="dialog-custom"
-                   :close-on-click-modal="false"
-                   :close-on-press-escape="false"
-                   :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')"
-                   :visible.sync="dialogFormVisible"
-                   v-dialogDrag
-                   @close="handleClose">
-            <el-form :inline="true"
-                     class="demo-form-inline"
-                     :model="temp"
-                     :rules="rules"
-                     ref="temp"
-                     label-width="120px"
-                     style="width:auto;">
-                <el-form-item :label="$t('workstation.lineCode')"
-                              prop="lineCode">
-                    <el-input v-model="temp.lineCode"
-                              disabled></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('workstation.stationCode')"
-                              prop="stationCode">
-                    <el-input v-model="temp.stationCode"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('workstation.stationName')"
-                              prop="stationName">
-                    <el-input v-model="temp.stationName"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('workstation.stationNo')"
-                              prop="stationNo">
-                    <el-input v-model="temp.stationNo"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('workstation.stationType')"
-                              prop="stationType">
-                    <el-select size="small"
-                               v-model="temp.stationType"
-                               :placeholder="$t('table.select')">
-                        <el-option v-for="item in dt_station_type"
-                                   :key="item.dictItemKey"
-                                   :label="item.dictItemValue"
-                                   :value="item.dictItemKey">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('workstation.feedArea')"
-                              prop="feedArea">
-                    <el-input style="width: 165px"
-                              v-model="temp.feedArea"
-                              disabled>
-                        <el-button slot="append"
-                                   icon="el-icon-search"
-                                   @click="handlefeed"></el-button>
-                    </el-input>
-                </el-form-item>
-            </el-form>
-            <div slot="footer"
-                 class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-                <el-button type="primary"
-                           @click="dialogStatus==='create'?create():update()">{{ $t('table.confirm') }}</el-button>
-            </div>
-        </el-dialog>
-        <el-dialog custom-class="dialog-custom"
-                   class="table-container spacing-one"
-                   :title="$t('workstation.feedArea')"
-                   :visible.sync="feedAreaDialogFormVisible"
-                   v-dialogDrag
-                   :close-on-click-modal="false">
-            <tkqy :warehouseCode="feedArea"
-                  @handSelectAreasRows="feedAreas"></tkqy>
-            <div slot="footer"
-                 class="dialog-footer">
-                <el-button type="primary"
-                           @click="update3">{{$t('table.confirm')}}</el-button>
-            </div>
-        </el-dialog>
     </div>
 </template>
 
@@ -181,6 +179,7 @@ import * as api from "@/api/data-base/work-center";
 import Pagination from "@/components/Pagination";
 import tkqy from "./tkqy";
 import { mapState } from "vuex";
+import global_valfn from '@/utils/global_valfn'
 
 export default {
     components: { Pagination, tkqy },
@@ -188,6 +187,7 @@ export default {
         return {
             list: null,
             total: 0,
+            theight: 0,//表格高度
             listQuery: {
                 page: true,
                 currentPage: 1,
@@ -256,6 +256,13 @@ export default {
             "dt_timeunit",
             "dt_station_type"
         ]);
+        this.setTableHeight();
+        //表格高度自适应
+        window.onresize = () => {
+            this.setTableHeight();
+        };
+        this.getList();
+
     },
     methods: {
         getList (node) {
@@ -269,6 +276,10 @@ export default {
                     this.total = res.data.pages.count;
                 });
             }
+        },
+        //表格高度计算
+        setTableHeight () {
+            this.theight = global_valfn.getSingleTbHeight();
         },
         getList1 () {
             api.queryList(this.workCenterCode, this.listQuery).then(res => {

@@ -1,8 +1,8 @@
 <template>
-    <div class="app-container calendar-list-container">
-        <div class="filter-container">
-            <div class="filter-items">
-                <div class="select-element">
+    <div>
+        <div class="app-container">
+            <div class="filter-container">
+                <div class="filter-items">
                     <el-input size="small"
                               :placeholder="$t('supplier.supplierCode')"
                               v-model="listQuery.supplierCode"
@@ -31,202 +31,202 @@
                                @click="handleQuery">{{ $t('table.search') }}</el-button>
                 </div>
             </div>
-        </div>
-        <div class="table-container">
-            <div class="table-items">
-                <el-button size="small"
-                           class="filter-item"
-                           type="primary"
-                           icon="el-icon-plus"
-                           @click="handleCreate">{{ $t('table.add') }}</el-button>
-                <el-button size="small"
-                           class="filter-item"
-                           type="primary"
-                           icon="el-icon-edit"
-                           @click="handleUpdate">{{ $t('table.edit') }}</el-button>
-                <el-button size="small"
-                           class="filter-item"
-                           type="primary"
-                           icon="el-icon-delete"
-                           @click="handleDelete">{{ $t('table.delete') }}</el-button>
+            <div class="table-container">
+                <div class="oprate_btn">
+                    <el-button size="small"
+                               class="filter-item"
+                               type="primary"
+                               icon="el-icon-plus"
+                               @click="handleCreate">{{ $t('table.add') }}</el-button>
+                    <el-button size="small"
+                               class="filter-item"
+                               type="primary"
+                               icon="el-icon-edit"
+                               @click="handleUpdate">{{ $t('table.edit') }}</el-button>
+                    <el-button size="small"
+                               class="filter-item"
+                               type="primary"
+                               icon="el-icon-delete"
+                               @click="handleDelete">{{ $t('table.delete') }}</el-button>
+                </div>
+                <el-table :key="tableKey"
+                          :data="list"
+                          border
+                          fit
+                          :height="theight"
+                          highlight-current-row
+                          style="width: 100%;"
+                          cell-class-name="table-cell"
+                          header-cell-class-name="header-cell"
+                          @selection-change='selectRow'
+                          @row-click="rowClick"
+                          ref="tb_a">
+                    <el-table-column type="selection"
+                                     fixed
+                                     width="30"
+                                     align="center">
+                    </el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="120"
+                                     align="left"
+                                     :label="$t('supplier.supplierCode')"
+                                     prop="supplierCode"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="120"
+                                     align="left"
+                                     :label="$t('supplier.supplierName')"
+                                     prop="supplierName"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="120"
+                                     align="left"
+                                     :label="$t('supplier.supplierTypeName')"
+                                     prop="supplierTypeName"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="120"
+                                     align="left"
+                                     :label="$t('supplier.supplyClassifyName')"
+                                     prop="supplyClassifyName"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="120"
+                                     align="left"
+                                     :label="$t('supplier.supplierGradeName')"
+                                     prop="supplierGradeName"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="100"
+                                     align="left"
+                                     :label="$t('supplier.contact')"
+                                     prop="contact"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="100"
+                                     align="left"
+                                     :label="$t('supplier.contactNumber')"
+                                     prop="contactNumber"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="160"
+                                     align="left"
+                                     :label="$t('supplier.email')"
+                                     prop="email"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="260"
+                                     align="left"
+                                     :label="$t('supplier.address')"
+                                     prop="address"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     min-width="480"
+                                     align="left"
+                                     :label="$t('supplier.remark')"
+                                     prop="remark"></el-table-column>
+                </el-table>
+
+                <pagination :total="total"
+                            :page.sync="listQuery.currentPage"
+                            :limit.sync="listQuery.pageSize"
+                            @pagination="getList" />
+                <el-dialog custom-class="dialog-custom"
+                           :close-on-click-modal="false"
+                           :close-on-press-escape="false"
+                           :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')"
+                           :visible.sync="dialogFormVisible"
+                           @close="handleClose"
+                           v-dialogDrag>
+                    <el-form class="small-space"
+                             :model="temp"
+                             :rules="rules"
+                             ref="temp"
+                             label-position="left"
+                             label-width="100px"
+                             :inline="true"
+                             style='max-width: 600px; '>
+                        <el-form-item :label="$t('supplier.supplierCode')"
+                                      prop="supplierCode">
+                            <el-input v-model="temp.supplierCode"
+                                      :disabled="dialogStatus!='create'"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('supplier.supplierName')"
+                                      prop="supplierName">
+                            <el-input v-model="temp.supplierName"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('supplier.supplierType')">
+                            <el-select size="small"
+                                       v-model="temp.supplierType"
+                                       :placeholder="$t('supplier.supplierType')">
+                                <el-option v-for="item in dt_supplier_type"
+                                           :key="item.dictItemKey"
+                                           :label="item.dictItemValue"
+                                           :value="item.dictItemKey"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item :label="$t('supplier.supplyClassifyName')">
+                            <el-select size="small"
+                                       v-model="temp.supplyClassify"
+                                       :placeholder="$t('table.select')">
+                                <el-option v-for="item in dt_materiel_classify"
+                                           :key="item.dictItemKey"
+                                           :label="item.dictItemValue"
+                                           :value="item.dictItemKey"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item :label="$t('supplier.supplierGradeName')">
+                            <el-select size="small"
+                                       v-model="temp.supplierGrade"
+                                       :placeholder="$t('table.select')">
+                                <el-option v-for="item in dt_supplier_level"
+                                           :key="item.dictItemKey"
+                                           :label="item.dictItemValue"
+                                           :value="item.dictItemKey"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item :label="$t('supplier.contact')"
+                                      prop="contact">
+                            <el-input v-model="temp.contact"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('supplier.contactNumber')"
+                                      prop="contactNumber">
+                            <el-input v-model="temp.contactNumber"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('supplier.email')"
+                                      prop="email">
+                            <el-input v-model="temp.email"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('supplier.address')"
+                                      prop="address">
+                            <el-input v-model="temp.address"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('supplier.remark')"
+                                      prop="remark">
+                            <el-input v-model="temp.remark"></el-input>
+                        </el-form-item>
+                        <el-form-item label="通讯地址"
+                                      prop="address">
+                            <el-input class="big-label"
+                                      type="textarea"
+                                      :rows="2"
+                                      v-model="temp.address"></el-input>
+                        </el-form-item>
+                        <el-form-item label="描述"
+                                      prop="remark">
+                            <el-input class="big-label"
+                                      type="textarea"
+                                      :rows="2"
+                                      v-model="temp.remark"></el-input>
+
+                        </el-form-item>
+                    </el-form>
+                    <div slot="footer"
+                         class="dialog-footer">
+                        <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
+                        <el-button v-if="dialogStatus=='create'"
+                                   type="primary"
+                                   @click="create">{{ $t('table.confirm') }}</el-button>
+                        <el-button v-else
+                                   type="primary"
+                                   @click="update">{{ $t('table.confirm') }}</el-button>
+                    </div>
+                </el-dialog>
             </div>
-            <el-table :key="tableKey"
-                      :data="list"
-                      border
-                      fit
-                      height="315"
-                      highlight-current-row
-                      style="width: 100%;"
-                      cell-class-name="table-cell"
-                      header-cell-class-name="header-cell"
-                      @selection-change='selectRow'
-                      @row-click="rowClick"
-                      ref="tb_a">
-                <el-table-column type="selection"
-                                 fixed
-                                 width="30"
-                                 align="center">
-                </el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="120"
-                                 align="left"
-                                 :label="$t('supplier.supplierCode')"
-                                 prop="supplierCode"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="120"
-                                 align="left"
-                                 :label="$t('supplier.supplierName')"
-                                 prop="supplierName"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="120"
-                                 align="left"
-                                 :label="$t('supplier.supplierTypeName')"
-                                 prop="supplierTypeName"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="120"
-                                 align="left"
-                                 :label="$t('supplier.supplyClassifyName')"
-                                 prop="supplyClassifyName"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="120"
-                                 align="left"
-                                 :label="$t('supplier.supplierGradeName')"
-                                 prop="supplierGradeName"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="100"
-                                 align="left"
-                                 :label="$t('supplier.contact')"
-                                 prop="contact"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="100"
-                                 align="left"
-                                 :label="$t('supplier.contactNumber')"
-                                 prop="contactNumber"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="160"
-                                 align="left"
-                                 :label="$t('supplier.email')"
-                                 prop="email"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="260"
-                                 align="left"
-                                 :label="$t('supplier.address')"
-                                 prop="address"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 min-width="480"
-                                 align="left"
-                                 :label="$t('supplier.remark')"
-                                 prop="remark"></el-table-column>
-            </el-table>
-
-            <pagination :total="total"
-                        :page.sync="listQuery.currentPage"
-                        :limit.sync="listQuery.pageSize"
-                        @pagination="getList" />
         </div>
-
-        <el-dialog custom-class="dialog-custom"
-                   :close-on-click-modal="false"
-                   :close-on-press-escape="false"
-                   :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')"
-                   :visible.sync="dialogFormVisible"
-                   @close="handleClose"
-                   v-dialogDrag>
-            <el-form class="small-space"
-                     :model="temp"
-                     :rules="rules"
-                     ref="temp"
-                     label-position="left"
-                     label-width="100px"
-                     :inline="true"
-                     style='max-width: 600px; '>
-                <el-form-item :label="$t('supplier.supplierCode')"
-                              prop="supplierCode">
-                    <el-input v-model="temp.supplierCode"
-                              :disabled="dialogStatus!='create'"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('supplier.supplierName')"
-                              prop="supplierName">
-                    <el-input v-model="temp.supplierName"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('supplier.supplierType')">
-                    <el-select size="small"
-                               v-model="temp.supplierType"
-                               :placeholder="$t('supplier.supplierType')">
-                        <el-option v-for="item in dt_supplier_type"
-                                   :key="item.dictItemKey"
-                                   :label="item.dictItemValue"
-                                   :value="item.dictItemKey"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('supplier.supplyClassifyName')">
-                    <el-select size="small"
-                               v-model="temp.supplyClassify"
-                               :placeholder="$t('table.select')">
-                        <el-option v-for="item in dt_materiel_classify"
-                                   :key="item.dictItemKey"
-                                   :label="item.dictItemValue"
-                                   :value="item.dictItemKey"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('supplier.supplierGradeName')">
-                    <el-select size="small"
-                               v-model="temp.supplierGrade"
-                               :placeholder="$t('table.select')">
-                        <el-option v-for="item in dt_supplier_level"
-                                   :key="item.dictItemKey"
-                                   :label="item.dictItemValue"
-                                   :value="item.dictItemKey"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('supplier.contact')"
-                              prop="contact">
-                    <el-input v-model="temp.contact"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('supplier.contactNumber')"
-                              prop="contactNumber">
-                    <el-input v-model="temp.contactNumber"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('supplier.email')"
-                              prop="email">
-                    <el-input v-model="temp.email"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('supplier.address')"
-                              prop="address">
-                    <el-input v-model="temp.address"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('supplier.remark')"
-                              prop="remark">
-                    <el-input v-model="temp.remark"></el-input>
-                </el-form-item>
-                <el-form-item label="通讯地址"
-                              prop="address">
-                    <el-input class="big-label"
-                              type="textarea"
-                              :rows="2"
-                              v-model="temp.address"></el-input>
-                </el-form-item>
-                <el-form-item label="描述"
-                              prop="remark">
-                    <el-input class="big-label"
-                              type="textarea"
-                              :rows="2"
-                              v-model="temp.remark"></el-input>
-
-                </el-form-item>
-            </el-form>
-            <div slot="footer"
-                 class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-                <el-button v-if="dialogStatus=='create'"
-                           type="primary"
-                           @click="create">{{ $t('table.confirm') }}</el-button>
-                <el-button v-else
-                           type="primary"
-                           @click="update">{{ $t('table.confirm') }}</el-button>
-            </div>
-        </el-dialog>
     </div>
+
 </template>
 
 <script>
@@ -234,6 +234,7 @@ import * as api from "@/api/data-base/supplier";
 import Pagination from "@/components/Pagination";
 import { validatorContactNumber, validatorEmail } from "@/utils/validate";
 import { mapState } from "vuex";
+import global_valfn from '@/utils/global_valfn'
 
 export default {
     name: "gyszsj",
@@ -242,6 +243,7 @@ export default {
         return {
             list: null,
             total: 0,
+            theight: 0,//表格高度
             listQuery: {
                 page: true,
                 currentPage: 1,
@@ -321,6 +323,11 @@ export default {
             "dt_supplier_level",
             "dt_materiel_classify"
         ]);
+        this.setTableHeight();
+        //表格高度自适应
+        window.onresize = () => {
+            this.setTableHeight()
+        };
         this.getList();
     },
     methods: {
@@ -329,6 +336,10 @@ export default {
                 this.list = res.data.list;
                 this.total = res.data.pages.count;
             });
+        },
+        //表格高度计算
+        setTableHeight () {
+            this.theight = global_valfn.getSingleTbHeight();
         },
         handleQuery () {
             this.listQuery.currentPage = 1;

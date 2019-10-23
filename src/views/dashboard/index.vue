@@ -2,7 +2,6 @@
 
 <template>
     <div>
-        测试2
         <temp1 @changeSelect="changeSelect"
                v-if="showTemp[0]"></temp1>
         <temp2 @changeSelect="changeSelect"
