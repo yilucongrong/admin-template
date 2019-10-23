@@ -482,7 +482,6 @@ export default {
         },
         getListUnelation () {//查询未关联的数据
             this.listQuery1.type = 2
-            console.log(this.selectlistRow[0])
             this.listQuery1.userName = this.selectlistRow[0].realName
 
             relation(this.selectlistRow[0].userName, this.listQuery1).then(response => {

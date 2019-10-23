@@ -368,8 +368,8 @@ export default {
             this.getSubList(val);
         },
         //显示从表
-        getSubList (row) {
-            console.log(row);
+        getSubList () {
+
         },
         //打印
         handlePrint () {

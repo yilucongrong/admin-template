@@ -68,7 +68,6 @@ export default {
                 });
         },
         beforeAvatarUpload (file) {
-            console.log(file.type);
             const isJPG = file.type === "image/jpeg";
             const isPNG = file.type === "image/png";
             const isGIF = file.type === "image/gif";

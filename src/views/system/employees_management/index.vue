@@ -664,7 +664,6 @@ export default {
             selectuser(code).then(response => {
                 this.listuser = response.data
                 this.frametotal = response.data.length;
-                console.log(this.frametotal);
                 // this.total = response.data.pages.count
             })
         },

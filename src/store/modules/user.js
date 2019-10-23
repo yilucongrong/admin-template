@@ -1,6 +1,5 @@
-
 import { getTokenId, getCatalog } from '@/api/login'
-import * as  auth from '@/utils/auth'
+import * as auth from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 import { changeUserInfo, relation } from '@/api/system/user'
 
@@ -90,17 +89,15 @@ const actions = {
     //     })
     // },
     //用户登录
-    LoginByUsername ({ commit }, userInfo) {
+    LoginByUsername({ commit }, userInfo) {
         const auths = {
-            "auth": {
-                "identity": {
-                    "methods": [
-                        "password"
-                    ],
-                    "password": {
-                        "user": {
-                            "name": userInfo.username,
-                            "password": userInfo.password
+            auth: {
+                identity: {
+                    methods: ['password'],
+                    password: {
+                        user: {
+                            name: userInfo.username,
+                            password: userInfo.password
                         }
                     }
                 }
@@ -111,84 +108,83 @@ const actions = {
 
         return new Promise((resolve, reject) => {
             //获取刷新token
-            getTokenId(auths).then(res => {
-                commit('SET_DOMAINID', res.data.token.domainId)
-                commit('SET_DOMAINNAME', res.data.token.domainName)
-                commit('SET_THEME', res.data.token.theme)
-                auth.setDomainId(res.data.token.domainId)
-                auth.setDomainName(res.data.token.domainName)
-                auth.setTheme(res.data.token.theme)
-                const userToken = {
-                    "auth": {
-                        "identity": {
-                            "methods": [
-                                "token"
-                            ],
-                            "token": {
-                                "id": res.headers['x-subject-token']
+            getTokenId(auths)
+                .then(res => {
+                    commit('SET_DOMAINID', res.data.token.domainId)
+                    commit('SET_DOMAINNAME', res.data.token.domainName)
+                    commit('SET_THEME', res.data.token.theme)
+                    auth.setDomainId(res.data.token.domainId)
+                    auth.setDomainName(res.data.token.domainName)
+                    auth.setTheme(res.data.token.theme)
+                    const userToken = {
+                        auth: {
+                            identity: {
+                                methods: ['token'],
+                                token: {
+                                    id: res.headers['x-subject-token']
+                                }
                             }
                         }
                     }
-                }
-                //获取访问token
-                getTokenId(userToken).then(response => {
-                    commit('SET_TOKEN', response.headers['x-subject-token'])
-                    commit('SET_TOKENTIME', response.data.token.expireAt)
-                    auth.setTokenTime(response.data.token.expireAt)
-                    auth.setToken(response.headers['x-subject-token'])
-                    auth.setName(userInfo.username)
-                    auth.setPassWord(userInfo.password)
+                    //获取访问token
+                    getTokenId(userToken).then(response => {
+                        commit('SET_TOKEN', response.headers['x-subject-token'])
+                        commit('SET_TOKENTIME', response.data.token.expireAt)
+                        auth.setTokenTime(response.data.token.expireAt)
+                        auth.setToken(response.headers['x-subject-token'])
+                        auth.setName(userInfo.username)
+                        auth.setPassWord(userInfo.password)
 
-                    let queryRole = {
-                        type: 1,
-                        currentPage: 1,
-                        pageSize: 1000,
-                        page: 1
-                    }
-                    relation(userInfo.username, queryRole).then(resr => {
-                        console.log(resr);
-                        // commit('SET_ROLES', resr.data.list);
-                        let superRole = false;
-                        resr.data.list.forEach(item => {
-                            if (item.roleCode === "WMS-SUPER") {
-                                commit('SET_SUPER_ROLES', true);
-                                superRole = true
-                            }
-                        });
-                        if (!superRole) {
-                            commit('SET_SUPER_ROLES', false);
+                        let queryRole = {
+                            type: 1,
+                            currentPage: 1,
+                            pageSize: 1000,
+                            page: 1
                         }
+                        relation(userInfo.username, queryRole).then(resr => {
+                            // commit('SET_ROLES', resr.data.list);
+                            let superRole = false
+                            resr.data.list.forEach(item => {
+                                if (item.roleCode === 'WMS-SUPER') {
+                                    commit('SET_SUPER_ROLES', true)
+                                    superRole = true
+                                }
+                            })
+                            if (!superRole) {
+                                commit('SET_SUPER_ROLES', false)
+                            }
+                        })
+                        resolve()
                     })
-                    resolve()
                 })
-
-            }).catch(error => {
-                reject(error)
-            })
+                .catch(error => {
+                    reject(error)
+                })
         })
     },
     //获取菜单资源
-    GetMenu () {
+    GetMenu() {
         return new Promise((resolve, reject) => {
-            getCatalog(auth.getName()).then(response => {
-                // console.log(response.data.catalogVMs[0])
-                // auth.setCatalogs(response.data.catalogVMs[0])
-                // console.log(auth.getCatalogs())
-                // console.log('SET_MENU存在')
+            getCatalog(auth.getName())
+                .then(response => {
+                    // console.log(response.data.catalogVMs[0])
+                    // auth.setCatalogs(response.data.catalogVMs[0])
+                    // console.log(auth.getCatalogs())
+                    // console.log('SET_MENU存在')
 
-                resolve(response.data.catalogVMs)
-            }).catch(error => {
-                auth.removeToken()
-                this.$router.push({ path: '/' })//重定向到首页
-                reject(error)
-            })
+                    resolve(response.data.catalogVMs)
+                })
+                .catch(error => {
+                    auth.removeToken()
+                    this.$router.push({ path: '/' }) //重定向到首页
+                    reject(error)
+                })
         })
     },
 
     // 用户退出
-    logout ({ commit }) {
-        return new Promise((resolve) => {
-
+    logout({ commit }) {
+        return new Promise(resolve => {
             commit('SET_TOKEN', '')
             commit('SET_ROLES', [])
             auth.removeToken()
@@ -207,7 +203,7 @@ const actions = {
     },
 
     // 删除token
-    resetToken ({ commit }) {
+    resetToken({ commit }) {
         return new Promise(resolve => {
             commit('SET_TOKEN', '')
             commit('SET_ROLES', [])
@@ -217,7 +213,7 @@ const actions = {
     },
 
     // 动态修改权限
-    changeRoles ({ commit, dispatch }, role) {
+    changeRoles({ commit, dispatch }, role) {
         return new Promise(async resolve => {
             const token = role + '-token'
 
@@ -229,7 +225,11 @@ const actions = {
             resetRouter()
 
             // generate accessible routes map based on roles
-            const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
+            const accessRoutes = await dispatch(
+                'permission/generateRoutes',
+                roles,
+                { root: true }
+            )
 
             // dynamically add accessible routes
             router.addRoutes(accessRoutes)
@@ -241,16 +241,18 @@ const actions = {
         })
     },
     //修改用户信息
-    ChangeUserInfo ({ commit }, userDTO) {
+    ChangeUserInfo({ commit }, userDTO) {
         console.log(commit)
         return new Promise((resolve, reject) => {
-            changeUserInfo(userDTO).then(res => {
-                resolve(res)
-            }).catch(error => {
-                reject(error)
-            })
+            changeUserInfo(userDTO)
+                .then(res => {
+                    resolve(res)
+                })
+                .catch(error => {
+                    reject(error)
+                })
         })
-    },
+    }
 }
 
 export default {

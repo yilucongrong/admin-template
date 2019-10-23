@@ -204,10 +204,6 @@ export default {
     methods: {
         // 查询bom主表
         getListMain_a () {
-            console.log(this.dt_org_data)
-            console.log(this.dt_org_data.options)
-
-
 
             // api.getMain_a(this.listQueryMain_a).then(res => {
             //     this.listMain_a=res.data.list
