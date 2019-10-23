@@ -45,15 +45,15 @@ export default {
             const originalCluster = this.getThemeCluster(
                 oldVal.replace("#", "")
             );
-            console.log(themeCluster, originalCluster);
+            // console.log(themeCluster, originalCluster);
 
-            const $message = this.$message({
-                message: "  Compiling the theme",
-                customClass: "theme-message",
-                type: "success",
-                duration: 0,
-                iconClass: "el-icon-loading"
-            });
+            // const $message = this.$message({
+            //     message: "  Compiling the theme",
+            //     customClass: "theme-message",
+            //     type: "success",
+            //     duration: 0,
+            //     iconClass: "el-icon-loading"
+            // });
 
             const getHandler = (variable, id) => {
                 return () => {
@@ -117,7 +117,7 @@ export default {
             };
             let dd = await this.$store.dispatch("user/ChangeUserInfo", userDTO);
             console.log(dd)
-            $message.close();
+            // $message.close();
         }
     },
     created () {

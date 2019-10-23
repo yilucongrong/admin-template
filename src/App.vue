@@ -29,7 +29,7 @@ export default {
 };
 </script>
 <style lang="scss">
-// body .el-table th.gutter {
-//     display: table-cell !important;
-// }
+body .el-table th.gutter {
+    display: table-cell !important;
+}
 </style>
