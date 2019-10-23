@@ -1,31 +1,28 @@
 <template>
-    <div class="app-container calendar-list-container">
+    <div class="app-container">
         <div class="filter-container">
             <div class="filter-items">
-                <div class="select-element">
-                    <el-input size="small"
-                              :placeholder="$t('workCenter.workCenterCode')"
-                              v-model="listQuery.workCenterCode"
-                              class="filter-item"
-                              @keyup.enter.native="handleQuery" />
-                    <el-input size="small"
-                              :placeholder="$t('workCenter.workCenterName')"
-                              v-model="listQuery.workCenterName"
-                              class="filter-item"
-                              @keyup.enter.native="handleQuery" />
-                    <el-button class="filter-item"
-                               size="small"
-                               type="primary"
-                               icon="el-icon-search"
-                               @click="handleQuery">
-                        {{ $t('table.search') }}
-                    </el-button>
-                </div>
+                <el-input size="small"
+                          :placeholder="$t('workCenter.workCenterCode')"
+                          v-model="listQuery.workCenterCode"
+                          class="filter-item"
+                          @keyup.enter.native="handleQuery" />
+                <el-input size="small"
+                          :placeholder="$t('workCenter.workCenterName')"
+                          v-model="listQuery.workCenterName"
+                          class="filter-item"
+                          @keyup.enter.native="handleQuery" />
+                <el-button class="filter-item"
+                           size="small"
+                           type="primary"
+                           icon="el-icon-search"
+                           @click="handleQuery">
+                    {{ $t('table.search') }}
+                </el-button>
             </div>
         </div>
-
         <div class="table-container">
-            <div class="table-items">
+            <div class="oprate_btn">
                 <el-button class="filter-item"
                            size="small"
                            type="primary"
@@ -52,7 +49,7 @@
                       :data="list"
                       border
                       fit
-                      height="315"
+                      :height="theight"
                       highlight-current-row
                       style="width: 100%;"
                       @selection-change='selectRow'
@@ -123,139 +120,139 @@
                         :page.sync="listQuery.currentPage"
                         :limit.sync="listQuery.pageSize"
                         @pagination="getList" />
-        </div>
-
-        <el-dialog custom-class="dialog-custom"
-                   :close-on-click-modal="false"
-                   :close-on-press-escape="false"
-                   :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')"
-                   :visible.sync="dialogFormVisible"
-                   @close="handleClose"
-                   v-dialogDrag>
-            <el-form :inline="true"
-                     class='demo-form-inline'
-                     :model="temp"
-                     :rules="rules"
-                     ref="temp"
-                     label-width="120px"
-                     style="width:auto;">
-                <el-form-item :label="$t('workCenter.orgCode')"
-                              prop="orgCode">
-                    <orgSelect disabled
-                               :orgType="DT_ORG_TYPE"
-                               v-model="temp.orgCode">
-                    </orgSelect>
-                </el-form-item>
-                <el-form-item :label="$t('workCenter.parentCode')"
-                              prop="parentCode">
-                    <el-input v-model="temp.parentName"
-                              disabled></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('workCenter.workCenterType')"
-                              prop="workCenterType">
-                    <el-select size="small"
-                               v-model="temp.workCenterType"
-                               :placeholder="$t('table.select')">
-                        <el-option v-for="item in dt_workcenter_type"
-                                   :key="item.dictItemKey"
-                                   :label="item.dictItemValue"
-                                   :value="item.dictItemKey"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('workCenter.workCenterClass')"
-                              prop="workCenterClass">
-                    <el-select size="small"
-                               v-model="temp.workCenterClass"
-                               :placeholder="$t('table.select')">
-                        <el-option v-for="item in dt_workcenter_class"
-                                   :key="item.dictItemKey"
-                                   :label="item.dictItemValue"
-                                   :value="item.dictItemKey"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('workCenter.workCenterCode')"
-                              prop="workCenterCode">
-                    <el-input v-model="temp.workCenterCode"
-                              :disabled="dialogStatus!='create'"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('workCenter.workCenterGroupName')">
-                    <el-select size="small"
-                               v-model="temp.workCenterGroup"
-                               :placeholder="$t('table.select')">
-                        <el-option v-for="item in dt_workcenter_group"
-                                   :key="item.dictItemKey"
-                                   :label="item.dictItemValue"
-                                   :value="item.dictItemKey"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('workCenter.workCenterName')"
-                              prop="workCenterName">
-                    <el-input v-model="temp.workCenterName"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('workCenter.workCenterModelName')"
-                              prop="workCenterModel">
-                    <el-select :disabled="temp.workCenterClass != 'dt_workcenter_class_line'"
-                               size="small"
-                               v-model="temp.workCenterModel"
-                               :placeholder="$t('table.select')">
-                        <el-option v-for="item in dt_workcenter_model"
-                                   :key="item.dictItemKey"
-                                   :label="item.dictItemValue"
-                                   :value="item.dictItemKey"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('workCenter.productNum')"
-                              prop="productNum">
-                    <el-input v-model="temp.productNum"
-                              :disabled="temp.workCenterClass != 'dt_workcenter_class_line'"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('workCenter.productBeat')"
-                              prop="productBeat">
-                    <el-input v-model="temp.productBeat"
-                              :disabled="temp.workCenterClass != 'dt_workcenter_class_line'">
-                        <el-select style="width: 70px"
-                                   :disabled="temp.workCenterClass != 'dt_workcenter_class_line'"
-                                   size="small"
-                                   v-model="temp.beatTimeunit"
+            <el-dialog custom-class="dialog-custom"
+                       :close-on-click-modal="false"
+                       :close-on-press-escape="false"
+                       :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')"
+                       :visible.sync="dialogFormVisible"
+                       @close="handleClose"
+                       v-dialogDrag>
+                <el-form :inline="true"
+                         class='demo-form-inline'
+                         :model="temp"
+                         :rules="rules"
+                         ref="temp"
+                         label-width="120px"
+                         style="width:auto;">
+                    <el-form-item :label="$t('workCenter.orgCode')"
+                                  prop="orgCode">
+                        <orgSelect disabled
+                                   :orgType="DT_ORG_TYPE"
+                                   v-model="temp.orgCode">
+                        </orgSelect>
+                    </el-form-item>
+                    <el-form-item :label="$t('workCenter.parentCode')"
+                                  prop="parentCode">
+                        <el-input v-model="temp.parentName"
+                                  disabled></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('workCenter.workCenterType')"
+                                  prop="workCenterType">
+                        <el-select size="small"
+                                   v-model="temp.workCenterType"
                                    :placeholder="$t('table.select')">
+                            <el-option v-for="item in dt_workcenter_type"
+                                       :key="item.dictItemKey"
+                                       :label="item.dictItemValue"
+                                       :value="item.dictItemKey"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item :label="$t('workCenter.workCenterClass')"
+                                  prop="workCenterClass">
+                        <el-select size="small"
+                                   v-model="temp.workCenterClass"
+                                   :placeholder="$t('table.select')">
+                            <el-option v-for="item in dt_workcenter_class"
+                                       :key="item.dictItemKey"
+                                       :label="item.dictItemValue"
+                                       :value="item.dictItemKey"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item :label="$t('workCenter.workCenterCode')"
+                                  prop="workCenterCode">
+                        <el-input v-model="temp.workCenterCode"
+                                  :disabled="dialogStatus!='create'"></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('workCenter.workCenterGroupName')">
+                        <el-select size="small"
+                                   v-model="temp.workCenterGroup"
+                                   :placeholder="$t('table.select')">
+                            <el-option v-for="item in dt_workcenter_group"
+                                       :key="item.dictItemKey"
+                                       :label="item.dictItemValue"
+                                       :value="item.dictItemKey"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item :label="$t('workCenter.workCenterName')"
+                                  prop="workCenterName">
+                        <el-input v-model="temp.workCenterName"></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('workCenter.workCenterModelName')"
+                                  prop="workCenterModel">
+                        <el-select :disabled="temp.workCenterClass != 'dt_workcenter_class_line'"
+                                   size="small"
+                                   v-model="temp.workCenterModel"
+                                   :placeholder="$t('table.select')">
+                            <el-option v-for="item in dt_workcenter_model"
+                                       :key="item.dictItemKey"
+                                       :label="item.dictItemValue"
+                                       :value="item.dictItemKey"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item :label="$t('workCenter.productNum')"
+                                  prop="productNum">
+                        <el-input v-model="temp.productNum"
+                                  :disabled="temp.workCenterClass != 'dt_workcenter_class_line'"></el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('workCenter.productBeat')"
+                                  prop="productBeat">
+                        <el-input v-model="temp.productBeat"
+                                  :disabled="temp.workCenterClass != 'dt_workcenter_class_line'">
+                            <el-select style="width: 70px"
+                                       :disabled="temp.workCenterClass != 'dt_workcenter_class_line'"
+                                       size="small"
+                                       v-model="temp.beatTimeunit"
+                                       :placeholder="$t('table.select')">
+                                <el-option v-for="item in dt_timeunit"
+                                           :key="item.dictItemKey"
+                                           :label="item.dictItemValue"
+                                           :value="item.dictItemKey"></el-option>
+                            </el-select>
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item :label="$t('workCenter.beatTimeunitName')"
+                                  prop="beatTimeunit">
+                        <el-select size="small"
+                                   v-model="temp.beatTimeunit"
+                                   :placeholder="$t('workCenter.beatTimeunitName')"
+                                   clearable>
                             <el-option v-for="item in dt_timeunit"
                                        :key="item.dictItemKey"
                                        :label="item.dictItemValue"
                                        :value="item.dictItemKey"></el-option>
                         </el-select>
-                    </el-input>
-                </el-form-item>
-                <el-form-item :label="$t('workCenter.beatTimeunitName')"
-                              prop="beatTimeunit">
-                    <el-select size="small"
-                               v-model="temp.beatTimeunit"
-                               :placeholder="$t('workCenter.beatTimeunitName')"
-                               clearable>
-                        <el-option v-for="item in dt_timeunit"
-                                   :key="item.dictItemKey"
-                                   :label="item.dictItemValue"
-                                   :value="item.dictItemKey"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item :label="$t('workCenter.feedAreaName')">
-                    <warehouseSelect :orgCode="temp.orgCode"
-                                     v-model="temp.feedArea">
-                    </warehouseSelect>
-                </el-form-item>
-                <el-form-item :label="$t('workCenter.bufferArea')">
-                    <warehouseSelect :orgCode="temp.orgCode"
-                                     v-model="temp.bufferArea">
-                    </warehouseSelect>
-                </el-form-item>
+                    </el-form-item>
+                    <el-form-item :label="$t('workCenter.feedAreaName')">
+                        <warehouseSelect :orgCode="temp.orgCode"
+                                         v-model="temp.feedArea">
+                        </warehouseSelect>
+                    </el-form-item>
+                    <el-form-item :label="$t('workCenter.bufferArea')">
+                        <warehouseSelect :orgCode="temp.orgCode"
+                                         v-model="temp.bufferArea">
+                        </warehouseSelect>
+                    </el-form-item>
 
-            </el-form>
-            <div slot="footer"
-                 class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-                <el-button type="primary"
-                           @click="dialogStatus==='create'?create():update()">{{ $t('table.confirm') }}</el-button>
-            </div>
-        </el-dialog>
+                </el-form>
+                <div slot="footer"
+                     class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
+                    <el-button type="primary"
+                               @click="dialogStatus==='create'?create():update()">{{ $t('table.confirm') }}</el-button>
+                </div>
+            </el-dialog>
+        </div>
+
     </div>
 </template>
 
@@ -265,6 +262,7 @@ import Pagination from '@/components/Pagination'
 import warehouseSelect from '@/components/Select/warehouse-select.vue'
 import orgSelect from '@/components/Select/orgSelect.vue'
 import { mapState } from 'vuex';
+import global_valfn from '@/utils/global_valfn'
 
 export default {
     name: 'workCenter',
@@ -274,6 +272,7 @@ export default {
             list: null,
             total: 0,
             DT_ORG_TYPE: 'dt_org_type_factory',
+            theight: 0,//表格高度
             listQuery: {
                 page: true,
                 currentPage: 1,
@@ -339,6 +338,12 @@ export default {
     },
     mounted () {
         this.$store.dispatch('dict/getDicData', ['dt_workcenter_type', 'dt_workcenter_class', 'dt_workcenter_group', 'dt_workcenter_model', 'dt_timeunit']);
+        this.setTableHeight();
+        //表格高度自适应
+        window.onresize = () => {
+            this.setTableHeight();
+        };
+        this.getList();
     },
     methods: {
         getList (node) {
@@ -359,6 +364,10 @@ export default {
                 this.list = res.data.list
                 this.total = res.data.pages.count
             })
+        },
+        //表格高度计算
+        setTableHeight () {
+            this.theight = global_valfn.getSingleTbHeight();
         },
         handleQuery () {
             this.listQuery.currentPage = 1

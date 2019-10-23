@@ -1,9 +1,8 @@
 <template>
-    <!-- 物料主数据 -->
-    <div class="app-container calendar-list-container">
-        <div class="filter-container">
-            <div class="filter-items">
-                <div class="select-element">
+    <div>
+        <div class="app-container">
+            <div class="filter-container">
+                <div class="filter-items">
                     <dictItemSelect class="filter-item"
                                     :placeholder="$t('materiel.materielType')"
                                     :dictCode="DICT_CODE.materielType"
@@ -47,306 +46,304 @@
                                @click="handleQuery">{{ $t("table.search") }}</el-button>
                 </div>
             </div>
-        </div>
+            <div class="table-container">
+                <div class="oprate_btn">
+                    <el-button class="filter-item"
+                               size="small"
+                               type="primary"
+                               @click="handleCreate"
+                               icon="el-icon-plus">{{ $t("table.add") }}</el-button>
+                    <el-button class="filter-item"
+                               size="small"
+                               type="primary"
+                               @click="handleUpdate"
+                               icon="el-icon-edit">{{ $t("table.edit") }}</el-button>
+                    <el-button class="filter-item"
+                               size="small"
+                               type="primary"
+                               @click="handleDelete"
+                               icon="el-icon-delete">{{ $t("table.delete") }}</el-button>
+                    <el-button size="small"
+                               class="filter-item"
+                               type="primary"
+                               icon="el-icon-download"
+                               @click="handleDownload">{{ $t("table.export") }}</el-button>
+                    <el-button class="filter-item"
+                               size="small"
+                               type="primary"
+                               @click="handleImport"
+                               icon="el-icon-edit">{{$t('table.import')}}</el-button>
+                </div>
+                <el-table :key="tableKey"
+                          :data="list"
+                          border
+                          fit
+                          :height="theight"
+                          highlight-current-row
+                          style="width: 100%;"
+                          @selection-change="selectRow"
+                          size="mini"
+                          cell-class-name="table-cell"
+                          header-cell-class-name="header-cell">
+                    <el-table-column type="selection"
+                                     width="30"> </el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="120"
+                                     align="left"
+                                     :label="$t('materiel.materielCode')"
+                                     prop="materielCode"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="120"
+                                     align="left"
+                                     :label="$t('materiel.materielName')"
+                                     prop="materielName"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="120"
+                                     align="left"
+                                     :label="$t('materiel.materielEngName')"
+                                     prop="materielEngName"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="120"
+                                     align="left"
+                                     :label="$t('materiel.materielTypeName')"
+                                     prop="materielTypeName"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="120"
+                                     align="left"
+                                     :label="$t('materiel.materielClassifyName')"
+                                     prop="materielClassifyName"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="120"
+                                     align="left"
+                                     :label="$t('materiel.materielGroupName')"
+                                     prop="materielGroupName"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="120"
+                                     align="left"
+                                     :label="$t('materiel.specification')"
+                                     prop="specification"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="120"
+                                     align="left"
+                                     :label="$t('materiel.materialQuality')"
+                                     prop="materialQuality"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="80"
+                                     align="left"
+                                     :label="$t('materiel.measuringUnitName')"
+                                     prop="measuringUnitName"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="120"
+                                     align="left"
+                                     :label="$t('materiel.externalMaterielCode')"
+                                     prop="externalMaterielCode"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="80"
+                                     align="left"
+                                     :label="$t('materiel.weight')"
+                                     prop="weight"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="80"
+                                     align="left"
+                                     :label="$t('materiel.volume')"
+                                     prop="volume"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="80"
+                                     align="left"
+                                     :label="$t('materiel.length')"
+                                     prop="length"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="80"
+                                     align="left"
+                                     :label="$t('materiel.width')"
+                                     prop="width"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="80"
+                                     align="left"
+                                     :label="$t('materiel.height')"
+                                     prop="height"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="80"
+                                     align="left"
+                                     :label="$t('materiel.shelfLife')"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="80"
+                                     align="left"
+                                     :label="$t('materiel.classStandard')"
+                                     prop="classStandard"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="120"
+                                     align="left"
+                                     :label="$t('materiel.productStandard')"
+                                     prop="productStandard"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="80"
+                                     align="left"
+                                     :label="$t('materiel.productionStateName')"
+                                     prop="productionStateName"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="80"
+                                     align="left"
+                                     :label="$t('materiel.importantMaterielMark')">
+                        <template slot-scope="scope">
+                            {{[scope.row.importantMaterielMark,TWO_STATE_OPTIONS] | optionsFilter}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     width="200"
+                                     align="left"
+                                     :label="$t('materiel.remark')"
+                                     prop="remark"></el-table-column>
+                </el-table>
 
-        <div class="table-container">
-            <div class="table-items">
-                <el-button class="filter-item"
-                           size="small"
-                           type="primary"
-                           @click="handleCreate"
-                           icon="el-icon-plus">{{ $t("table.add") }}</el-button>
-                <el-button class="filter-item"
-                           size="small"
-                           type="primary"
-                           @click="handleUpdate"
-                           icon="el-icon-edit">{{ $t("table.edit") }}</el-button>
-                <el-button class="filter-item"
-                           size="small"
-                           type="primary"
-                           @click="handleDelete"
-                           icon="el-icon-delete">{{ $t("table.delete") }}</el-button>
-                <el-button size="small"
-                           class="filter-item"
-                           type="primary"
-                           icon="el-icon-download"
-                           @click="handleDownload">{{ $t("table.export") }}</el-button>
-                <el-button class="filter-item"
-                           size="small"
-                           type="primary"
-                           @click="handleImport"
-                           icon="el-icon-edit">{{$t('table.import')}}</el-button>
+                <pagination :total="total"
+                            :page.sync="listQuery.currentPage"
+                            :limit.sync="listQuery.pageSize"
+                            @pagination="getList" />
+                <el-dialog custom-class="dialog-custom"
+                           :close-on-click-modal="false"
+                           :close-on-press-escape="false"
+                           :title="dialogStatus == 'create' ? $t('table.add') : $t('table.edit')"
+                           :visible.sync="dialogFormVisible"
+                           v-dialogDrag
+                           @close="handleClose">
+                    <el-form class="mini-space"
+                             :model="temp"
+                             :rules="rules"
+                             ref="temp"
+                             label-position="left"
+                             label-width="120px"
+                             :inline="true"
+                             size="mini"
+                             style="max-width: 700px; margin-left:10px;">
+                        <el-form-item :label="$t('materiel.materielCode')"
+                                      prop="materielCode">
+                            <el-input v-model="temp.materielCode"
+                                      :disabled="dialogStatus != 'create'"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.materielName')"
+                                      prop="materielName">
+                            <el-input v-model="temp.materielName"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.materielEngName')"
+                                      prop="materielEngName">
+                            <el-input v-model="temp.materielEngName"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.materielType')"
+                                      prop="materielType">
+                            <dictItemSelect :dictCode="DICT_CODE.materielType"
+                                            v-model="temp.materielType"></dictItemSelect>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.materielClassify')"
+                                      prop="materielClassify">
+                            <dictItemSelect :dictCode="DICT_CODE.materielClassify"
+                                            v-model="temp.materielClassify"> </dictItemSelect>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.materielGroup')">
+                            <dictItemSelect :dictCode="DICT_CODE.materielGroup"
+                                            v-model="temp.materielGroup"></dictItemSelect>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.specification')"
+                                      prop="specification">
+                            <el-input v-model="temp.specification"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.materialQuality')"
+                                      prop="materialQuality">
+                            <el-input v-model="temp.materialQuality"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.measuringUnitName')">
+                            <el-input style="width: 165px"
+                                      v-model="temp.measuringUnitName"
+                                      disabled>
+                                <el-button slot="append"
+                                           icon="el-icon-search"
+                                           @click="handleMeasuringUnit"></el-button>
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.externalMaterielCode')"
+                                      prop="externalMaterielCode">
+                            <el-input v-model="temp.externalMaterielCode"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.weight')"
+                                      prop="weight">
+                            <el-input v-model="temp.weight"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.volume')"
+                                      prop="volume">
+                            <el-input v-model="temp.volume"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.length')"
+                                      prop="length">
+                            <el-input v-model="temp.length"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.width')"
+                                      prop="width">
+                            <el-input v-model="temp.width"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.height')"
+                                      prop="height">
+                            <el-input v-model="temp.height"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.shelfLife')"
+                                      prop="shelfLife">
+                            <el-input v-model="temp.shelfLife"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.classStandard')"
+                                      prop="classStandard">
+                            <el-input v-model="temp.classStandard"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.productStandard')"
+                                      prop="productStandard">
+                            <el-input v-model="temp.productStandard"></el-input>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.productionState')">
+                            <dictItemSelect :dictCode="DICT_CODE.productionState"
+                                            v-model="temp.productionState"></dictItemSelect>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.importantMaterielMark')"
+                                      prop="importantMaterielMark">
+                            <el-radio-group v-model="temp.importantMaterielMark">
+                                <el-radio v-for="item in TWO_STATE_OPTIONS"
+                                          :label="item.value"
+                                          :key="item.value">{{ item.label }}</el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+                        <el-form-item :label="$t('materiel.remark')"
+                                      prop="remark">
+                            <el-input type="textarea"
+                                      :rows="2"
+                                      style="width: 460px"
+                                      v-model="temp.remark"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <div slot="footer"
+                         class="dialog-footer">
+                        <el-button @click="dialogFormVisible = false">{{$t("table.cancel")}}</el-button>
+                        <el-button type="primary"
+                                   @click="dialogStatus === 'create' ? create() : update()">{{ $t("table.confirm") }}</el-button>
+                    </div>
+                </el-dialog>
+
+                <el-dialog class="table-container"
+                           :title="$t('materiel.measuringUnitName')"
+                           :visible.sync="dialogFormVisible2"
+                           v-dialogDrag
+                           @close="handleClose2">
+                    <measureUnitTable v-on:dblclick="handleDblclick"></measureUnitTable>
+                </el-dialog>
+
+                <!-- 导入弹框 -->
+                <el-dialog custom-class="dialog-custom"
+                           class="table-container"
+                           :title="'储位物料导入'"
+                           :visible.sync="importDialogVisible"
+                           v-dialogDrag
+                           :close-on-click-modal="false">
+                    <ImportFile ref="importDialog"
+                                :modalNo="modalNo"></ImportFile>
+                </el-dialog>
             </div>
-            <el-table :key="tableKey"
-                      :data="list"
-                      border
-                      fit
-                      height="315"
-                      highlight-current-row
-                      style="width: 100%;"
-                      @selection-change="selectRow"
-                      size="mini"
-                      cell-class-name="table-cell"
-                      header-cell-class-name="header-cell">
-                <el-table-column type="selection"
-                                 width="30"> </el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="120"
-                                 align="left"
-                                 :label="$t('materiel.materielCode')"
-                                 prop="materielCode"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="120"
-                                 align="left"
-                                 :label="$t('materiel.materielName')"
-                                 prop="materielName"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="120"
-                                 align="left"
-                                 :label="$t('materiel.materielEngName')"
-                                 prop="materielEngName"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="120"
-                                 align="left"
-                                 :label="$t('materiel.materielTypeName')"
-                                 prop="materielTypeName"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="120"
-                                 align="left"
-                                 :label="$t('materiel.materielClassifyName')"
-                                 prop="materielClassifyName"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="120"
-                                 align="left"
-                                 :label="$t('materiel.materielGroupName')"
-                                 prop="materielGroupName"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="120"
-                                 align="left"
-                                 :label="$t('materiel.specification')"
-                                 prop="specification"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="120"
-                                 align="left"
-                                 :label="$t('materiel.materialQuality')"
-                                 prop="materialQuality"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="80"
-                                 align="left"
-                                 :label="$t('materiel.measuringUnitName')"
-                                 prop="measuringUnitName"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="120"
-                                 align="left"
-                                 :label="$t('materiel.externalMaterielCode')"
-                                 prop="externalMaterielCode"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="80"
-                                 align="left"
-                                 :label="$t('materiel.weight')"
-                                 prop="weight"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="80"
-                                 align="left"
-                                 :label="$t('materiel.volume')"
-                                 prop="volume"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="80"
-                                 align="left"
-                                 :label="$t('materiel.length')"
-                                 prop="length"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="80"
-                                 align="left"
-                                 :label="$t('materiel.width')"
-                                 prop="width"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="80"
-                                 align="left"
-                                 :label="$t('materiel.height')"
-                                 prop="height"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="80"
-                                 align="left"
-                                 :label="$t('materiel.shelfLife')"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="80"
-                                 align="left"
-                                 :label="$t('materiel.classStandard')"
-                                 prop="classStandard"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="120"
-                                 align="left"
-                                 :label="$t('materiel.productStandard')"
-                                 prop="productStandard"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="80"
-                                 align="left"
-                                 :label="$t('materiel.productionStateName')"
-                                 prop="productionStateName"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="80"
-                                 align="left"
-                                 :label="$t('materiel.importantMaterielMark')">
-                    <template slot-scope="scope">
-                        {{[scope.row.importantMaterielMark,TWO_STATE_OPTIONS] | optionsFilter}}
-                    </template>
-                </el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 width="200"
-                                 align="left"
-                                 :label="$t('materiel.remark')"
-                                 prop="remark"></el-table-column>
-            </el-table>
-
-            <pagination :total="total"
-                        :page.sync="listQuery.currentPage"
-                        :limit.sync="listQuery.pageSize"
-                        @pagination="getList" />
         </div>
-
-        <el-dialog custom-class="dialog-custom"
-                   :close-on-click-modal="false"
-                   :close-on-press-escape="false"
-                   :title="dialogStatus == 'create' ? $t('table.add') : $t('table.edit')"
-                   :visible.sync="dialogFormVisible"
-                   v-dialogDrag
-                   @close="handleClose">
-            <el-form class="mini-space"
-                     :model="temp"
-                     :rules="rules"
-                     ref="temp"
-                     label-position="left"
-                     label-width="120px"
-                     :inline="true"
-                     size="mini"
-                     style="max-width: 700px; margin-left:10px;">
-                <el-form-item :label="$t('materiel.materielCode')"
-                              prop="materielCode">
-                    <el-input v-model="temp.materielCode"
-                              :disabled="dialogStatus != 'create'"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.materielName')"
-                              prop="materielName">
-                    <el-input v-model="temp.materielName"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.materielEngName')"
-                              prop="materielEngName">
-                    <el-input v-model="temp.materielEngName"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.materielType')"
-                              prop="materielType">
-                    <dictItemSelect :dictCode="DICT_CODE.materielType"
-                                    v-model="temp.materielType"></dictItemSelect>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.materielClassify')"
-                              prop="materielClassify">
-                    <dictItemSelect :dictCode="DICT_CODE.materielClassify"
-                                    v-model="temp.materielClassify"> </dictItemSelect>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.materielGroup')">
-                    <dictItemSelect :dictCode="DICT_CODE.materielGroup"
-                                    v-model="temp.materielGroup"></dictItemSelect>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.specification')"
-                              prop="specification">
-                    <el-input v-model="temp.specification"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.materialQuality')"
-                              prop="materialQuality">
-                    <el-input v-model="temp.materialQuality"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.measuringUnitName')">
-                    <el-input style="width: 165px"
-                              v-model="temp.measuringUnitName"
-                              disabled>
-                        <el-button slot="append"
-                                   icon="el-icon-search"
-                                   @click="handleMeasuringUnit"></el-button>
-                    </el-input>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.externalMaterielCode')"
-                              prop="externalMaterielCode">
-                    <el-input v-model="temp.externalMaterielCode"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.weight')"
-                              prop="weight">
-                    <el-input v-model="temp.weight"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.volume')"
-                              prop="volume">
-                    <el-input v-model="temp.volume"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.length')"
-                              prop="length">
-                    <el-input v-model="temp.length"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.width')"
-                              prop="width">
-                    <el-input v-model="temp.width"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.height')"
-                              prop="height">
-                    <el-input v-model="temp.height"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.shelfLife')"
-                              prop="shelfLife">
-                    <el-input v-model="temp.shelfLife"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.classStandard')"
-                              prop="classStandard">
-                    <el-input v-model="temp.classStandard"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.productStandard')"
-                              prop="productStandard">
-                    <el-input v-model="temp.productStandard"></el-input>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.productionState')">
-                    <dictItemSelect :dictCode="DICT_CODE.productionState"
-                                    v-model="temp.productionState"></dictItemSelect>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.importantMaterielMark')"
-                              prop="importantMaterielMark">
-                    <el-radio-group v-model="temp.importantMaterielMark">
-                        <el-radio v-for="item in TWO_STATE_OPTIONS"
-                                  :label="item.value"
-                                  :key="item.value">{{ item.label }}</el-radio>
-                    </el-radio-group>
-                </el-form-item>
-                <el-form-item :label="$t('materiel.remark')"
-                              prop="remark">
-                    <el-input type="textarea"
-                              :rows="2"
-                              style="width: 460px"
-                              v-model="temp.remark"></el-input>
-                </el-form-item>
-            </el-form>
-            <div slot="footer"
-                 class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">{{$t("table.cancel")}}</el-button>
-                <el-button type="primary"
-                           @click="dialogStatus === 'create' ? create() : update()">{{ $t("table.confirm") }}</el-button>
-            </div>
-        </el-dialog>
-
-        <el-dialog class="table-container"
-                   :title="$t('materiel.measuringUnitName')"
-                   :visible.sync="dialogFormVisible2"
-                   v-dialogDrag
-                   @close="handleClose2">
-            <measureUnitTable v-on:dblclick="handleDblclick"></measureUnitTable>
-        </el-dialog>
-
-        <!-- 导入弹框 -->
-        <el-dialog custom-class="dialog-custom"
-                   class="table-container"
-                   :title="'储位物料导入'"
-                   :visible.sync="importDialogVisible"
-                   v-dialogDrag
-                   :close-on-click-modal="false">
-            <ImportFile ref="importDialog"
-                        :modalNo="modalNo"></ImportFile>
-        </el-dialog>
     </div>
 </template>
 
@@ -358,6 +355,7 @@ import dictItemSelect from "@/components/Select/dictItemSelect.vue";
 import measureUnitTable from "@/components/Table/measureUnitTable.vue";
 import { DICT_CODE, TWO_STATE_OPTIONS } from "@/utils/constant";
 import { parseTime } from "@/utils";
+import global_valfn from '@/utils/global_valfn'
 
 export default {
     name: "materiel",
@@ -366,6 +364,7 @@ export default {
         return {
             list: null,
             total: 0,
+            theight: 0,//表格高度
             listQuery: {
                 page: true,
                 currentPage: 1,
@@ -473,12 +472,24 @@ export default {
     created () {
         this.getList();
     },
+    mounted () {
+        this.setTableHeight();
+        //表格高度自适应
+        window.onresize = () => {
+            this.setTableHeight()
+        };
+        this.getList();
+    },
     methods: {
         getList () {
             api.queryRecords(this.listQuery).then(res => {
                 this.list = res.data.list;
                 this.total = res.data.pages.count;
             });
+        },
+        //表格高度计算
+        setTableHeight () {
+            this.theight = global_valfn.getSingleTbHeight();
         },
         handleQuery () {
             this.listQuery.currentPage = 1;

@@ -31,6 +31,7 @@ import { buildTree } from "@/utils";
 import { selectlists as listOrg } from "@/api/system/organization";
 import { queryRecords as listWorkCenter } from "@/api/data-base/work-center";
 import orgSelect from "@/components/Select/orgSelect.vue";
+import global_valfn from '@/utils/global_valfn'
 
 export default {
     name: "gzzxzsj",
@@ -42,6 +43,7 @@ export default {
                 children: "children",
                 label: "label"
             },
+            //树高度样式
             contentStyleObj: {
                 height: ""
             },
@@ -51,8 +53,16 @@ export default {
     },
     created () {
         window.addEventListener("resize", this.getHeight);
-        this.getHeight();
+
         this.initTree();
+    },
+    mounted () {
+        //表格高度自适应
+        window.onresize = () => {
+            this.setTreeHeight();
+        };
+        this.getList();
+        this.setTreeHeight();
     },
     methods: {
         initTree () {
@@ -108,7 +118,11 @@ export default {
         getHeight () {
             this.contentStyleObj.height =
                 document.body.scrollHeight - 197 + "px";
-        }
+        },
+        //树高度设置
+        setTreeHeight () {
+            this.contentStyleObj.height = global_valfn.getTreehHeight();
+        },
     },
     destroyed () {
         window.removeEventListener("resize", this.getHeight);
