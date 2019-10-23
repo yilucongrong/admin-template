@@ -195,16 +195,17 @@ aside {
     border-top: solid 5px $border-color;
     background-color: white;
     text-align: left;
-    padding: 5px;
+    padding: 5px 5px 0px 5px;
 
     // 搜索条件输入项
     .filter-item {
         display: inline-block;
+        margin-bottom: 5px;
     }
 
-    .filter-items {
-        height: 32px;
-    }
+    // .filter-items {
+    //     height: 32px;
+    // }
 
     //搜索条件按钮
     .filter-item-btn {
@@ -418,7 +419,7 @@ aside {
 
     .el-form--inline .el-form-item {
         margin-right: 0px;
-        margin-bottom: 5px;
+        margin-bottom: 0px;
     }
 
     .left_content {
