@@ -21,6 +21,7 @@
                                :label="item.dictItemValue"
                                :value="item.dictItemKey"></el-option>
                 </el-select>
+                <changeModuleSelect @changeMoudle="changeMoudle"></changeModuleSelect>
                 <el-button class="filter-item"
                            size="small"
                            type="primary"
@@ -29,7 +30,7 @@
             </div>
         </div>
         <div class="table-container">
-            <div class="btn">
+            <div class="oprate_btn">
                 <el-button size="small"
                            class="filter-item"
                            type="primary"
@@ -63,7 +64,7 @@
                       highlight-current-row
                       style="width: 100%"
                       cell-class-name="table-cell"
-                      height="315"
+                      :height="theight"
                       header-cell-class-name="header-cell"
                       @selection-change="selected"
                       @row-click="rowClick"
@@ -102,6 +103,7 @@
                                  prop="remark"></el-table-column>
             </el-table>
             <pagination :total="total"
+                        :size="15"
                         :page.sync="listQuery.currentPage"
                         :limit.sync="listQuery.pageSize"
                         @pagination="getList" />
@@ -245,15 +247,17 @@
 </template>
 
 <script>
+import changeModuleSelect from '@/components/template/changeMoudleSelect'
 import * as api from "@/api/system/role";
 import Pagination from "@/components/Pagination";
 import { loadtreeDates, loadtreeDate } from "@/utils/treeDate";
+import global_valfn from '@/utils/global_valfn'
 import { mapState } from "vuex";
 import { selectDatas } from "@/api/system/menu";
 import { codeToName } from "@/utils/codeToName";
 export default {
     name: "jsgl",
-    components: { Pagination },
+    components: { Pagination, changeModuleSelect },
     data () {
         return {
             data1: [],
@@ -264,6 +268,7 @@ export default {
             list: [],
             list2: [],
             total: 0,
+            theight: 0,//表格高度
             listQuery: {
                 //查询
                 page: true,
@@ -350,6 +355,11 @@ export default {
     },
     mounted () {
         this.$store.dispatch("dict/getDicData", ["dt_role_type"]);
+        this.setTableHeight();
+        //表格高度自适应
+        window.onresize = () => {
+            this.setTableHeight()
+        };
         this.getList();
     },
     methods: {
@@ -367,6 +377,9 @@ export default {
                 }, 1.5 * 100);
             });
         },
+        changeMoudle (val) {
+            this.$emit('changeSelect', val)
+        },
         handleCheckChange () {
             return this.$refs.tree
                 .getCheckedNodes()
@@ -383,6 +396,11 @@ export default {
             this.listQuery.currentPage = 1;
             this.getList();
         },
+        //表格高度计算
+        setTableHeight () {
+            this.theight = global_valfn.getSingleTbHeight();
+        },
+
         handleSizeChange (val) {
             this.listQuery.pageSize = val;
             this.getList();

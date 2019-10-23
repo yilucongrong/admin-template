@@ -13,185 +13,183 @@
         <el-col :span="21">
             <div class="app-container">
                 <div class="filter-container">
-                    <div class="main-header">
-                        <div class="select-content">
-                            <el-input size="small"
-                                      :placeholder="$t('table.organizationNum')"
-                                      v-model="listQuery.organizationCode"
-                                      class="filter-item"
-                                      @keyup.enter.native="handleFilter" />
-                            <el-input size="small"
-                                      :placeholder="$t('table.organizationName')"
-                                      v-model="listQuery.organizationName"
-                                      class="filter-item"
-                                      @keyup.enter.native="handleFilter" />
+                    <div class="filter-items">
+                        <el-input size="small"
+                                  :placeholder="$t('table.organizationNum')"
+                                  v-model="listQuery.organizationCode"
+                                  class="filter-item"
+                                  @keyup.enter.native="handleFilter" />
+                        <el-input size="small"
+                                  :placeholder="$t('table.organizationName')"
+                                  v-model="listQuery.organizationName"
+                                  class="filter-item"
+                                  @keyup.enter.native="handleFilter" />
 
-                            <el-button type="primary"
-                                       size="small"
-                                       icon="el-icon-search"
-                                       @click="handleFilter">
-                                {{ $t("table.search") }}</el-button>
-
-                        </div>
+                        <el-button type="primary"
+                                   size="small"
+                                   icon="el-icon-search"
+                                   @click="handleFilter">
+                            {{ $t("table.search") }}</el-button>
                     </div>
-                    <div class="main-body">
-                        <div class="btn">
-                            <el-button size="small"
-                                       class="filter-item"
-                                       type="primary"
-                                       icon="el-icon-plus"
-                                       @click="handleCreate">
-                                {{ $t("table.add") }}
-                            </el-button>
-                            <el-button size="small"
-                                       class="filter-item"
-                                       type="primary"
-                                       icon="el-icon-download"
-                                       @click="handleDownload">
-                                {{ $t("table.export") }}</el-button>
-                            <el-button size="small"
-                                       class="filter-item"
-                                       type="primary"
-                                       icon="el-icon-edit"
-                                       @click="handleUpdate">
-                                {{ $t("table.edit") }}</el-button>
-                            <el-button size="small"
-                                       class="filter-item"
-                                       type="primary"
-                                       icon="el-icon-delete"
-                                       @click="handleDelete">
-                                {{ $t("table.delete") }}</el-button>
-                        </div>
-                        <el-table :key="tableKey"
-                                  :data="list"
-                                  border
-                                  fit
-                                  height="315"
-                                  highlight-current-row
-                                  style="width: 100%;"
-                                  cell-class-name="table-cell"
-                                  header-cell-class-name="header-cell"
-                                  @selection-change="selectRow"
-                                  @row-click="rowClick"
-                                  ref="tb_a">
-                            <el-table-column type="selection"
-                                             fixed
-                                             width="30"
-                                             align="center">
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('table.organizationNum')"
-                                             fixed
-                                             prop="organizationCode"
-                                             align="center"
-                                             width="120">
-                                <template slot-scope="scope">
-                                    <span>{{
+                </div>
+                <div class="table-container">
+                    <div class="oprate_btn">
+                        <el-button size="small"
+                                   class="filter-item"
+                                   type="primary"
+                                   icon="el-icon-plus"
+                                   @click="handleCreate">
+                            {{ $t("table.add") }}
+                        </el-button>
+                        <el-button size="small"
+                                   class="filter-item"
+                                   type="primary"
+                                   icon="el-icon-download"
+                                   @click="handleDownload">
+                            {{ $t("table.export") }}</el-button>
+                        <el-button size="small"
+                                   class="filter-item"
+                                   type="primary"
+                                   icon="el-icon-edit"
+                                   @click="handleUpdate">
+                            {{ $t("table.edit") }}</el-button>
+                        <el-button size="small"
+                                   class="filter-item"
+                                   type="primary"
+                                   icon="el-icon-delete"
+                                   @click="handleDelete">
+                            {{ $t("table.delete") }}</el-button>
+                    </div>
+                    <el-table :key="tableKey"
+                              :data="list"
+                              border
+                              fit
+                              :height="theight"
+                              highlight-current-row
+                              style="width: 100%;"
+                              cell-class-name="table-cell"
+                              header-cell-class-name="header-cell"
+                              @selection-change="selectRow"
+                              @row-click="rowClick"
+                              ref="tb_a">
+                        <el-table-column type="selection"
+                                         fixed
+                                         width="30"
+                                         align="center">
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('table.organizationNum')"
+                                         fixed
+                                         prop="organizationCode"
+                                         align="center"
+                                         width="120">
+                            <template slot-scope="scope">
+                                <span>{{
                                         scope.row.organizationCode
                                     }}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('table.organizationName')"
-                                             fixed
-                                             width="120px"
-                                             align="center">
-                                <template slot-scope="scope">
-                                    <span>{{
+                            </template>
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('table.organizationName')"
+                                         fixed
+                                         width="120px"
+                                         align="center">
+                            <template slot-scope="scope">
+                                <span>{{
                                         scope.row.organizationName
                                     }}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('table.organizationType')"
-                                             fixed
-                                             min-width="140px">
-                                <template slot-scope="scope">
-                                    <span>{{ scope.row.typeCN }}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('table.parentId')"
-                                             width="120px"
-                                             align="center">
-                                <template slot-scope="scope">
-                                    <span>{{
+                            </template>
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('table.organizationType')"
+                                         fixed
+                                         min-width="140px">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.typeCN }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('table.parentId')"
+                                         width="120px"
+                                         align="center">
+                            <template slot-scope="scope">
+                                <span>{{
                                         scope.row.parentId
                                             | organizationFilter(scope.row)
                                     }}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('table.contacts')"
-                                             align="center"
-                                             width="120px">
-                                <template slot-scope="scope">
-                                    <span>{{ scope.row.contact }}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('table.address')"
-                                             width="120px"
-                                             align="center">
-                                <template slot-scope="scope">
-                                    <span>{{ scope.row.adress }}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('table.email')"
-                                             width="150px">
-                                <template slot-scope="scope">
-                                    <span>{{ scope.row.email }}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('table.businessFunction')"
-                                             width="150px">
-                                <template slot-scope="scope">
-                                    <span>{{
+                            </template>
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('table.contacts')"
+                                         align="center"
+                                         width="120px">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.contact }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('table.address')"
+                                         width="120px"
+                                         align="center">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.adress }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('table.email')"
+                                         width="150px">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.email }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('table.businessFunction')"
+                                         width="150px">
+                            <template slot-scope="scope">
+                                <span>{{
                                         scope.row.businessFunctionCN
                                     }}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('table.mobile')"
-                                             width="150px">
-                                <template slot-scope="scope">
-                                    <span>{{ scope.row.mobile }}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('table.remarks')"
-                                             width="150px">
-                                <template slot-scope="scope">
-                                    <span>{{ scope.row.remark }}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('table.state')"
-                                             width="80px">
-                                <template slot-scope="scope">
-                                    <span>{{
+                            </template>
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('table.mobile')"
+                                         width="150px">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.mobile }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('table.remarks')"
+                                         width="150px">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.remark }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('table.state')"
+                                         width="80px">
+                            <template slot-scope="scope">
+                                <span>{{
                                         scope.row.state | stateFilter
                                     }}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('table.postalCode')"
-                                             class-name="status-col"
-                                             width="120px">
-                                <template slot-scope="scope">
-                                    <span>{{ scope.row.postalCode }}</span>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                        <pagination v-show="total > 0"
-                                    :total="total"
-                                    :page.sync="listQuery.currentPage"
-                                    :limit.sync="listQuery.pageSize"
-                                    @pagination="getList" />
-                    </div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('table.postalCode')"
+                                         class-name="status-col"
+                                         width="120px">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.postalCode }}</span>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <pagination v-show="total > 0"
+                                :total="total"
+                                :page.sync="listQuery.currentPage"
+                                :limit.sync="listQuery.pageSize"
+                                @pagination="getList" />
                 </div>
+
                 <el-dialog custom-class="dialog-custom"
                            :title="
                         dialogStatus == 'create'
@@ -337,6 +335,7 @@ import { parseTime } from "@/utils";
 import { loadtreeDates } from "@/utils/treeDate";
 import { mapState } from "vuex";
 import { codeToName } from "@/utils/codeToName";
+import global_valfn from '@/utils/global_valfn'
 
 export default {
     name: "zzjg",
@@ -349,6 +348,7 @@ export default {
                 label: "organizationName"
             },
             tableKey: 0,
+            theight: 0,//表格高度
             list: [],
             total: 0,
             orgType: [],
@@ -445,6 +445,13 @@ export default {
         ]);
         this.getList();
         this.getHeight();
+        this.setTableHeight();
+        //表格高度自适应
+        window.onresize = () => {
+            this.setTableHeight();
+            this.setTreeHeight();
+        };
+        this.setTreeHeight();
     },
     methods: {
         treeGetList () {
@@ -494,6 +501,14 @@ export default {
                 state: 1,
                 parentId: this.temp.parentId
             };
+        },
+        //表格高度计算
+        setTableHeight () {
+            this.theight = global_valfn.getSingleTbHeight();
+        },
+        //树高度设置
+        setTreeHeight () {
+            this.contentStyleObj.height = global_valfn.getTreehHeight();
         },
         filertOrgName (val) {
             for (let i = 0; i < this.orgName.length; i++) {

@@ -12,99 +12,97 @@
         <el-col :span="21">
             <div class="app-container">
                 <div class="filter-container">
-                    <div class="main-header">
-
-                        <div class="select-content">
-                            <el-input size="small"
-                                      :placeholder="$t('userManagement.userName')"
-                                      v-model="listQuery.userName"
-                                      class="filter-item"
-                                      @keyup.enter.native="handleFilter" />
-                            <el-input size="small"
-                                      :placeholder="$t('userManagement.realName')"
-                                      v-model="listQuery.realName"
-                                      class="filter-item"
-                                      @keyup.enter.native="handleFilter" />
-                            <el-button type="primary"
-                                       size="small"
-                                       icon="el-icon-search"
-                                       @click="handleFilter">{{ $t('table.search') }}</el-button>
-                        </div>
-                    </div>
-                    <div class="main-body">
-                        <div class="btn">
-                            <el-button size="small"
-                                       class="filter-item"
-                                       type="primary"
-                                       icon="el-icon-edit-outline"
-                                       @click="handleUser">{{$t('userManagement.roleAuthorization')}}</el-button>
-                            <!-- <el-button size="small" class="filter-item" type="primary" icon="el-icon-edit-outline" @click="handleFun">{{ $t('userManagement.functionAuthorization') }}</el-button> -->
-                        </div>
-                        <el-table v-loading="listLoading"
-                                  :key="tableKey"
-                                  :data="list"
-                                  border
-                                  fit
-                                  height="315"
-                                  highlight-current-row
-                                  style="width: 100%;"
-                                  cell-class-name="table-cell"
-                                  header-cell-class-name="header-cell"
-                                  @selection-change='selectRow'
-                                  @row-click="rowClick"
-                                  ref="tb_a">
-                            <el-table-column type="selection"
-                                             width="30"
-                                             align="center">
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('userManagement.userName')"
-                                             prop="userName"
-                                             align="center"
-                                             min-width="120">
-                                <template slot-scope="scope">
-                                    <span>{{ scope.row.userName }}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('userManagement.realName')"
-                                             min-width="80"
-                                             align="center">
-                                <template slot-scope="scope">
-                                    <span>{{ scope.row.realName }}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('userManagement.lastIp')"
-                                             min-width="120">
-                                <template slot-scope="scope">
-                                    <span>{{ scope.row.lastIp }}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('userManagement.state')"
-                                             min-width="60"
-                                             align="center">
-                                <template slot-scope="scope">
-                                    <span>{{ scope.row.state }}</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('userManagement.isLog')"
-                                             min-width="120"
-                                             align="center">
-                                <template slot-scope="scope">
-                                    <span>{{ scope.row.isLog }}</span>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                        <pagination v-show="total>0"
-                                    :total="total"
-                                    :page.sync="listQuery.currentPage"
-                                    :limit.sync="listQuery.pageSize"
-                                    @pagination="getList" />
+                    <div class="filter-items">
+                        <el-input size="small"
+                                  :placeholder="$t('userManagement.userName')"
+                                  v-model="listQuery.userName"
+                                  class="filter-item"
+                                  @keyup.enter.native="handleFilter" />
+                        <el-input size="small"
+                                  :placeholder="$t('userManagement.realName')"
+                                  v-model="listQuery.realName"
+                                  class="filter-item"
+                                  @keyup.enter.native="handleFilter" />
+                        <el-button type="primary"
+                                   size="small"
+                                   icon="el-icon-search"
+                                   @click="handleFilter">{{ $t('table.search') }}</el-button>
                     </div>
                 </div>
+                <div class="table-container">
+                    <div class="oprate_btn">
+                        <el-button size="small"
+                                   class="filter-item"
+                                   type="primary"
+                                   icon="el-icon-edit-outline"
+                                   @click="handleUser">{{$t('userManagement.roleAuthorization')}}</el-button>
+                        <!-- <el-button size="small" class="filter-item" type="primary" icon="el-icon-edit-outline" @click="handleFun">{{ $t('userManagement.functionAuthorization') }}</el-button> -->
+                    </div>
+                    <el-table v-loading="listLoading"
+                              :key="tableKey"
+                              :data="list"
+                              border
+                              fit
+                              :height="theight"
+                              highlight-current-row
+                              style="width: 100%;"
+                              cell-class-name="table-cell"
+                              header-cell-class-name="header-cell"
+                              @selection-change='selectRow'
+                              @row-click="rowClick"
+                              ref="tb_a">
+                        <el-table-column type="selection"
+                                         width="30"
+                                         align="center">
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('userManagement.userName')"
+                                         prop="userName"
+                                         align="center"
+                                         min-width="120">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.userName }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('userManagement.realName')"
+                                         min-width="80"
+                                         align="center">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.realName }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('userManagement.lastIp')"
+                                         min-width="120">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.lastIp }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('userManagement.state')"
+                                         min-width="60"
+                                         align="center">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.state }}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column show-overflow-tooltip
+                                         :label="$t('userManagement.isLog')"
+                                         min-width="120"
+                                         align="center">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.isLog }}</span>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <pagination v-show="total>0"
+                                :total="total"
+                                :page.sync="listQuery.currentPage"
+                                :limit.sync="listQuery.pageSize"
+                                @pagination="getList" />
+                </div>
+
                 <!-- 用户维护弹窗 -->
                 <el-dialog custom-class="dialog-custom"
                            :title="$t('userManagement.roleAuthorization')"
@@ -335,6 +333,7 @@ import { selectrole } from '@/api/system/role'
 import { loadtreeDates } from '@/utils/treeDate'
 import { getDomainName } from '@/utils/auth'
 import { mapState } from 'vuex'
+import global_valfn from '@/utils/global_valfn'
 
 export default {
     name: 'yhgl',
@@ -345,6 +344,7 @@ export default {
             tableKey: 0,
             list: [
             ],
+            theight: 0,//表格高度
             listunrole: [],
             listrole: [],
             treeData: [],
@@ -411,7 +411,14 @@ export default {
     },
     mounted () {
         this.$store.dispatch('dict/getDicData', ['dt_domainScope_type']);
+        this.setTableHeight();
+        //表格高度自适应
+        window.onresize = () => {
+            this.setTableHeight();
+            this.setTreeHeight();
+        };
         this.getList();
+        this.setTreeHeight();
     },
     created () {
         window.addEventListener('resize', this.getHeight);
@@ -441,6 +448,14 @@ export default {
                     this.listLoading = false
                 }, 1.5 * 100)
             })
+        },
+        //表格高度计算
+        setTableHeight () {
+            this.theight = global_valfn.getSingleTbHeight();
+        },
+        //树高度设置
+        setTreeHeight () {
+            this.contentStyleObj.height = global_valfn.getTreehHeight();
         },
         getList () {//查询数据
             this.listLoading = true
