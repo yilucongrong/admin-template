@@ -115,8 +115,7 @@ export default {
             let userDTO = {
                 theme: val
             };
-            let dd = await this.$store.dispatch("user/ChangeUserInfo", userDTO);
-            console.log(dd)
+            await this.$store.dispatch("user/ChangeUserInfo", userDTO);
             // $message.close();
         }
     },
