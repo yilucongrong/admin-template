@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="table-container">
-                    <div class="table-items">
+                    <div class="oprate_btn">
                         <el-button class="filter-item"
                                    size="small"
                                    type="primary"
@@ -46,7 +46,7 @@
                               :data="list"
                               border
                               fit
-                              height="315"
+                              :height="theight"
                               highlight-current-row
                               style="width: 100%;"
                               @selection-change="selectRow"
@@ -225,8 +225,8 @@
 
             <el-col :span="12"
                     class="right-table">
-                <div class="table-container">
-                    <div class="table-items table-items-top">
+                <div class="table-container-left">
+                    <div class="oprate_btn">
                         <el-button class="filter-item"
                                    size="small"
                                    type="primary"
@@ -247,7 +247,7 @@
                               :data="list1"
                               border
                               fit
-                              height="315"
+                              :height="clientHeight "
                               highlight-current-row
                               style="width: 100%;"
                               @selection-change="selectRow1"
@@ -267,7 +267,10 @@
                                          :label="$t('dict.dictItemValue')"
                                          prop="dictItemValue"></el-table-column>
                     </el-table>
-                    <!-- <pagination :total="total1" :page.sync="listQuery1.currentPage" :limit.sync="listQuery1.pageSize" @pagination="getList1"/> -->
+                    <pagination :total="total1"
+                                :page.sync="listQuery1.currentPage"
+                                :limit.sync="listQuery1.pageSize"
+                                @pagination="getList1" />
                 </div>
             </el-col>
         </el-row>
@@ -277,6 +280,7 @@
 <script>
 import * as api from "@/api/data-base/dict";
 import Pagination from "@/components/Pagination";
+import global_valfn from '@/utils/global_valfn'
 export default {
     name: "sjzd",
     components: { Pagination },
@@ -286,6 +290,8 @@ export default {
             list1: [],
             total: 0,
             total1: 0,
+            theight: 0,
+            clientHeight: 0,
             listQuery: {
                 page: true,
                 currentPage: 1,
@@ -346,6 +352,14 @@ export default {
     created () {
         this.getList();
     },
+    mounted () {
+        this.setTableHeight();
+        //表格高度自适应
+        window.onresize = () => {
+            this.setTableHeight()
+        };
+        this.getList();
+    },
     methods: {
         getList () {
             api.queryRecords(this.listQuery).then(res => {
@@ -395,6 +409,11 @@ export default {
                     type: "warning"
                 });
             }
+        },
+        //表格高度计算
+        setTableHeight () {
+            this.theight = global_valfn.getSingleTbHeight();
+            this.clientHeight = document.documentElement.clientHeight - 194
         },
         create1 () {//新增明细弹窗方法
             this.$refs["temp"].validate(valid => {
@@ -569,8 +588,6 @@ export default {
         },
         handleDelete1 () {//删除明细列表
             if (this.selectlistRow1 && this.selectlistRow1.length == 1) {
-                console.log(this.selectlistRow1[0]);
-                console.log(this.selectlistRow2);
                 this.$confirm("此操作将删除所选中数据, 是否继续?", "提示", {
                     confirmButtonText: "确定",
                     cancelButtonText: "取消",
@@ -580,9 +597,7 @@ export default {
                     if (index !== -1) {
                         this.list1.splice(index, 1);
                     }
-                    console.log(this.list1);
                     this.selectlistRow2.dictItemDTOs = this.list1; //
-                    console.log(this.selectlistRow2);
                     api.updateRecord(this.selectlistRow2.dictCode, this.selectlistRow2).then(() => {
                         this.getList1(),
                             this.$message({
@@ -650,12 +665,10 @@ export default {
             });
         },
         deleteDictItem (item) {
-            console.log(item);
             var index = this.temp.dictItemDTOs.indexOf(item);
             if (index !== -1) {
                 this.temp.dictItemDTOs.splice(index, 1);
             }
-            console.log(index);
         }
     }
 };

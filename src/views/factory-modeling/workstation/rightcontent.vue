@@ -265,7 +265,6 @@ export default {
                 this.feedArea = node.feedArea;
                 this.lineCode = node.label;
                 api.queryList(workCenterCode, this.listQuery).then(res => {
-                    console.log(res, "999");
                     this.list = res.data.list;
                     this.total = res.data.pages.count;
                 });
