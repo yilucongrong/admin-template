@@ -1,6 +1,6 @@
 //查+上下表
 <template>
-    <div class="app-container calendar-list-container">
+    <div class="app-container">
         <div class="filter-container">
             <div class="filter-items">
                 <el-input size="small"
