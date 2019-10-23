@@ -332,7 +332,9 @@ export default {
         },
         //点击某行时执行
         rowClick (val) {
-            this.$refs.tb.clearSelection(); //清除其他行的选中
+            if (this.isSingle) {
+                this.$refs.tb.clearSelection(); //清除其他行的选中
+            }
             this.$refs.tb.toggleRowSelection(val); //单击行绑定点击事件
         },
         handleDelete () {
