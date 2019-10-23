@@ -588,8 +588,6 @@ export default {
         },
         handleDelete1 () {//删除明细列表
             if (this.selectlistRow1 && this.selectlistRow1.length == 1) {
-                console.log(this.selectlistRow1[0]);
-                console.log(this.selectlistRow2);
                 this.$confirm("此操作将删除所选中数据, 是否继续?", "提示", {
                     confirmButtonText: "确定",
                     cancelButtonText: "取消",
@@ -599,9 +597,7 @@ export default {
                     if (index !== -1) {
                         this.list1.splice(index, 1);
                     }
-                    console.log(this.list1);
                     this.selectlistRow2.dictItemDTOs = this.list1; //
-                    console.log(this.selectlistRow2);
                     api.updateRecord(this.selectlistRow2.dictCode, this.selectlistRow2).then(() => {
                         this.getList1(),
                             this.$message({
@@ -669,12 +665,10 @@ export default {
             });
         },
         deleteDictItem (item) {
-            console.log(item);
             var index = this.temp.dictItemDTOs.indexOf(item);
             if (index !== -1) {
                 this.temp.dictItemDTOs.splice(index, 1);
             }
-            console.log(index);
         }
     }
 };

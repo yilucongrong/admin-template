@@ -63,7 +63,6 @@ export default {
             };
             listOrg(listQuery).then(res => {
                 this.options = res.data;
-                console.log(this.options, "9090");
                 this.$emit("org", this.options);
             });
         },

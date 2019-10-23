@@ -1,7 +1,9 @@
 <template>
     <section class="app-main">
-        <transition name="fade-transform" mode="out-in">
-            <keep-alive :include="cachedViews" exclude="redirect">
+        <transition name="fade-transform"
+                    mode="out-in">
+            <keep-alive :include="cachedViews"
+                        exclude="redirect">
                 <router-view :key="key" />
             </keep-alive>
         </transition>
@@ -12,11 +14,10 @@
 export default {
     name: "AppMain",
     computed: {
-        cachedViews() {
-            console.log(this.$store.state.tagsView.cachedViews)
+        cachedViews () {
             return this.$store.state.tagsView.cachedViews;
         },
-        key() {
+        key () {
             return this.$route.path;
             // return this.$route.fullPath
         }
@@ -31,7 +32,7 @@ export default {
     width: 100%;
     position: relative;
     overflow: hidden;
-    background:#f3f3f3;
+    background: #f3f3f3;
 }
 .fixed-header + .app-main {
     padding-top: 50px;

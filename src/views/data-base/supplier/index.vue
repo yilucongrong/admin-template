@@ -366,7 +366,6 @@ export default {
             if (this.selectlistRow && this.selectlistRow.length == 1) {
                 this.readonly = true; //组织编码不可以编写
                 this.temp = this.selectlistRow[0]; // copy obj
-                console.log(this.temp);
                 api.getRecord(this.temp.supplierCode).then(res => {
                     this.temp = res.data;
                     this.dialogStatus = "update";
