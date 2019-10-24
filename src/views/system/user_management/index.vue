@@ -206,6 +206,7 @@
                                 </el-table>
                                 <pagination v-show="total1>0"
                                             :total="total1"
+                                            :size='10'
                                             :page.sync="listQuery1.currentPage"
                                             :limit.sync="listQuery1.pageSize"
                                             @pagination="getListUnelation" />
@@ -269,6 +270,7 @@
                                 </el-table>
                                 <pagination v-show="total2>0"
                                             :total="total2"
+                                            :size='10'
                                             :page.sync="listQuery2.currentPage"
                                             :limit.sync="listQuery2.pageSize"
                                             @pagination="getListRelation" />
@@ -356,7 +358,7 @@ export default {
             listQuery: {
                 orgId: '',
                 currentPage: 1,
-                pageSize: 10,
+                pageSize: 15,
                 page: 1
             },
             listQuery1: {

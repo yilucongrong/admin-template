@@ -295,7 +295,7 @@ export default {
             listQuery: {
                 page: true,
                 currentPage: 1,
-                pageSize: 10,
+                pageSize: 15,
                 dictCode: undefined,
                 dictName: undefined,
                 dictType: undefined,
@@ -305,7 +305,7 @@ export default {
             listQuery1: {
                 page: true,
                 currentPage: 1,
-                pageSize: 10
+                pageSize: 15
             },
             temp: {
                 dictCode: undefined,

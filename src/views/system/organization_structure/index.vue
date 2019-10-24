@@ -358,7 +358,7 @@ export default {
             listQuery: {
                 parentOrgCode: undefined,
                 currentPage: 1,
-                pageSize: 10,
+                pageSize: 15,
                 organizationCode: undefined,
                 organizationName: undefined
             },

@@ -236,15 +236,16 @@ export default {
             tableKey: [0, 1],//表格索引，虚拟dom渲染表格时使用
             totalMain_a: 0,
             totalSlave_a: 0,
+            theight: 0,
             listMain_a: [],
             listSlave_a: [],
             listQueryMain_a: {
                 currentPage: 1,
-                pageSize: 10,
+                pageSize: 15,
             },
             listQuerySlave_a: {
                 currentPage: 1,
-                pageSize: 10,
+                pageSize: 15,
             },
         }
     },
