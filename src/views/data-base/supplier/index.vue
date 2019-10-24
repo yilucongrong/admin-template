@@ -247,7 +247,7 @@ export default {
             listQuery: {
                 page: true,
                 currentPage: 1,
-                pageSize: 10,
+                pageSize: 15,
                 supplierCode: undefined,
                 supplierName: undefined,
                 supplierType: undefined

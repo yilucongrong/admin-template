@@ -484,7 +484,7 @@ export default {
             listLoading: true,
             listQuery: {
                 currentPage: 1,
-                pageSize: 10,
+                pageSize: 15,
                 page: 1,
             },
             listQuery1: {
@@ -494,7 +494,7 @@ export default {
             },
             listQuery2: {
                 currentPage: 1,
-                pageSize: 10,
+                pageSize: 15,
                 page: 1,
             },
             temp: {

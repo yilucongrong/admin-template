@@ -276,7 +276,7 @@ export default {
             listQuery: {
                 page: true,
                 currentPage: 1,
-                pageSize: 10,
+                pageSize: 15,
                 orgCode: undefined,
                 workCenterCode: undefined,
                 workCenterName: undefined,
