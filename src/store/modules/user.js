@@ -242,13 +242,13 @@ const actions = {
     },
     //修改用户信息
     ChangeUserInfo({ commit }, userDTO) {
-        console.log(commit)
         return new Promise((resolve, reject) => {
             changeUserInfo(userDTO)
                 .then(res => {
                     resolve(res)
                 })
                 .catch(error => {
+                    console.log(commit)
                     reject(error)
                 })
         })

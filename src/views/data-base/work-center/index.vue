@@ -31,6 +31,7 @@ import { buildTree } from "@/utils";
 import { selectlists as listOrg } from "@/api/system/organization";
 import { queryRecords as listWorkCenter } from "@/api/data-base/work-center";
 import orgSelect from "@/components/Select/orgSelect.vue";
+import global_valfn from '@/utils/global_valfn'
 
 export default {
     name: "gzzxzsj",
@@ -42,6 +43,7 @@ export default {
                 children: "children",
                 label: "label"
             },
+            //树高度样式
             contentStyleObj: {
                 height: ""
             },
@@ -51,8 +53,15 @@ export default {
     },
     created () {
         window.addEventListener("resize", this.getHeight);
-        this.getHeight();
+
         this.initTree();
+    },
+    mounted () {
+        //表格高度自适应
+        window.onresize = () => {
+            this.setTreeHeight();
+        };
+        this.setTreeHeight();
     },
     methods: {
         initTree () {
@@ -108,45 +117,15 @@ export default {
         getHeight () {
             this.contentStyleObj.height =
                 document.body.scrollHeight - 197 + "px";
-        }
+        },
+        //树高度设置
+        setTreeHeight () {
+            this.contentStyleObj.height = global_valfn.getTreehHeight();
+        },
     },
     destroyed () {
         window.removeEventListener("resize", this.getHeight);
     }
 };
 </script>
-<style scoped>
-.el-table {
-    max-height: 350px;
-}
 
-.btn,
-.select-title {
-    border: solid 1px #ded8e1;
-    border-bottom: 0px;
-    border-top: solid 5px #ded8e1;
-    padding: 8px 10px;
-}
-
-.left-trees {
-    background-color: #e2e9ef;
-}
-
-.main-content {
-    margin: 20px;
-}
-
-.select-content {
-    border: solid 1px #ded8e1;
-    padding: 8px 10px;
-}
-
-.el-tree {
-    margin-top: 20px;
-    background-color: #e2e9ef;
-}
-
-.el-form-item {
-    margin-bottom: 0px;
-}
-</style>

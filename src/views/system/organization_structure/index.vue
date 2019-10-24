@@ -358,7 +358,7 @@ export default {
             listQuery: {
                 parentOrgCode: undefined,
                 currentPage: 1,
-                pageSize: 10,
+                pageSize: 15,
                 organizationCode: undefined,
                 organizationName: undefined
             },
@@ -706,25 +706,5 @@ export default {
     }
 };
 </script>
-<style scoped>
-.btn,
-.select-title {
-    border-top: solid 5px #d5d8da;
-    padding: 8px 10px;
-}
-.left-trees {
-    background-color: #e2e9ef;
-}
-.main-content {
-    margin: 20px;
-}
-.el-tree {
-    margin-top: 20px;
-    background-color: #e2e9ef;
-}
-.el-textarea,
-.el-input--mini {
-    width: 470px;
-}
-</style>
+
 

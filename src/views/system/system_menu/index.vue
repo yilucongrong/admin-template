@@ -484,7 +484,7 @@ export default {
             listLoading: true,
             listQuery: {
                 currentPage: 1,
-                pageSize: 10,
+                pageSize: 15,
                 page: 1,
             },
             listQuery1: {
@@ -494,7 +494,7 @@ export default {
             },
             listQuery2: {
                 currentPage: 1,
-                pageSize: 10,
+                pageSize: 15,
                 page: 1,
             },
             temp: {
@@ -843,27 +843,3 @@ export default {
 
 };
 </script>
-<style scoped>
-.btn,
-.select-title {
-    border: solid 1px #ded8e1;
-    border-bottom: 0px;
-    border-top: solid 5px #ded8e1;
-    padding: 8px 10px;
-}
-.left-trees {
-    background-color: #e2e9ef;
-}
-.main-content {
-    margin: 20px;
-}
-.select-content {
-    border: solid 1px #ded8e1;
-    padding: 8px 10px;
-}
-.el-tree {
-    margin-top: 20px;
-    background-color: #e2e9ef;
-    overflow-y: auto;
-}
-</style>
