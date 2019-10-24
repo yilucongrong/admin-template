@@ -53,7 +53,7 @@
                                        class="filter-item"
                                        type="primary"
                                        @click="handleUser">
-                                <svg-icon icon-class="userfix" />
+                                <svg-icon icon-class="user" />
                                 {{ $t('employeesManagement.userMaintain') }}</el-button>
                         </div>
 
