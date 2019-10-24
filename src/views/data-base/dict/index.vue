@@ -225,7 +225,7 @@
 
             <el-col :span="12"
                     class="right-table">
-                <div class="table-container-left">
+                <div class="table-container">
                     <div class="oprate_btn">
                         <el-button class="filter-item"
                                    size="small"
@@ -673,3 +673,9 @@ export default {
     }
 };
 </script>
+<style scoped>
+.right-table .table-container {
+    margin-top: 0px;
+    margin-left: 10px;
+}
+</style>
