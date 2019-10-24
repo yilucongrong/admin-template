@@ -73,6 +73,11 @@
                                type="primary"
                                @click="handleImport"
                                icon="el-icon-edit">{{$t('table.import')}}</el-button>
+                    <el-button class="filter-item"
+                               size="small"
+                               type="primary"
+                               @click="receiptPrint"
+                               icon="el-icon-edit">二维码打印</el-button>
                 </div>
                 <el-table :key="tableKey"
                           :data="list"
@@ -342,6 +347,50 @@
                     <ImportFile ref="importDialog"
                                 :modalNo="modalNo"></ImportFile>
                 </el-dialog>
+                <!--单据打印弹框 -->
+                <el-dialog :model="printData"
+                           custom-class="dialog-custom"
+                           :visible.sync="dialogPrintVisible"
+                           :show-close=false>
+                    <div slot="title"
+                         class="dialog-footer">
+                        <el-button type="primary"
+                                   @click="doReceiptPrint">打印</el-button>
+                        <el-button @click="dialogPrintVisible = false"
+                                   style="float:right;">关闭</el-button>
+                    </div>
+
+                    <div id="receipt">
+                        <div class="code">
+                            <p>物料编码:<u>{{code}}</u></p>
+                        </div>
+                        <div class="qcode">
+                            <qrcode :imgindex="'receipt'"
+                                    ref="childQRcode"></qrcode>
+                        </div>
+                        <div>
+                            <table class="tab">
+                                <tr>
+                                    <th class="thtd">行号</th>
+                                    <th class="thtd">物料编码</th>
+                                    <th class="thtd">物料名称</th>
+                                    <th class="thtd">计量单位</th>
+                                    <th class="thtd">订单数量</th>
+                                    <th class="thtd">备注</th>
+                                </tr>
+                                <tr v-for="data in this.selectlistRow"
+                                    :key="data.rowNo">
+                                    <td class="thtd">{{data.rowNo}}</td>
+                                    <td class="thtd">{{data.materielCode}}</td>
+                                    <td class="thtd">{{data.materielName}}</td>
+                                    <td class="thtd">{{data.measuringUnit}}</td>
+                                    <td class="thtd">{{data.orderQuantity}}</td>
+                                    <td class="thtd">{{data.remark}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </el-dialog>
             </div>
         </div>
     </div>
@@ -356,15 +405,20 @@ import measureUnitTable from "@/components/Table/measureUnitTable.vue";
 import { DICT_CODE, TWO_STATE_OPTIONS } from "@/utils/constant";
 import { parseTime } from "@/utils";
 import global_valfn from '@/utils/global_valfn'
+import qrcode from "@/components/QRCode";
 
 export default {
     name: "materiel",
-    components: { Pagination, dictItemSelect, measureUnitTable, ImportFile },
+    components: { Pagination, dictItemSelect, measureUnitTable, ImportFile, qrcode },
     data () {
         return {
             list: null,
             total: 0,
             theight: 0,//表格高度
+            dialogPrintVisible: false,
+            selectlistRow: [],
+            printData: {},//打印数据
+            code: '',
             listQuery: {
                 page: true,
                 currentPage: 1,
@@ -489,7 +543,7 @@ export default {
         },
         //表格高度计算
         setTableHeight () {
-            this.theight = global_valfn.getSingleTbHeight();
+            this.theight = global_valfn.getSingleTbHeight() - 35;
         },
         handleQuery () {
             this.listQuery.currentPage = 1;
@@ -693,7 +747,57 @@ export default {
             this.$nextTick(() => {
                 this.$refs.importDialog.getList();
             })
-        }
+        },
+        //单据打印
+        receiptPrint () {
+            if (this.selectlistRow && this.selectlistRow.length > 0) {
+
+                this.dialogPrintVisible = true;
+                this.dialogStatus = "print";
+                console.log(this.selectlistRow, '88')
+                this.printData = this.selectlistRow;
+                this.code = this.printData[0].materielCode
+                this.$nextTick(() => {
+                    this.$refs.childQRcode.qrCreate(this.printData[0].materielCode)
+                });
+
+            } else {
+                this.$message.warning(this.$t('message.checkedplease'));
+                return false;
+            }
+
+        },
+        //单据打印执行
+        doReceiptPrint () {
+            let newWin = window.open("");
+            var newstr = document.getElementById('receipt').innerHTML;
+            newWin.document.write(newstr);
+            newWin.document.close();//IE添加
+
+            setTimeout(function () {
+                newWin.print();
+                newWin.close();
+            }, 100);
+        },
     }
 };
 </script>
+<style scoped>
+.thtd {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #ccc;
+}
+.tab {
+    border-collapse: collapse;
+    width: 100%;
+}
+.code {
+    width: 67%;
+    float: left;
+}
+.qcode {
+    width: 33%;
+    float: left;
+}
+</style>
