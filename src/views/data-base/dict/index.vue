@@ -225,7 +225,7 @@
 
             <el-col :span="12"
                     class="right-table">
-                <div class="table-container-left">
+                <div class="table-container">
                     <div class="oprate_btn">
                         <el-button class="filter-item"
                                    size="small"
@@ -295,7 +295,7 @@ export default {
             listQuery: {
                 page: true,
                 currentPage: 1,
-                pageSize: 10,
+                pageSize: 15,
                 dictCode: undefined,
                 dictName: undefined,
                 dictType: undefined,
@@ -305,7 +305,7 @@ export default {
             listQuery1: {
                 page: true,
                 currentPage: 1,
-                pageSize: 10
+                pageSize: 15
             },
             temp: {
                 dictCode: undefined,
@@ -673,3 +673,9 @@ export default {
     }
 };
 </script>
+<style scoped>
+.right-table .table-container {
+    margin-top: 0px;
+    margin-left: 10px;
+}
+</style>

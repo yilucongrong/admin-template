@@ -53,7 +53,7 @@
                                        class="filter-item"
                                        type="primary"
                                        @click="handleUser">
-                                <svg-icon icon-class="userfix" />
+                                <svg-icon icon-class="user" />
                                 {{ $t('employeesManagement.userMaintain') }}</el-button>
                         </div>
 
@@ -454,7 +454,7 @@ export default {
             listLoading: true,
             listQuery: {
                 currentPage: 1,
-                pageSize: 10,
+                pageSize: 15,
                 page: 1,
                 scope: false
             },

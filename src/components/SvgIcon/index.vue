@@ -28,20 +28,20 @@ export default {
         }
     },
     computed: {
-        isExternal() {
+        isExternal () {
             return isExternal(this.iconClass);
         },
-        iconName() {
+        iconName () {
             return `#icon-${this.iconClass}`;
         },
-        svgClass() {
+        svgClass () {
             if (this.className) {
                 return "svg-icon " + this.className;
             } else {
                 return "svg-icon";
             }
         },
-        styleExternalIcon() {
+        styleExternalIcon () {
             return {
                 mask: `url(${this.iconClass}) no-repeat 50% 50%`,
                 "-webkit-mask": `url(${this.iconClass}) no-repeat 50% 50%`
@@ -55,7 +55,7 @@ export default {
 .svg-icon {
     width: 1em;
     height: 1em;
-    vertical-align: -0.15em;
+    vertical-align: -0.149em;
     fill: currentColor;
     overflow: hidden;
 }

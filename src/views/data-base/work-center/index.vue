@@ -61,7 +61,6 @@ export default {
         window.onresize = () => {
             this.setTreeHeight();
         };
-        this.getList();
         this.setTreeHeight();
     },
     methods: {
