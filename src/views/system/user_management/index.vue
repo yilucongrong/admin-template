@@ -555,6 +555,12 @@ export default {
                     roleCodes[i] = this.selectlistRowUser1[i].roleCode
                 }
                 authorizationrole(this.selectlistRow[0].userName, roleCodes, fun).then(() => {
+                    this.$message({
+                        title: '成功',
+                        message: '删除成功',
+                        type: 'success',
+
+                    })
                     this.getListRelation()
                 })
                 this.dialogFormUser = true
@@ -622,8 +628,13 @@ export default {
                 for (let i = 0; i < this.selectlistRowUser.length; i++) {
                     roleCodes[i] = this.selectlistRowUser[i].roleCode
                 }
-
                 authorizationrole(this.selectlistRow[0].userName, roleCodes, fun).then(() => {
+                    this.$message({
+                        title: '成功',
+                        message: '授权成功',
+                        type: 'success',
+                        duration: 2000
+                    })
                     this.handleUser()
                 })
                 this.dialogFormUser = true
