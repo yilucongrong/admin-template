@@ -24,6 +24,16 @@ module.exports = {
      * @description Whether show the logo in sidebar
      */
     sidebarLogo: true,
+    /**
+     * @type {boolean} true | false
+     * @description Whether show the showSidebar in sidebar
+     */
+    showSidebar: true,
+    /**
+     * @type {boolean} true | false
+     * @description Whether show the Braed is show
+     */
+    showBraed: true,
 
     /**
      * @type {string | array} 'production' | ['production', 'development']

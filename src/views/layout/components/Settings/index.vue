@@ -26,6 +26,16 @@
                 <el-switch v-model="sidebarLogo"
                            class="drawer-switch" />
             </div>
+            <div class="drawer-item">
+                <span>侧边栏</span>
+                <el-switch v-model="showSidebar"
+                           class="drawer-switch" />
+            </div>
+            <div class="drawer-item">
+                <span>面包削</span>
+                <el-switch v-model="showBraed"
+                           class="drawer-switch" />
+            </div>
 
         </div>
     </div>
@@ -36,15 +46,15 @@ import ThemePicker from "@/components/ThemePicker";
 
 export default {
     components: { ThemePicker },
-    data() {
+    data () {
         return {};
     },
     computed: {
         fixedHeader: {
-            get() {
+            get () {
                 return this.$store.state.settings.fixedHeader;
             },
-            set(val) {
+            set (val) {
                 this.$store.dispatch("settings/changeSetting", {
                     key: "fixedHeader",
                     value: val
@@ -52,10 +62,10 @@ export default {
             }
         },
         tagsView: {
-            get() {
+            get () {
                 return this.$store.state.settings.tagsView;
             },
-            set(val) {
+            set (val) {
                 this.$store.dispatch("settings/changeSetting", {
                     key: "tagsView",
                     value: val
@@ -63,19 +73,41 @@ export default {
             }
         },
         sidebarLogo: {
-            get() {
+            get () {
                 return this.$store.state.settings.sidebarLogo;
             },
-            set(val) {
+            set (val) {
                 this.$store.dispatch("settings/changeSetting", {
                     key: "sidebarLogo",
+                    value: val
+                });
+            }
+        },
+        showSidebar: {//侧边栏
+            get () {
+                return this.$store.state.settings.showSidebar;
+            },
+            set (val) {
+                this.$store.dispatch("settings/changeSetting", {
+                    key: "showSidebar",
+                    value: val
+                });
+            }
+        },
+        showBraed: {//面包削导航
+            get () {
+                return this.$store.state.settings.showBraed;
+            },
+            set (val) {
+                this.$store.dispatch("settings/changeSetting", {
+                    key: "showBraed",
                     value: val
                 });
             }
         }
     },
     methods: {
-        themeChange(val) {
+        themeChange (val) {
             this.$store.dispatch("settings/changeSetting", {
                 key: "theme",
                 value: val
