@@ -75,14 +75,14 @@
                                    class="filter-item"
                                    type="primary"
                                    icon="el-icon-upload2"
-                                   @click="handleExport">{{$t('table.export')}}</el-button>
+                                   @click="handleExport">{{$t('btn.export')}}</el-button>
                     </div>
                 </div>
                 <div class="table-container  border_t_1">
                     <!-- <div class="oprate_btn">
                         <el-button size="small" class="filter-item" type="primary" icon="el-icon-search" @click="handleQuery">{{$t('table.query')}}</el-button>
                         <el-button size="small" class="filter-item" type="primary" icon="el-icon-printer " @click="handlePrint">{{$t('table.print')}}</el-button>
-                        <el-button size="small" class="filter-item" type="primary" icon="el-icon-upload2" @click="handleExport">{{$t('table.export')}}</el-button>
+                        <el-button size="small" class="filter-item" type="primary" icon="el-icon-upload2" @click="handleExport">{{$t('btn.export')}}</el-button>
                     </div> -->
                     <el-table key="0"
                               :data="listDetail"

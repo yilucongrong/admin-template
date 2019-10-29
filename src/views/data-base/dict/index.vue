@@ -20,7 +20,7 @@
                                        size="small"
                                        type="primary"
                                        icon="el-icon-search"
-                                       @click="handleQuery">{{$t('table.search')}}</el-button>
+                                       @click="handleQuery">{{$t('btn.search')}}</el-button>
                         </div>
                     </div>
                 </div>
@@ -30,17 +30,17 @@
                                    size="small"
                                    type="primary"
                                    @click="handleCreate"
-                                   icon="el-icon-plus">{{$t('table.add')}}</el-button>
+                                   icon="el-icon-plus">{{$t('btn.add')}}</el-button>
                         <el-button class="filter-item"
                                    size="small"
                                    type="primary"
                                    @click="handleUpdate"
-                                   icon="el-icon-edit">{{$t('table.edit')}}</el-button>
+                                   icon="el-icon-edit">{{$t('btn.edit')}}</el-button>
                         <el-button class="filter-item"
                                    size="small"
                                    type="primary"
                                    @click="handleDelete"
-                                   icon="el-icon-delete">{{$t('table.delete')}}</el-button>
+                                   icon="el-icon-delete">{{$t('btn.delete')}}</el-button>
                     </div>
                     <el-table :key="tableKey"
                               :data="list"
@@ -86,7 +86,7 @@
             <el-dialog custom-class="dialog-custom"
                        :close-on-click-modal="false"
                        :close-on-press-escape="false"
-                       :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')"
+                       :title="dialogStatus=='create'?$t('btn.add'):$t('btn.edit')"
                        :visible.sync="dialogFormVisible"
                        v-dialogDrag
                        @close="handleClose">
@@ -118,9 +118,9 @@
                 </el-form>
                 <div slot="footer"
                      class="dialog-footer">
-                    <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
+                    <el-button @click="dialogFormVisible = false">{{ $t('btn.cancel') }}</el-button>
                     <el-button type="primary"
-                               @click="dialogStatus==='create'?create():update()">{{ $t('table.confirm') }}</el-button>
+                               @click="dialogStatus==='create'?create():update()">{{ $t('btn.confirm') }}</el-button>
                 </div>
             </el-dialog>
 
@@ -128,7 +128,7 @@
             <el-dialog custom-class="dialog-custom"
                        :close-on-click-modal="false"
                        :close-on-press-escape="false"
-                       :title="dialogStatus=='create1'?$t('table.add'):$t('table.edit')"
+                       :title="dialogStatus=='create1'?$t('btn.add'):$t('btn.edit')"
                        :visible.sync="dialogFormVisible1"
                        v-dialogDrag
                        @close="handleClose">
@@ -171,7 +171,7 @@
                                           style="width: 150px"
                                           :placeholder="$t('dict.dictItemValue')"></el-input>
                                 <el-button type="danger"
-                                           @click="deleteDictItem(item)">{{$t('table.delete')}}</el-button>
+                                           @click="deleteDictItem(item)">{{$t('btn.delete')}}</el-button>
                             </div>
                         </div>
                         <el-button type="primary"
@@ -180,9 +180,9 @@
                 </el-form>
                 <div slot="footer"
                      class="dialog-footer">
-                    <el-button @click="dialogFormVisible1 = false">{{ $t('table.cancel') }}</el-button>
+                    <el-button @click="dialogFormVisible1 = false">{{ $t('btn.cancel') }}</el-button>
                     <el-button type="primary"
-                               @click="dialogStatus==='create1'?create1():update1()">{{ $t('table.confirm') }}</el-button>
+                               @click="dialogStatus==='create1'?create1():update1()">{{ $t('btn.confirm') }}</el-button>
                 </div>
             </el-dialog>
 
@@ -190,7 +190,7 @@
             <el-dialog custom-class="dialog-custom"
                        :close-on-click-modal="false"
                        :close-on-press-escape="false"
-                       :title="dialogStatus=='update1'?$t('table.edit'):$t('table.add')"
+                       :title="dialogStatus=='update1'?$t('btn.edit'):$t('btn.add')"
                        :visible.sync="dialogFormVisible2"
                        v-dialogDrag
                        @close="handleClose">
@@ -217,9 +217,9 @@
                 </el-form>
                 <div slot="footer"
                      class="dialog-footer">
-                    <el-button @click="dialogFormVisible2 = false">{{ $t('table.cancel') }}</el-button>
+                    <el-button @click="dialogFormVisible2 = false">{{ $t('btn.cancel') }}</el-button>
                     <el-button type="primary"
-                               @click="dialogStatus==='update1'?update1():create1()">{{ $t('table.confirm') }}</el-button>
+                               @click="dialogStatus==='update1'?update1():create1()">{{ $t('btn.confirm') }}</el-button>
                 </div>
             </el-dialog>
 
@@ -231,17 +231,17 @@
                                    size="small"
                                    type="primary"
                                    @click="handleCreate1"
-                                   icon="el-icon-plus">{{$t('table.add')}}</el-button>
+                                   icon="el-icon-plus">{{$t('btn.add')}}</el-button>
                         <el-button class="filter-item"
                                    size="small"
                                    type="primary"
                                    @click="handleUpdate1"
-                                   icon="el-icon-edit">{{$t('table.edit')}}</el-button>
+                                   icon="el-icon-edit">{{$t('btn.edit')}}</el-button>
                         <el-button class="filter-item"
                                    size="small"
                                    type="primary"
                                    @click="handleDelete1"
-                                   icon="el-icon-delete">{{$t('table.delete')}}</el-button>
+                                   icon="el-icon-delete">{{$t('btn.delete')}}</el-button>
                     </div>
                     <el-table :key="tableKey"
                               :data="list1"

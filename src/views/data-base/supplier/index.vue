@@ -28,7 +28,7 @@
                                type="primary"
                                size="small"
                                icon="el-icon-search"
-                               @click="handleQuery">{{ $t('table.search') }}</el-button>
+                               @click="handleQuery">{{ $t('btn.search') }}</el-button>
                 </div>
             </div>
             <div class="table-container">
@@ -37,17 +37,17 @@
                                class="filter-item"
                                type="primary"
                                icon="el-icon-plus"
-                               @click="handleCreate">{{ $t('table.add') }}</el-button>
+                               @click="handleCreate">{{ $t('btn.add') }}</el-button>
                     <el-button size="small"
                                class="filter-item"
                                type="primary"
                                icon="el-icon-edit"
-                               @click="handleUpdate">{{ $t('table.edit') }}</el-button>
+                               @click="handleUpdate">{{ $t('btn.edit') }}</el-button>
                     <el-button size="small"
                                class="filter-item"
                                type="primary"
                                icon="el-icon-delete"
-                               @click="handleDelete">{{ $t('table.delete') }}</el-button>
+                               @click="handleDelete">{{ $t('btn.delete') }}</el-button>
                 </div>
                 <el-table :key="tableKey"
                           :data="list"
@@ -125,7 +125,7 @@
                 <el-dialog custom-class="dialog-custom"
                            :close-on-click-modal="false"
                            :close-on-press-escape="false"
-                           :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')"
+                           :title="dialogStatus=='create'?$t('btn.add'):$t('btn.edit')"
                            :visible.sync="dialogFormVisible"
                            @close="handleClose"
                            v-dialogDrag>
@@ -214,13 +214,13 @@
                     </el-form>
                     <div slot="footer"
                          class="dialog-footer">
-                        <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
+                        <el-button @click="dialogFormVisible = false">{{ $t('btn.cancel') }}</el-button>
                         <el-button v-if="dialogStatus=='create'"
                                    type="primary"
-                                   @click="create">{{ $t('table.confirm') }}</el-button>
+                                   @click="create">{{ $t('btn.confirm') }}</el-button>
                         <el-button v-else
                                    type="primary"
-                                   @click="update">{{ $t('table.confirm') }}</el-button>
+                                   @click="update">{{ $t('btn.confirm') }}</el-button>
                     </div>
                 </el-dialog>
             </div>

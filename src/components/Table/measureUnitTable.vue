@@ -21,7 +21,7 @@
                            size="mini"
                            type="primary"
                            icon="search"
-                           @click="handleQuery">{{$t('table.search')}}</el-button>
+                           @click="handleQuery">{{$t('btn.search')}}</el-button>
             </div>
         </div>
         <div class="table-container">
