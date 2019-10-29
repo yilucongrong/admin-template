@@ -12,6 +12,7 @@ type 用于说明 commit 的类别，只允许使用下面 7 个标识。(根据
 -   [ ] fix：修补 bug
 -   [ ] docs：文档（documentation）
 -   [ ] test：增加测试
+-   [ ] other：其他
 -   [ ] versions：构建过程或辅助工具的变动（包含包版本的变动，配置变动）
 
 subject 是 commit 目的的简短描述，不超过 50 个字符。
