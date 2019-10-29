@@ -156,7 +156,6 @@
                 </div>
             </el-dialog>
             <el-dialog custom-class="dialog-custom"
-                       class="table-container spacing-one"
                        :title="$t('workstation.feedArea')"
                        :visible.sync="feedAreaDialogFormVisible"
                        v-dialogDrag

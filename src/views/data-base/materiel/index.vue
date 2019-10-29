@@ -543,7 +543,10 @@ export default {
         },
         //表格高度计算
         setTableHeight () {
-            this.theight = global_valfn.getSingleTbHeight() - 35;
+
+            this.theight = global_valfn.getSingleTbHeight()
+            console.log(this.theight);
+
         },
         handleQuery () {
             this.listQuery.currentPage = 1;
