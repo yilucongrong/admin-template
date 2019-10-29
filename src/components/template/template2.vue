@@ -32,7 +32,7 @@
                                        size="small"
                                        icon="el-icon-search"
                                        @click="handleQuery">
-                                {{ $t("table.search") }}</el-button>
+                                {{ $t("btn.search") }}</el-button>
                         </div>
                     </div>
                     <div class="table-container">
@@ -42,20 +42,20 @@
                                        type="primary"
                                        icon="el-icon-plus"
                                        @click="handleCreate">
-                                {{ $t("table.add") }}
+                                {{ $t("btn.add") }}
                             </el-button>
                             <el-button size="small"
                                        class="filter-item"
                                        type="primary"
                                        icon="el-icon-edit"
                                        @click="handleUpdate">
-                                {{ $t("table.edit") }}</el-button>
+                                {{ $t("btn.edit") }}</el-button>
                             <el-button size="small"
                                        class="filter-item"
                                        type="primary"
                                        icon="el-icon-delete"
                                        @click="handleDelete">
-                                {{ $t("table.delete") }}</el-button>
+                                {{ $t("btn.delete") }}</el-button>
                         </div>
                         <el-table :key="tableKey"
                                   :data="list"

@@ -26,7 +26,7 @@
                            size="small"
                            type="primary"
                            icon="search"
-                           @click="handleQuery">{{$t('table.search')}}</el-button>
+                           @click="handleQuery">{{$t('btn.search')}}</el-button>
             </div>
         </div>
         <div class="table-container">
@@ -35,17 +35,17 @@
                            class="filter-item"
                            type="primary"
                            icon="el-icon-plus"
-                           @click="handleCreate">{{ $t('table.add') }}</el-button>
+                           @click="handleCreate">{{ $t('btn.add') }}</el-button>
                 <el-button size="small"
                            class="filter-item"
                            type="primary"
                            icon="el-icon-edit"
-                           @click="handleUpdate">{{ $t('table.edit') }}</el-button>
+                           @click="handleUpdate">{{ $t('btn.edit') }}</el-button>
                 <el-button size="small"
                            class="filter-item"
                            type="primary"
                            icon="el-icon-delete"
-                           @click="handleDelete">{{ $t('table.delete') }}</el-button>
+                           @click="handleDelete">{{ $t('btn.delete') }}</el-button>
                 <el-button size="small"
                            class="filter-item"
                            type="primary"
@@ -112,7 +112,7 @@
         <!--新增编辑弹窗 -->
         <el-dialog :close-on-click-modal="false"
                    custom-class="dialog-custom"
-                   :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')"
+                   :title="dialogStatus=='create'?$t('btn.add'):$t('btn.edit')"
                    :visible.sync="dialogFormVisible"
                    v-dialogDrag
                    @close="handleClose">
@@ -169,13 +169,13 @@
             </el-form>
             <div slot="footer"
                  class="dialog-footer">
-                <el-button @click="cancel()">{{$t('table.cancel')}}</el-button>
+                <el-button @click="cancel()">{{$t('btn.cancel')}}</el-button>
                 <el-button v-if="dialogStatus=='create'"
                            type="primary"
-                           @click="create">{{$t('table.confirm')}}</el-button>
+                           @click="create">{{$t('btn.confirm')}}</el-button>
                 <el-button v-else
                            type="primary"
-                           @click="update">{{$t('table.confirm')}}</el-button>
+                           @click="update">{{$t('btn.confirm')}}</el-button>
             </div>
         </el-dialog>
 
@@ -196,9 +196,9 @@
                      @check-change="handleCheckChange"></el-tree>
             <div slot="footer"
                  class="dialog-footer">
-                <el-button @click="cancel()">{{$t('table.cancel')}}</el-button>
+                <el-button @click="cancel()">{{$t('btn.cancel')}}</el-button>
                 <el-button type="primary"
-                           @click="create1">{{$t('table.confirm')}}</el-button>
+                           @click="create1">{{$t('btn.confirm')}}</el-button>
             </div>
         </el-dialog>
 
@@ -209,39 +209,43 @@
                    :visible.sync="dialogFormVisible2"
                    @close="handleClose"
                    v-dialogDrag>
-            <div class="btn">
-                <el-button size="small"
-                           class="filter-item"
-                           type="primary"
-                           icon="el-icon-delete"
-                           @click="handleDelete1">{{ $t('table.delete') }}</el-button>
+            <div class="filter-container">
+                <div class="filter-items">
+                    <el-button size="small"
+                               class="filter-item"
+                               type="primary"
+                               icon="el-icon-delete"
+                               @click="handleDelete1">{{ $t('btn.delete') }}</el-button>
+                </div>
             </div>
-            <el-table :key="tableKey"
-                      :data="list2"
-                      border
-                      fit
-                      highlight-current-row
-                      style="width: 100%"
-                      cell-class-name="table-cell"
-                      height="200"
-                      header-cell-class-name="header-cell"
-                      @selection-change="selected1">
-                <!-- <el-table-column type="selection" align="center" width="40" fixed></el-table-column> -->
-                <el-table-column type="selection"
-                                 width="30"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 align="center"
-                                 :label="'所属组织'"
-                                 prop="orgName"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 align="center"
-                                 :label="$t('roleManagement.userName')"
-                                 prop="userName"></el-table-column>
-                <el-table-column show-overflow-tooltip
-                                 align="center"
-                                 :label="$t('roleManagement.realName')"
-                                 prop="realName"></el-table-column>
-            </el-table>
+            <div class="table-container">
+                <el-table :key="tableKey"
+                          :data="list2"
+                          border
+                          fit
+                          highlight-current-row
+                          style="width: 100%"
+                          cell-class-name="table-cell"
+                          height="200"
+                          header-cell-class-name="header-cell"
+                          @selection-change="selected1">
+                    <!-- <el-table-column type="selection" align="center" width="40" fixed></el-table-column> -->
+                    <el-table-column type="selection"
+                                     width="30"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     align="center"
+                                     :label="'所属组织'"
+                                     prop="orgName"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     align="center"
+                                     :label="$t('roleManagement.userName')"
+                                     prop="userName"></el-table-column>
+                    <el-table-column show-overflow-tooltip
+                                     align="center"
+                                     :label="$t('roleManagement.realName')"
+                                     prop="realName"></el-table-column>
+                </el-table>
+            </div>
         </el-dialog>
     </div>
 </template>

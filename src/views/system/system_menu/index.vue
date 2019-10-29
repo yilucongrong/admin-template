@@ -26,7 +26,7 @@
                         <el-button type="primary"
                                    size="small"
                                    icon="el-icon-search"
-                                   @click="handleFilter">{{ $t('table.search') }}</el-button>
+                                   @click="handleFilter">{{ $t('btn.search') }}</el-button>
                     </div>
                 </div>
                 <div class="table-container">
@@ -35,17 +35,17 @@
                                    class="filter-item"
                                    type="primary"
                                    icon="el-icon-plus"
-                                   @click="handleCreate">{{ $t('table.add') }}</el-button>
+                                   @click="handleCreate">{{ $t('btn.add') }}</el-button>
                         <el-button size="small"
                                    class="filter-item"
                                    type="primary"
                                    icon="el-icon-delete"
-                                   @click="handleDelete">{{ $t('table.delete') }}</el-button>
+                                   @click="handleDelete">{{ $t('btn.delete') }}</el-button>
                         <el-button size="small"
                                    class="filter-item"
                                    type="primary"
                                    icon="el-icon-edit"
-                                   @click="handleUpdate">{{ $t('table.edit') }}</el-button>
+                                   @click="handleUpdate">{{ $t('btn.edit') }}</el-button>
                         <el-button size="small"
                                    class="filter-item"
                                    type="primary"
@@ -145,7 +145,7 @@
 
                 <!-- 新增，修改弹窗 -->
                 <el-dialog custom-class="dialog-custom"
-                           :title="dialogStatus=='create'?$t('table.add'):$t('table.edit')"
+                           :title="dialogStatus=='create'?$t('btn.add'):$t('btn.edit')"
                            :visible.sync="dialogFormVisible"
                            v-dialogDrag
                            :close-on-click-modal="false">
@@ -187,8 +187,8 @@
                         <el-form-item :label="$t('systemMenu.nodeType')"
                                       prop="nodeType">
                             <el-radio-group v-model="temp.nodeType">
-                                <el-radio :label="1">{{$t('table.open')}}</el-radio>
-                                <el-radio :label="0">{{$t('table.stop')}}</el-radio>
+                                <el-radio :label="1">{{$t('from.open')}}</el-radio>
+                                <el-radio :label="0">{{$t('from.stop')}}</el-radio>
                             </el-radio-group>
                         </el-form-item>
                         <el-form-item :label="$t('systemMenu.url')"
@@ -209,9 +209,9 @@
                     </el-form>
                     <div slot="footer"
                          class="dialog-footer">
-                        <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
+                        <el-button @click="dialogFormVisible = false">{{ $t('btn.cancel') }}</el-button>
                         <el-button type="primary"
-                                   @click="dialogStatus==='create'?createData():updateData()">{{ $t('table.confirm') }}</el-button>
+                                   @click="dialogStatus==='create'?createData():updateData()">{{ $t('btn.confirm') }}</el-button>
                     </div>
                 </el-dialog>
                 <!-- 资源关联弹窗 -->
@@ -223,18 +223,18 @@
                     <el-tabs v-model="activeName2"
                              type="border-card"
                              @tab-click="handleTabClick">
-                        <el-tab-pane :label="$t('table.tbSelected')"
+                        <el-tab-pane :label="$t('tabs.tbSelected')"
                                      name="first">
-                            <div class="main-header">
-                                <div class="select-content">
+                            <div class="filter-container">
+                                <div class="filter-items">
                                     <el-button size="small"
                                                class="filter-item"
                                                type="primary"
                                                icon="el-icon-select"
-                                               @click="authority">{{ $t('table.empower') }}</el-button>
+                                               @click="authority">{{ $t('btn.empower') }}</el-button>
                                 </div>
                             </div>
-                            <div>
+                            <div class="table-container">
                                 <el-table v-loading="listLoading"
                                           :key="tableKey"
                                           :data="listUnrelation"
@@ -242,6 +242,8 @@
                                           fit
                                           height="350px"
                                           highlight-current-row
+                                          cell-class-name="table-cell"
+                                          header-cell-class-name="header-cell"
                                           style="width: 100%;"
                                           @selection-change='selectRowUser'>
                                     <el-table-column type="selection"
@@ -294,22 +296,27 @@
                                             @pagination="getListUnelation" />
                             </div>
                         </el-tab-pane>
-                        <el-tab-pane :label="$t('table.selected')"
+                        <el-tab-pane :label="$t('tabs.selected')"
                                      name="second">
-                            <div>
-                                <div class="select-content">
+
+                            <div class="filter-container">
+                                <div class="filter-items">
                                     <el-button size="small"
                                                class="filter-item"
                                                type="primary"
                                                icon="el-icon-select"
-                                               @click="unauthority">{{$t('table.unauthority')}}</el-button>
+                                               @click="unauthority">{{$t('btn.unauthority')}}</el-button>
                                 </div>
+                            </div>
+                            <div class="table-container">
                                 <el-table v-loading="listLoading"
                                           :key="tableKey"
                                           :data="listRelation"
                                           border
                                           fit
                                           height="350px"
+                                          cell-class-name="table-cell"
+                                          header-cell-class-name="header-cell"
                                           highlight-current-row
                                           style="width: 100%;"
                                           @selection-change='selectRowUser'>
@@ -372,6 +379,8 @@
                               border
                               fit
                               highlight-current-row
+                              cell-class-name="table-cell"
+                              header-cell-class-name="header-cell"
                               style="width: 100%">
                         <el-table-column show-overflow-tooltip
                                          prop="key"
@@ -383,7 +392,7 @@
                     <span slot="footer"
                           class="dialog-footer">
                         <el-button type="primary"
-                                   @click="dialogPvVisible = false">{{ $t('table.confirm') }}</el-button>
+                                   @click="dialogPvVisible = false">{{ $t('btn.confirm') }}</el-button>
                     </span>
                 </el-dialog>
 
@@ -398,12 +407,12 @@
                                    size="small"
                                    type="primary"
                                    @click="addButton"
-                                   icon="el-icon-plus">{{ $t('table.add') }}</el-button>
+                                   icon="el-icon-plus">{{ $t('btn.add') }}</el-button>
                         <el-button class="filter-item"
                                    size="small"
                                    type="primary"
                                    @click="deleteButton"
-                                   icon="el-icon-plus">{{ $t('table.delete') }}</el-button>
+                                   icon="el-icon-plus">{{ $t('btn.delete') }}</el-button>
                     </div>
                     <el-table :data="btnFucList"
                               border
@@ -450,9 +459,9 @@
 
                     <div slot="footer"
                          class="dialog-footer">
-                        <el-button @click="btnAuthorityDialog=!btnAuthorityDialog">{{$t('table.cancel')}}</el-button>
+                        <el-button @click="btnAuthorityDialog=!btnAuthorityDialog">{{$t('btn.cancel')}}</el-button>
                         <el-button type="primary"
-                                   @click="confirmBtnList">{{$t('table.confirm')}}</el-button>
+                                   @click="confirmBtnList">{{$t('btn.confirm')}}</el-button>
                     </div>
                 </el-dialog>
             </div>

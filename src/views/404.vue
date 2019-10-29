@@ -16,7 +16,7 @@
                      alt="404">
             </div>
             <div class="bullshit">
-                <div class="bullshit__oops">OOPS!</div>
+                <div class="bullshit__oops">OOPS!   404</div>
                 <div class="bullshit__info">版权所有
                     <a class="link-type"
                        href="https://wallstreetcn.com"

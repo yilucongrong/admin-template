@@ -24,7 +24,7 @@
                            type="primary"
                            size="small"
                            icon="el-icon-search"
-                           @click="handleQuery">{{$t('table.search')}}</el-button>
+                           @click="handleQuery">{{$t('btn.search')}}</el-button>
 
             </div>
         </div>
@@ -35,12 +35,12 @@
                            size="small"
                            type="primary"
                            @click="handlePublish"
-                           icon="el-icon-edit-outline">{{$t('table.publish')}}</el-button>
+                           icon="el-icon-edit-outline">{{$t('btn.publish')}}</el-button>
                 <el-button class="filter-item"
                            size="small"
                            type="primary"
                            @click="handleDelete"
-                           icon="el-icon-delete">{{$t('table.delete')}}</el-button>
+                           icon="el-icon-delete">{{$t('btn.delete')}}</el-button>
                 <el-button class="filter-item"
                            size="small"
                            type="primary"
