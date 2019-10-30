@@ -119,7 +119,7 @@ export default {
         },
         //树高度设置
         setTreeHeight () {
-            this.contentStyleObj.height = global_valfn.getTreehHeight();
+            this.contentStyleObj.height = parseInt(global_valfn.getTreehHeight()) - 40 + 'px';
         },
     },
     destroyed () {
@@ -127,38 +127,3 @@ export default {
     }
 };
 </script>
-<style scoped>
-.el-table {
-    max-height: 350px;
-}
-
-.btn,
-.select-title {
-    border: solid 1px #ded8e1;
-    border-bottom: 0px;
-    border-top: solid 5px #ded8e1;
-    padding: 8px 10px;
-}
-
-.left-trees {
-    background-color: #e2e9ef;
-}
-
-.main-content {
-    margin: 20px;
-}
-
-.select-content {
-    border: solid 1px #ded8e1;
-    padding: 8px 10px;
-}
-
-.el-tree {
-    margin-top: 20px;
-    background-color: #e2e9ef;
-}
-
-.el-form-item {
-    margin-bottom: 0px;
-}
-</style>

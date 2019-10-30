@@ -116,11 +116,11 @@ export default {
         },
         getHeight () {
             this.contentStyleObj.height =
-                document.body.scrollHeight - 197 + "px";
+                document.body.scrollHeight - 110 + "px";
         },
         //树高度设置
         setTreeHeight () {
-            this.contentStyleObj.height = global_valfn.getTreehHeight();
+            this.contentStyleObj.height = parseInt(global_valfn.getTreehHeight()) - 40 + 'px';
         },
     },
     destroyed () {
