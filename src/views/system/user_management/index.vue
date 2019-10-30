@@ -26,7 +26,7 @@
                         <el-button type="primary"
                                    size="small"
                                    icon="el-icon-search"
-                                   @click="handleFilter">{{ $t('table.search') }}</el-button>
+                                   @click="handleFilter">{{ $t('btn.search') }}</el-button>
                     </div>
                 </div>
                 <div class="table-container">
@@ -114,9 +114,9 @@
                              @tab-click="handleTabClick">
                         <el-tab-pane :label="$t('userManagement.unrelatedRoles')"
                                      name="first">
-                            <div>
-                                <div class="main-header">
-                                    <div class="select-content">
+                            <div class="table-container">
+                                <div class="filter-container">
+                                    <div class="filter-items">
                                         <el-input size="small"
                                                   :placeholder="$t('userManagement.roleName')"
                                                   v-model="listQuery1.roleName"
@@ -151,12 +151,12 @@
                                                    class="filter-item"
                                                    type="primary"
                                                    icon="el-icon-search"
-                                                   @click="handsearchsole">{{ $t('table.search') }}</el-button>
+                                                   @click="handsearchsole">{{ $t('btn.search') }}</el-button>
                                         <el-button size="small"
                                                    class="filter-item"
                                                    type="primary"
                                                    icon="el-icon-select"
-                                                   @click="addrole">{{ $t('table.empower') }}</el-button>
+                                                   @click="addrole">{{ $t('tabs.empower') }}</el-button>
                                     </div>
                                 </div>
                                 <el-table v-loading="listLoading"
@@ -166,6 +166,8 @@
                                           fit
                                           height="350px"
                                           highlight-current-row
+                                          cell-class-name="table-cell"
+                                          header-cell-class-name="header-cell"
                                           style="width: 100%;"
                                           @selection-change='selectRowUser'>
                                     <el-table-column type="selection"
@@ -214,14 +216,14 @@
                         </el-tab-pane>
                         <el-tab-pane :label="$t('userManagement.associatedRoles')"
                                      name="second">
-                            <div>
-                                <div class="main-header">
-                                    <div class="select-content">
+                            <div class="table-container">
+                                <div class="filter-container">
+                                    <div class="filter-items">
                                         <el-button size="small"
                                                    class="filter-item"
                                                    type="primary"
                                                    icon="el-icon-select"
-                                                   @click="deleRole">{{ $t('table.delete') }}</el-button>
+                                                   @click="deleRole">{{ $t('btn.delete') }}</el-button>
                                     </div>
                                 </div>
                                 <el-table v-loading="listLoading"
@@ -231,6 +233,8 @@
                                           fit
                                           height="350px"
                                           highlight-current-row
+                                          cell-class-name="table-cell"
+                                          header-cell-class-name="header-cell"
                                           style="width: 100%;"
                                           @selection-change='selectRowUser1'>
                                     <el-table-column type="selection"
@@ -299,7 +303,7 @@
                     <span slot="footer"
                           class="dialog-footer">
                         <el-button type="primary"
-                                   @click="dialogPvVisible = false">{{ $t('table.confirm') }}</el-button>
+                                   @click="dialogPvVisible = false">{{ $t('btn.confirm') }}</el-button>
                     </span>
                 </el-dialog>
                 <!--功能授权弹窗 -->
@@ -317,9 +321,9 @@
                              @check-change="handleCheckChange"></el-tree>
                     <div slot="footer"
                          class="dialog-footer">
-                        <el-button @click="cancel()">{{$t('table.cancel')}}</el-button>
+                        <el-button @click="cancel()">{{$t('btn.cancel')}}</el-button>
                         <el-button type="primary"
-                                   @click="create1">{{$t('table.confirm')}}</el-button>
+                                   @click="create1">{{$t('btn.confirm')}}</el-button>
                     </div>
                 </el-dialog>
             </div>
@@ -551,6 +555,12 @@ export default {
                     roleCodes[i] = this.selectlistRowUser1[i].roleCode
                 }
                 authorizationrole(this.selectlistRow[0].userName, roleCodes, fun).then(() => {
+                    this.$message({
+                        title: '成功',
+                        message: '删除成功',
+                        type: 'success',
+
+                    })
                     this.getListRelation()
                 })
                 this.dialogFormUser = true
@@ -618,8 +628,13 @@ export default {
                 for (let i = 0; i < this.selectlistRowUser.length; i++) {
                     roleCodes[i] = this.selectlistRowUser[i].roleCode
                 }
-
                 authorizationrole(this.selectlistRow[0].userName, roleCodes, fun).then(() => {
+                    this.$message({
+                        title: '成功',
+                        message: '授权成功',
+                        type: 'success',
+                        duration: 2000
+                    })
                     this.handleUser()
                 })
                 this.dialogFormUser = true

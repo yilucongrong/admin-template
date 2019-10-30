@@ -50,7 +50,7 @@ export function authorizationrole(userName, code, methods) {
     //授权角色
     let codes = {
         method: methods,
-        roleCodes: [code],
+        roleCodes: code,
         userName: userName
     }
     return request({

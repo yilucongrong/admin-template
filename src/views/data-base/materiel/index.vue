@@ -43,7 +43,7 @@
                                size="small"
                                type="primary"
                                icon="el-icon-search"
-                               @click="handleQuery">{{ $t("table.search") }}</el-button>
+                               @click="handleQuery">{{ $t("btn.search") }}</el-button>
                 </div>
             </div>
             <div class="table-container">
@@ -52,27 +52,27 @@
                                size="small"
                                type="primary"
                                @click="handleCreate"
-                               icon="el-icon-plus">{{ $t("table.add") }}</el-button>
+                               icon="el-icon-plus">{{ $t("btn.add") }}</el-button>
                     <el-button class="filter-item"
                                size="small"
                                type="primary"
                                @click="handleUpdate"
-                               icon="el-icon-edit">{{ $t("table.edit") }}</el-button>
+                               icon="el-icon-edit">{{ $t("btn.edit") }}</el-button>
                     <el-button class="filter-item"
                                size="small"
                                type="primary"
                                @click="handleDelete"
-                               icon="el-icon-delete">{{ $t("table.delete") }}</el-button>
+                               icon="el-icon-delete">{{ $t("btn.delete") }}</el-button>
                     <el-button size="small"
                                class="filter-item"
                                type="primary"
                                icon="el-icon-download"
-                               @click="handleDownload">{{ $t("table.export") }}</el-button>
+                               @click="handleDownload">{{ $t("btn.export") }}</el-button>
                     <el-button class="filter-item"
                                size="small"
                                type="primary"
                                @click="handleImport"
-                               icon="el-icon-edit">{{$t('table.import')}}</el-button>
+                               icon="el-icon-edit">{{$t('btn.import')}}</el-button>
                     <el-button class="filter-item"
                                size="small"
                                type="primary"
@@ -208,7 +208,7 @@
                 <el-dialog custom-class="dialog-custom"
                            :close-on-click-modal="false"
                            :close-on-press-escape="false"
-                           :title="dialogStatus == 'create' ? $t('table.add') : $t('table.edit')"
+                           :title="dialogStatus == 'create' ? $t('btn.add') : $t('btn.edit')"
                            :visible.sync="dialogFormVisible"
                            v-dialogDrag
                            @close="handleClose">
@@ -323,9 +323,9 @@
                     </el-form>
                     <div slot="footer"
                          class="dialog-footer">
-                        <el-button @click="dialogFormVisible = false">{{$t("table.cancel")}}</el-button>
+                        <el-button @click="dialogFormVisible = false">{{$t("btn.cancel")}}</el-button>
                         <el-button type="primary"
-                                   @click="dialogStatus === 'create' ? create() : update()">{{ $t("table.confirm") }}</el-button>
+                                   @click="dialogStatus === 'create' ? create() : update()">{{ $t("btn.confirm") }}</el-button>
                     </div>
                 </el-dialog>
 
@@ -361,31 +361,31 @@
                     </div>
 
                     <div id="receipt">
-                        <div class="code">
+                        <div style="width: 67%; float: left;">
                             <p>物料编码:<u>{{code}}</u></p>
                         </div>
-                        <div class="qcode">
+                        <div style=" width: 33%;float: left;margin-bottom:5px">
                             <qrcode :imgindex="'receipt'"
                                     ref="childQRcode"></qrcode>
                         </div>
                         <div>
-                            <table class="tab">
+                            <table style="border-collapse: collapse;width: 100%;">
                                 <tr>
-                                    <th class="thtd">行号</th>
-                                    <th class="thtd">物料编码</th>
-                                    <th class="thtd">物料名称</th>
-                                    <th class="thtd">计量单位</th>
-                                    <th class="thtd">订单数量</th>
-                                    <th class="thtd">备注</th>
+                                    <th style="padding: 15px;text-align: center;border: 1px solid #ccc;">行号</th>
+                                    <th style="padding: 15px;text-align: center;border: 1px solid #ccc;">物料编码</th>
+                                    <th style="padding: 15px;text-align: center;border: 1px solid #ccc;">物料名称</th>
+                                    <th style="padding: 15px;text-align: center;border: 1px solid #ccc;">计量单位</th>
+                                    <th style="padding: 15px;text-align: center;border: 1px solid #ccc;">订单数量</th>
+                                    <th style="padding: 15px;text-align: center;border: 1px solid #ccc;">备注</th>
                                 </tr>
                                 <tr v-for="data in this.selectlistRow"
                                     :key="data.rowNo">
-                                    <td class="thtd">{{data.rowNo}}</td>
-                                    <td class="thtd">{{data.materielCode}}</td>
-                                    <td class="thtd">{{data.materielName}}</td>
-                                    <td class="thtd">{{data.measuringUnit}}</td>
-                                    <td class="thtd">{{data.orderQuantity}}</td>
-                                    <td class="thtd">{{data.remark}}</td>
+                                    <td style="padding: 15px;text-align: center;border: 1px solid #ccc;">{{data.rowNo}}</td>
+                                    <td style="padding: 15px;text-align: center;border: 1px solid #ccc;">{{data.materielCode}}</td>
+                                    <td style="padding: 15px;text-align: center;border: 1px solid #ccc;">{{data.materielName}}</td>
+                                    <td style="padding: 15px;text-align: center;border: 1px solid #ccc;">{{data.measuringUnit}}</td>
+                                    <td style="padding: 15px;text-align: center;border: 1px solid #ccc;">{{data.orderQuantity}}</td>
+                                    <td style="padding: 15px;text-align: center;border: 1px solid #ccc;">{{data.remark}}</td>
                                 </tr>
                             </table>
                         </div>
@@ -543,7 +543,10 @@ export default {
         },
         //表格高度计算
         setTableHeight () {
-            this.theight = global_valfn.getSingleTbHeight() - 35;
+
+            this.theight = global_valfn.getSingleTbHeight()
+            console.log(this.theight);
+
         },
         handleQuery () {
             this.listQuery.currentPage = 1;
@@ -782,22 +785,4 @@ export default {
     }
 };
 </script>
-<style scoped>
-.thtd {
-    padding: 15px;
-    text-align: center;
-    border: 1px solid #ccc;
-}
-.tab {
-    border-collapse: collapse;
-    width: 100%;
-}
-.code {
-    width: 67%;
-    float: left;
-}
-.qcode {
-    width: 33%;
-    float: left;
-}
-</style>
+

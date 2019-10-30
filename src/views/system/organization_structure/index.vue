@@ -29,7 +29,7 @@
                                    size="small"
                                    icon="el-icon-search"
                                    @click="handleFilter">
-                            {{ $t("table.search") }}</el-button>
+                            {{ $t("btn.search") }}</el-button>
                     </div>
                 </div>
                 <div class="table-container">
@@ -39,26 +39,26 @@
                                    type="primary"
                                    icon="el-icon-plus"
                                    @click="handleCreate">
-                            {{ $t("table.add") }}
+                            {{ $t("btn.add") }}
                         </el-button>
                         <el-button size="small"
                                    class="filter-item"
                                    type="primary"
                                    icon="el-icon-download"
                                    @click="handleDownload">
-                            {{ $t("table.export") }}</el-button>
+                            {{ $t("btn.export") }}</el-button>
                         <el-button size="small"
                                    class="filter-item"
                                    type="primary"
                                    icon="el-icon-edit"
                                    @click="handleUpdate">
-                            {{ $t("table.edit") }}</el-button>
+                            {{ $t("btn.edit") }}</el-button>
                         <el-button size="small"
                                    class="filter-item"
                                    type="primary"
                                    icon="el-icon-delete"
                                    @click="handleDelete">
-                            {{ $t("table.delete") }}</el-button>
+                            {{ $t("btn.delete") }}</el-button>
                     </div>
                     <el-table :key="tableKey"
                               :data="list"
@@ -191,10 +191,11 @@
                 </div>
 
                 <el-dialog custom-class="dialog-custom"
+                           size="small"
                            :title="
                         dialogStatus == 'create'
-                            ? $t('table.add')
-                            : $t('table.edit')
+                            ? $t('btn.add')
+                            : $t('btn.edit')
                     "
                            :visible.sync="dialogFormVisible"
                            v-dialogDrag
@@ -265,10 +266,10 @@
                                       prop="state">
                             <el-radio-group v-model="temp.state">
                                 <el-radio :label="1">{{
-                                    $t("table.enable")
+                                    $t("from.open")
                                 }}</el-radio>
                                 <el-radio :label="0">{{
-                                    $t("table.stop")
+                                    $t("from.stop")
                                 }}</el-radio>
                             </el-radio-group>
                         </el-form-item>
@@ -287,14 +288,14 @@
                     <div slot="footer"
                          class="dialog-footer">
                         <el-button @click="dialogFormVisible = false">{{
-                            $t("table.cancel")
+                            $t("btn.cancel")
                         }}</el-button>
                         <el-button type="primary"
                                    @click="
                                 dialogStatus === 'create'
                                     ? createData()
                                     : updateData()
-                            ">{{ $t("table.confirm") }}</el-button>
+                            ">{{ $t("btn.confirm") }}</el-button>
                     </div>
                 </el-dialog>
 
@@ -315,7 +316,7 @@
                     <span slot="footer"
                           class="dialog-footer">
                         <el-button type="primary"
-                                   @click="dialogPvVisible = false">{{ $t("table.confirm") }}</el-button>
+                                   @click="dialogPvVisible = false">{{ $t("btn.confirm") }}</el-button>
                     </span>
                 </el-dialog>
             </div>

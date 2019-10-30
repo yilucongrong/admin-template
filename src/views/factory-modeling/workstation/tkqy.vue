@@ -1,24 +1,24 @@
 <template>
-    <div class="app-container calendar-list-container">
+    <div>
         <div class="filter-container">
             <div class="filter-items">
-                <div class="select-element">
-                    <el-input size="small"
-                              :placeholder="$t('workstation.locationCode')"
-                              v-model="listQuery.locationCode"
-                              class="filter-item"
-                              @keyup.enter.native="handleQuery" />
-                    <el-input size="small"
-                              :placeholder="$t('workstation.locationName')"
-                              v-model="listQuery.locationName"
-                              class="filter-item"
-                              @keyup.enter.native="handleQuery" />
-                    <el-button class="filter-item"
-                               type="primary"
-                               size="small"
-                               icon="el-icon-search"
-                               @click="handleQuery">{{ $t('table.search') }}</el-button>
-                </div>
+
+                <el-input size="small"
+                          :placeholder="$t('workstation.locationCode')"
+                          v-model="listQuery.locationCode"
+                          class="filter-item"
+                          @keyup.enter.native="handleQuery" />
+                <el-input size="small"
+                          :placeholder="$t('workstation.locationName')"
+                          v-model="listQuery.locationName"
+                          class="filter-item"
+                          @keyup.enter.native="handleQuery" />
+                <el-button class="filter-item"
+                           type="primary"
+                           size="small"
+                           icon="el-icon-search"
+                           @click="handleQuery">{{ $t('btn.search') }}</el-button>
+
             </div>
         </div>
         <div class="table-container">
@@ -37,28 +37,18 @@
                                  width="30"
                                  align="center"></el-table-column>
                 <el-table-column show-overflow-tooltip
-                                 width="120"
-                                 align="left"
                                  :label="$t('workstation.warehouseCode')"
                                  prop="warehouseCode"></el-table-column>
                 <el-table-column show-overflow-tooltip
-                                 width="200"
-                                 align="left"
                                  :label="$t('workstation.areaCode')"
                                  prop="areaCode"></el-table-column>
                 <el-table-column show-overflow-tooltip
-                                 width="100"
-                                 align="left"
                                  :label="$t('workstation.locationCode')"
                                  prop="locationCode"></el-table-column>
                 <el-table-column show-overflow-tooltip
-                                 width="100"
-                                 align="left"
                                  :label="$t('workstation.locationName')"
                                  prop="locationName"></el-table-column>
                 <el-table-column show-overflow-tooltip
-                                 width="100"
-                                 align="left"
                                  :label="$t('workstation.warehouseName')"
                                  prop="warehouseName"></el-table-column>
             </el-table>

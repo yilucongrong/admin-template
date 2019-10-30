@@ -4,11 +4,12 @@
         <div v-if="device==='mobile'&&sidebar.opened"
              class="drawer-bg"
              @click="handleClickOutside" />
-        <sidebar class="sidebar-container" />
+        <sidebar class="sidebar-container"
+                 v-if="showSidebar" />
         <div :class="{hasTagsView:needTagsView}"
              class="main-container">
             <div :class="{'fixed-header':fixedHeader}">
-                <navbar />
+                <navbar v-if="showBraed" />
                 <tags-view v-if="needTagsView" />
             </div>
             <app-main />
@@ -41,11 +42,15 @@ export default {
             sidebar: state => state.app.sidebar,
             device: state => state.app.device,
             showSettings: state => state.settings.showSettings,
+            showSidebar: state => state.settings.showSidebar,
+            showBraed: state => state.settings.showBraed,
             needTagsView: state => state.settings.tagsView,
             fixedHeader: state => state.settings.fixedHeader
         }),
         classObj () {
             return {
+                showBraed: !this.showBraed,
+                hideSidebarAll: !this.showSidebar,
                 hideSidebar: !this.sidebar.opened,
                 openSidebar: this.sidebar.opened,
                 withoutAnimation: this.sidebar.withoutAnimation,
@@ -99,8 +104,13 @@ export default {
 .hideSidebar .fixed-header {
     width: calc(100% - 54px);
 }
-
+.hideSidebarAll .fixed-header {
+    width: calc(100%);
+}
 .mobile .fixed-header {
     width: 100%;
+}
+.showBraed .app-main {
+    min-height: calc(100vh);
 }
 </style>

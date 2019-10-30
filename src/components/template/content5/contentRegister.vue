@@ -77,14 +77,14 @@
                                class="filter-item"
                                type="primary"
                                icon="el-icon-plus"
-                               @click="handleAdd">{{$t('table.add')}}</el-button>
+                               @click="handleAdd">{{$t('btn.add')}}</el-button>
                     <el-button :disabled="isSaveEdit"
                                v-if="mainFormList.dicType === configBusiness.db"
                                size="small"
                                class="filter-item"
                                type="primary"
                                icon="el-icon-delete"
-                               @click="handleDelete">{{$t('table.delete')}}</el-button>
+                               @click="handleDelete">{{$t('btn.delete')}}</el-button>
                     <el-button :disabled="isSaveEdit"
                                size="small"
                                class="filter-item"

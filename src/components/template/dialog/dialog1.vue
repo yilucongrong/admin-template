@@ -22,7 +22,7 @@
                                 <el-button type="primary"
                                            size="small"
                                            icon="el-icon-search"
-                                           @click="handleFilter1">{{ $t('table.search') }}</el-button>
+                                           @click="handleFilter1">{{ $t('btn.search') }}</el-button>
                             </div>
                         </div>
 
@@ -109,7 +109,7 @@
                  class="dialog-footer">
                 <el-button type="primary"
                            size="small"
-                           @click="dialogConfirm">{{$t('table.confirm')}}</el-button>
+                           @click="dialogConfirm">{{$t('btn.confirm')}}</el-button>
             </div>
         </el-dialog>
     </div>

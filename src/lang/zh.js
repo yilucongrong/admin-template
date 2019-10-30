@@ -1,4 +1,5 @@
 export default {
+    //路由模块
     route: {
         dashboard: '首页',
         // 系统管理模块
@@ -82,6 +83,7 @@ export default {
         donate: '打赏',
         profile: '个人中心'
     },
+    //个人信息模块
     navbar: {
         dashboard: '首页',
         github: '项目地址',
@@ -90,6 +92,7 @@ export default {
         theme: '换肤',
         size: '布局大小'
     },
+    //登录模块
     login: {
         title: '系统登录',
         logIn: '登录',
@@ -132,32 +135,37 @@ export default {
         imageUploadTips:
             '由于我在使用时它只有vue@1版本，而且和mockjs不兼容，所以自己改造了一下，如果大家要使用的话，优先还是使用官方版本。'
     },
-    //表格
-    table: {
-        dynamicTips1: '固定表头, 按照表头顺序排序',
-        dynamicTips2: '不固定表头, 按照点击顺序排序',
-        dragTips1: '默认顺序',
-        dragTips2: '拖拽后顺序',
-        title: '标题',
-        importance: '重要性',
-        type: '类型',
-        remark: '点评',
+    // 按钮
+    btn: {
+        empower: '授权',
+        unauthority: '取消授权',
+        copyonly: '复制',
+        createTime: '创建时间',
+        generate: '生成',
+        import: '导入',
         search: '搜索',
         add: '添加',
         export: '导出',
-        reviewer: '审核人',
-        id: '序号',
-        date: '时间',
-        author: '作者',
-        readings: '阅读数',
-        status: '状态',
         actions: '操作',
         edit: '编辑',
         publish: '发布',
         draft: '草稿',
         delete: '删除',
         cancel: '取 消',
-        confirm: '确 定',
+        confirm: '确 定'
+    },
+    //表格模块
+    table: {
+        remark: '点评',
+        // 以下中英文按钮功能移至btn
+        // search: '搜索',
+        // add: '添加',
+        // export: '导出',
+        // edit: '编辑',
+        // confirm: '确 定',
+        // delete: '删除',
+        //cancel: '取 消',
+        // publish: '发布',
         // 系统管理
         organizationNum: '组织编码',
         organizationName: '组织名称',
@@ -175,6 +183,17 @@ export default {
         remarks: '备注',
         enable: '启用',
         stop: '停用'
+    },
+    //表单模块
+    form: {
+        close: '关闭',
+        stop: '停用',
+        open: '开启'
+    },
+    //tabs页
+    tabs: {
+        selected: '已选项',
+        tbSelected: '备选项'
     },
     //员工管理
     employeesManagement: {
@@ -227,6 +246,16 @@ export default {
         remark: '备注',
         resourceAssociation: '资源关联',
         buttonOprate: '按钮操作'
+    },
+    //系统资源
+    systemResource: {
+        endpointCode: '资源号',
+        endpointName: '资源名称',
+        url: '资源路径',
+        method: '状态',
+        remark: '备注',
+        parentId: '父目录',
+        resourceAssociation: '资源关联'
     },
     //数据字典
     dict: {
@@ -354,18 +383,21 @@ export default {
     pdf: {
         tips: '这里使用   window.print() 来实现下载pdf的功能'
     },
+    //主题模块
     theme: {
         change: '换肤',
         documentation: '换肤文档',
         tips:
             'Tips: 它区别于 navbar 上的 theme-pick, 是两种不同的换肤方法，各自有不同的应用场景，具体请参考文档。'
     },
+    //tagsview模块
     tagsView: {
         refresh: '刷新',
         close: '关闭',
         closeOthers: '关闭其它',
         closeAll: '关闭所有'
     },
+    //设置模块
     settings: {
         title: '系统布局配置',
         theme: '主题色',

@@ -23,7 +23,7 @@
                                            size="small"
                                            type="primary"
                                            icon="el-icon-search"
-                                           @click="handleQuery">{{$t('table.search')}}</el-button>
+                                           @click="handleQuery">{{$t('btn.search')}}</el-button>
                             </div>
                         </div>
                     </div>
@@ -34,17 +34,17 @@
                                        size="small"
                                        type="primary"
                                        @click="handleCreate"
-                                       icon="el-icon-plus">{{$t('table.add')}}</el-button>
+                                       icon="el-icon-plus">{{$t('btn.add')}}</el-button>
                             <el-button class="filter-item"
                                        size="small"
                                        type="primary"
                                        @click="handleUpdate"
-                                       icon="el-icon-edit">{{$t('table.edit')}}</el-button>
+                                       icon="el-icon-edit">{{$t('btn.edit')}}</el-button>
                             <el-button class="filter-item"
                                        size="small"
                                        type="primary"
                                        @click="handleDelete"
-                                       icon="el-icon-delete">{{$t('table.delete')}}</el-button>
+                                       icon="el-icon-delete">{{$t('btn.delete')}}</el-button>
                         </div>
 
                         <el-table :key="tableKey[0]"
@@ -95,17 +95,17 @@
                                        size="small"
                                        type="primary"
                                        @click="handleCreateSub"
-                                       icon="el-icon-plus">{{$t('table.add')}}</el-button>
+                                       icon="el-icon-plus">{{$t('btn.add')}}</el-button>
                             <el-button class="filter-item"
                                        size="small"
                                        type="primary"
                                        @click="handleCreateSub"
-                                       icon="el-icon-edit">{{$t('table.edit')}}</el-button>
+                                       icon="el-icon-edit">{{$t('btn.edit')}}</el-button>
                             <el-button class="filter-item"
                                        size="small"
                                        type="primary"
                                        @click="handleDeleteSub()"
-                                       icon="el-icon-delete">{{$t('table.delete')}}</el-button>
+                                       icon="el-icon-delete">{{$t('btn.delete')}}</el-button>
                         </div>
 
                         <el-table :key="tableKey[1]"
