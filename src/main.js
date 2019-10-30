@@ -15,7 +15,8 @@ import router from './router'
 import store from './store'
 
 import i18n from './lang' // internationalization
-import './icons' // icon
+// import './icons' // icon
+import getSVG from './icons' // icon
 import './permission' // permission control
 
 import * as filters from './filters' // global filters
@@ -30,7 +31,7 @@ Vue.use(Element, {
 })
 Vue.prototype.$echarts = echarts
 Vue.prototype.$myFun = myFun //其中$xx为新命的名。
-
+Vue.prototype.$myFun.getSVG = getSVG
 Object.keys(filters).forEach(key => {
     Vue.filter(key, filters[key])
 })
