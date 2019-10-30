@@ -188,6 +188,25 @@ aside {
     .range_date {
         width: 210px !important;
     }
+
+    .el-button {
+        border: none !important;
+        padding: 0 15px;
+        line-height: 30px;
+        height: 30px;
+    }
+
+    // .el-input-group__append {
+    //     .el-button {
+    //         line-height: 32px;
+    //         height: 32px;
+    //     }
+    // }
+
+    // .el-input-group__append,
+    // .el-input-group__prepend {
+    //     border: none;
+    // }
 }
 
 .filter-container {
@@ -210,7 +229,7 @@ aside {
     //搜索条件按钮
     .filter-item-btn {
         display: inline-block;
-        height: 32px;
+        // height: 32px;
     }
 
     .filter-item-name {
@@ -251,8 +270,8 @@ aside {
     .el-table--border,
     .el-table--group {
         border: 1px solid $border-color;
-        border-right: none;
-        border-bottom: none;
+        // border-right: none;
+        // border-bottom: none;
     }
 
     .el-table--border::after,
@@ -282,21 +301,21 @@ aside {
 
     .el-table--small th {
         font-size: 12px;
-        padding: 6px 0;
+        padding: 0px 0;
     }
 
     .el-table--small td {
         font-size: 12px;
-        padding: 2px 0;
+        padding: 0px 0;
     }
 
     .el-table th {
         font-size: 12px;
-        padding: 6px 0;
+        padding: 0px 0;
     }
     .el-table td {
         font-size: 12px;
-        padding: 2px 0;
+        padding: 0px 0;
     }
 
     //折叠表哥行内样式
@@ -326,16 +345,17 @@ aside {
     }
 }
 .table-container {
-    border: none;
+    border: solid 1px $border-color;
+    border-top: solid 5px $border-color;
     margin-top: 10px;
     background-color: white;
 
     .oprate_btn {
         padding: 5px;
         text-align: left;
-        border: solid 1px $border-color;
-        border-top: solid 5px $border-color;
-        border-bottom: none;
+        // border: solid 1px $border-color;
+        // border-top: solid 5px $border-color;
+        border-bottom: solid 1px $border-color;
 
         .el-button + .el-button {
             margin-left: 0px;
@@ -353,9 +373,7 @@ aside {
 
     .el-table--border,
     .el-table--group {
-        border: 1px solid $border-color;
-        border-right: none;
-        border-bottom: none;
+        border: none;
     }
 
     .el-table--border::after,
@@ -385,21 +403,21 @@ aside {
 
     .el-table--small th {
         font-size: 12px;
-        padding: 6px 0;
+        padding: 0px 0;
     }
 
     .el-table--small td {
         font-size: 12px;
-        padding: 2px 0;
+        padding: 0px 0;
     }
 
     .el-table th {
         font-size: 12px;
-        padding: 6px 0;
+        padding: 0px 0;
     }
     .el-table td {
         font-size: 12px;
-        padding: 2px 0;
+        padding: 0px 0;
     }
 
     //折叠表哥行内样式
@@ -427,6 +445,14 @@ aside {
         background: $headerCell-inner-color;
         color: #474747;
     }
+
+    .el-table .cell {
+        line-height: 27px;
+    }
+
+    .el-table thead .cell {
+        line-height: 33px;
+    }
 }
 
 .nofilter.table-container {
@@ -441,8 +467,7 @@ aside {
 .pagination-container {
     background: #fff;
     padding: 5px;
-    border: 1px solid $border-color;
-    border-top: none;
+    border-top: 1px solid $border-color;
 }
 .pagination-container.hidden {
     display: none;
@@ -515,10 +540,6 @@ aside {
         }
     }
 
-    .pagination-container {
-        border: none;
-    }
-
     .el-form--inline .el-form-item {
         margin-right: 0px;
         margin-bottom: 0px;
@@ -551,10 +572,6 @@ aside {
 
 //折叠面板块样式,根据实际布局修改
 .collapse_div {
-    border: solid 1px $border-color;
-    border-top: solid 5px $border-color;
-    border-bottom: none;
-
     .el-collapse-item__header {
         padding: 0px 0px 0px 10px;
         border-bottom: solid 1px $border-color;
@@ -604,4 +621,49 @@ aside {
 
 .table_dialog .el-dialog__body {
     padding: 0px;
+}
+
+.form_dialog .el-dialog__body {
+    padding: 0px;
+
+    .el-form {
+        padding: 30px 20px 0px 20px;
+    }
+
+    .oprate_btn {
+        padding: 5px;
+        text-align: left;
+
+        .el-button + .el-button {
+            margin-left: 0px;
+        }
+    }
+
+    .oprate_btn.no_t_border {
+        border-top: none;
+    }
+
+    .table-container {
+        border: none;
+        border-top: solid 1px #d3dae0;
+        border-bottom: solid 1px #d3dae0;
+        margin-top: 0px;
+    }
+}
+
+.el-button {
+    span {
+        display: inline-block;
+        height: 12px;
+    }
+}
+
+.table-container .el-table--border::after,
+.table-container .el-table--group::after,
+.table-container .el-table::before {
+    background-color: #d3dae000;
+}
+
+.dialog-custom .el-dialog__footer {
+    border-top: none;
 }
