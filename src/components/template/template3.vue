@@ -18,6 +18,7 @@
                                           v-model="listQuery.dictName"
                                           class="filter-item"
                                           @keyup.enter.native="handleQuery" />
+
                                 <el-button class="filter-item"
                                            size="small"
                                            type="primary"
@@ -201,7 +202,7 @@ export default {
     methods: {
         //表格高度计算
         setTableHeight () {
-            this.theight = global_valfn.getSingleTbHeight();
+            this.theight = global_valfn.getSingleTbHeight() - 2;
             this.stheight = this.theight + 58;
         },
         //模板变化

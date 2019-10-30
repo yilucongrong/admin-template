@@ -131,6 +131,7 @@ export default {
             totalSelected: 0,//选中的条数 暂未使用
             activeName: 'first',//tab激活内容
             tableKey: [0, 1, 2],//表格索引
+            selectRowData: null,
             listQueryAll: {
                 page: true,
                 currentPage: 1,
@@ -203,7 +204,7 @@ export default {
             }
         },
         getList2 () {//已选项查询
-            this.listSelected = this.selectRowData1
+            this.listSelected = this.selectRowData
         },
         //传递子表数据时赋值使用
         getDetail (row) {
@@ -216,20 +217,20 @@ export default {
             if (this.unMutiple) {
                 this.selectOneRow(val);
             } else {
-                this.selectRow1(val);
+                this.selectRows(val);
             }
         },
-        selectRow1 (val) {//备选项选中行
+        selectRows (val) {//备选项选中行
             console.log(33333, val);
-            this.selectRowData1 = val
-            this.listSelected = this.selectRowData1;
+            this.selectRowData = val
+            this.listSelected = this.selectRowData;
             // this.getDetail(val[val.length - 1]);
             // this.$emit('clickRows' ,val,this.listSub);
         },
         selectOneRow (val) {
             let arr = [];
             arr.push(val[val.length - 1])
-            this.selectRowData1 = arr;
+            this.selectRowData = arr;
             // if (arr[0]) {
             //     this.getDetail(arr[0]);
             // }
@@ -237,7 +238,7 @@ export default {
                 this.$refs.tbselect.clearSelection()
                 this.$refs.tbselect.toggleRowSelection(val[val.length - 1], 'selected')
             }
-            this.listSelected = this.selectRowData1;
+            this.listSelected = this.selectRowData;
 
         },
         //弹框1点击确定

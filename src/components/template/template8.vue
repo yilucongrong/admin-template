@@ -34,21 +34,37 @@
                  ref="dialogRef2"
                  :unMutiple="unMutiple[1]"></dialog1>
 
+        <!-- tableform -->
+        <dialog2 @handleDialogClick="handleDialogClick"
+                 :title="'dialog2form+表单'"
+                 :curdialogStatus="curdialogStatus"
+                 ref="dialogRef3"
+                 :unMutiple="unMutiple[2]"></dialog2>
+
+        <!-- 嵌套dialog -->
+        <dialog3 @handleDialogClick="handleDialogClick"
+                 :title="'嵌套dialog'"
+                 ref="dialogRef4"
+                 :unMutiple="unMutiple[2]"></dialog3>
+
     </div>
 </template>
 <script>
 import changeModuleSelect from '@/components/template/changeMoudleSelect'
 import dialog1 from './dialog/dialog1.vue'
+import dialog2 from './dialog/dialog2.vue'
+import dialog3 from './dialog/dialog3.vue'
+
 export default {
     name: "zdmb",
-    components: { changeModuleSelect, dialog1 },
+    components: { changeModuleSelect, dialog1, dialog2, dialog3 },
     data () {
         return {
             buttonsInfo: [{ id: 1, catelog: 'dialog', value: 'dialog1', des: 'table多选' },
             { id: 2, catelog: 'dialog', value: 'dialog2', des: 'table单选' },
             { id: 3, catelog: 'dialog', value: 'dialog3', des: 'form' },
-            { id: 4, catelog: 'dialog', value: 'dialog4', des: 'info' },
-            { id: 5, catelog: 'dialog', value: 'dialog5', des: 'formTable' }
+            { id: 4, catelog: 'dialog', value: 'dialog4', des: '嵌套' },
+                // { id: 5, catelog: 'dialog', value: 'dialog5', des: 'formTable' }
             ],
             selectedInfos: null,//选中的弹框内容
             dialogVisible: {
@@ -58,8 +74,8 @@ export default {
                 dialogVisible4: false,
                 dialogVisible5: false
             },
-            dialogVisible1: false,
-            unMutiple: [false, true],
+            curdialogStatus: 0,
+            unMutiple: [false, true, true],
 
         }
     },

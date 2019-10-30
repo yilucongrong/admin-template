@@ -7,7 +7,10 @@ export default {
     },
     getSingleTbHeight() {
         let wh = document.body.offsetHeight
-        let th = wh - this.single_table_height
+        let fch = document.getElementsByClassName('filter-container')[0]
+            .offsetHeight
+        let th = wh - this.single_table_height - fch + 48
+        console.log(th)
         return th
     }
 }

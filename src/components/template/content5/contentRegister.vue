@@ -30,6 +30,8 @@
                                           disabled>
                                     <el-button :disabled="isEdit"
                                                slot="append"
+                                               size="small"
+                                               type="primary"
                                                icon="el-icon-search"></el-button>
                                 </el-input>
                             </el-form-item>

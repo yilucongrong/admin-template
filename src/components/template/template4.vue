@@ -117,7 +117,7 @@
                         :page.sync="listQuery.currentPage"
                         :limit.sync="listQuery.pageSize"
                         @pagination="getList"
-                        class="pagination-container no_b_border" />
+                        class="pagination-container border_b_1" />
             <el-table :key="tableKey[1]"
                       :data="listSub"
                       border
@@ -161,10 +161,10 @@
             </el-table>
         </div>
 
-        <!-- 
-            //分开表样式
-        <div class="table-container">
+        <!-- 分开表样式 -->
+        <!-- <div class="table-container">
             <el-table :data="listSub"
+                      :key="tableKey[1]"
                       border
                       fit
                       :height="theight"

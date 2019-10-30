@@ -44,7 +44,8 @@
             <div class="">
                 <div class="filter-container">
                     <div class="filter-items">
-                        <el-select :placeholder="'业务类型'"
+                        <el-select class="filter-item"
+                                   :placeholder="'业务类型'"
                                    size="small"
                                    filterable
                                    v-model="listQuery.dicType">
@@ -54,13 +55,14 @@
                                        :value="item.wareRuleCode">
                             </el-option>
                         </el-select>
-                        <el-date-picker class="range_date"
+                        <el-date-picker class="range_date filter-item"
                                         size="small"
                                         v-model="accountRangeTime"
                                         type="daterange"
                                         :start-placeholder="'记账日期'"
                                         :end-placeholder="'结束日期'"
                                         value-format="yyyy-MM-dd"></el-date-picker>
+
                         <el-button size="small"
                                    class="filter-item"
                                    type="primary"
@@ -303,8 +305,8 @@ export default {
     methods: {
         //表格高度计算
         setTableHeight () {
-            this.theight = global_valfn.getSingleTbHeight() + 60;
-            this.sheight = (global_valfn.getSingleTbHeight() - 27) / 2;
+            this.theight = global_valfn.getSingleTbHeight() + 58;
+            this.sheight = (global_valfn.getSingleTbHeight() - 30) / 2;
         },
         //主表数据获取
         getList () {
