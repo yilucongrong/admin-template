@@ -663,6 +663,16 @@ aside {
     background-color: #d3dae000;
 }
 
+.table-container {
+    .el-table--border td:last-child {
+        border-right: none !important;
+    }
+
+    .el-table--border th:nth-last-child(2) {
+        border-right: none !important;
+    }
+}
+
 .dialog-custom .el-dialog__footer {
     border-top: none;
 }
