@@ -305,8 +305,8 @@ export default {
     methods: {
         //表格高度计算
         setTableHeight () {
-            this.theight = global_valfn.getSingleTbHeight() + 58;
-            this.sheight = (global_valfn.getSingleTbHeight() - 30) / 2;
+            this.theight = global_valfn.getSingleTbHeight() + 53;
+            this.sheight = (global_valfn.getSingleTbHeight() - 33) / 2;
         },
         //主表数据获取
         getList () {

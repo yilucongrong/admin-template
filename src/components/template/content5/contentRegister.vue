@@ -352,7 +352,7 @@ export default {
     methods: {
         //表格高度计算
         setTableHeight () {
-            this.theight = global_valfn.getSingleTbHeight() - 25;
+            this.theight = global_valfn.getSingleTbHeight() - 30;
         },
         changeMoudle (val) {
             this.$emit('changeSelect', val)

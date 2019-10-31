@@ -9,11 +9,13 @@
         <div :class="{hasTagsView:needTagsView}"
              class="main-container">
             <div :class="{'fixed-header':fixedHeader}">
-                <navbar v-if="showBraed" />
+                <navbar @clickSettings="clickSettings"
+                        v-if="showBraed" />
                 <tags-view v-if="needTagsView" />
             </div>
             <app-main />
-            <right-panel v-if="showSettings">
+            <right-panel ref="rpanel"
+                         v-if="showSettings">
                 <settings />
             </right-panel>
         </div>
@@ -61,6 +63,10 @@ export default {
     methods: {
         handleClickOutside () {
             this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+        },
+        clickSettings () {
+            console.log('点击了设置');
+            this.$refs.rpanel.show = !this.$refs.rpanel.show;
         }
     }
 }

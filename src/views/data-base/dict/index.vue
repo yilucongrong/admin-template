@@ -2,7 +2,7 @@
     <div class="app-container calendar-list-container">
         <el-row>
             <el-col :span="12"
-                    class="left-table">
+                    class="left_col">
                 <div class="filter-container">
                     <div class="filter-items">
                         <div class="select-element">
@@ -224,9 +224,9 @@
             </el-dialog>
 
             <el-col :span="12"
-                    class="right-table">
-                <div class="table-container">
-                    <div class="oprate_btn">
+                    class="right_col">
+                <div class="nofilter table-container">
+                    <div class="oprate_btn_r">
                         <el-button class="filter-item"
                                    size="small"
                                    type="primary"
@@ -413,7 +413,7 @@ export default {
         //表格高度计算
         setTableHeight () {
             this.theight = global_valfn.getSingleTbHeight();
-            this.clientHeight = document.documentElement.clientHeight - 194
+            this.clientHeight = document.documentElement.clientHeight - 197
         },
         create1 () {//新增明细弹窗方法
             this.$refs["temp"].validate(valid => {
@@ -673,9 +673,3 @@ export default {
     }
 };
 </script>
-<style scoped>
-.right-table .table-container {
-    margin-top: 0px;
-    margin-left: 10px;
-}
-</style>

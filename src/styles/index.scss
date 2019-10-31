@@ -189,11 +189,13 @@ aside {
         width: 210px !important;
     }
 
-    .el-button {
-        border: none !important;
-        padding: 0 15px;
-        line-height: 30px;
-        height: 30px;
+    //自编写button样式
+    .filter-container .el-button {
+        border-bottom: none !important;
+    }
+
+    .oprate_btn .el-button {
+        border-top: none !important;
     }
 
     // .el-input-group__append {
@@ -461,6 +463,16 @@ aside {
 
 .left_col {
     padding-right: 10px;
+}
+
+.right_col .oprate_btn_r {
+    padding: 5px;
+    text-align: left;
+    border-bottom: solid 1px $border-color;
+
+    .el-button + .el-button {
+        margin-left: 0px;
+    }
 }
 
 //表格分页样式
