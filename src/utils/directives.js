@@ -39,10 +39,10 @@ Vue.directive('dialogDrag', {
             if (sty.left.includes('%')) {
                 styL =
                     +document.body.clientWidth *
-                    (+sty.left.replace(/\%/g, '') / 100)
+                    (+sty.left.replace(/%/g, '') / 100)
                 styT =
                     +document.body.clientHeight *
-                    (+sty.top.replace(/\%/g, '') / 100)
+                    (+sty.top.replace(/%/g, '') / 100)
             } else {
                 styL = +sty.left.replace(/\px/g, '')
                 styT = +sty.top.replace(/\px/g, '')
