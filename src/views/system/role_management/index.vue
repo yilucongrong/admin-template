@@ -203,22 +203,21 @@
         </el-dialog>
 
         <!--授权用户弹窗 -->
-        <el-dialog :close-on-click-modal="false"
+        <el-dialog class="table_dialog"
                    custom-class="dialog-custom"
+                   :close-on-click-modal="false"
                    :title="$t('userManagement.userAuthorization')"
                    :visible.sync="dialogFormVisible2"
                    @close="handleClose"
                    v-dialogDrag>
-            <div class="filter-container">
-                <div class="filter-items">
-                    <el-button size="small"
-                               class="filter-item"
-                               type="primary"
-                               icon="el-icon-delete"
-                               @click="handleDelete1">{{ $t('btn.delete') }}</el-button>
-                </div>
+            <div class="oprate_btn_d border_b_1">
+                <el-button size="small"
+                           class="filter-item"
+                           type="primary"
+                           icon="el-icon-delete"
+                           @click="handleDelete1">{{ $t('btn.delete') }}</el-button>
             </div>
-            <div class="table-container">
+            <div class="table-container no_t_border no_t_margin">
                 <el-table :key="tableKey"
                           :data="list2"
                           border
