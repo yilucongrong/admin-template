@@ -214,7 +214,7 @@
                                            :label="item"
                                            :value="item">
                                     <svg-icon :icon-class="item" />
-                                    <a href="javascript:void(0);">{{item}}</a>
+                                    <span>{{item}}</span>
                                 </el-option>
 
                             </el-select>
