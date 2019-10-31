@@ -206,6 +206,19 @@
                                       prop="remark">
                             <el-input v-model="temp.remark" />
                         </el-form-item>
+                        <el-form-item label="图标"
+                                      prop="icon">
+                            <el-select v-model="temp.icon">
+                                <el-option v-for="item in icons"
+                                           :key="item"
+                                           :label="item"
+                                           :value="item">
+                                    <svg-icon :icon-class="item" />
+                                    <span>{{item}}</span>
+                                </el-option>
+
+                            </el-select>
+                        </el-form-item>
                     </el-form>
                     <div slot="footer"
                          class="dialog-footer">
@@ -475,6 +488,7 @@ import global_valfn from '@/utils/global_valfn'
 import { selectDatas, addData, deleteData, selectEndpoints, addRelation, renewData } from '@/api/system/menu'
 import SelectTree from '@/components/SelectTree/index.vue';
 import { loadtreeDates } from '@/utils/treeDate'
+
 export default {
     name: 'xtcd',
     components: { Pagination, SelectTree },
@@ -484,6 +498,7 @@ export default {
             list: [],
             listRelation: [],
             listUnrelation: [],
+            icons: this.$myFun.getSVG,
             treeData: [],
             theight: 0,//表格高度
             btnFucList: [{ rowId: '1', btnFunc: '添加', btnName: 'btnAdd' }, { rowId: '2', btnFunc: '编辑', btnName: 'btnEdit' }, { rowId: '3', btnFunc: '删除', btnName: 'btnDelete' }],//按钮列表
@@ -507,7 +522,8 @@ export default {
                 page: 1,
             },
             temp: {
-                allowEmptyValue: 'PC'
+                allowEmptyValue: 'PC',
+                icon: undefined
             },
             dialogFormVisible: false,
             dialogFormUser: false,
@@ -639,6 +655,7 @@ export default {
                 this.resetTemp()
                 this.dialogStatus = 'create'
                 this.dialogFormVisible = true
+                console.log(this.icons, '1111')
                 this.temp.parentId = this.listQuery.parentId
                 this.$nextTick(() => {
                     this.$refs['dataForm'].clearValidate()
