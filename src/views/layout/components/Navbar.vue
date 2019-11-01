@@ -47,7 +47,8 @@
                             {{ $t('navbar.dashboard') }}
                         </el-dropdown-item>
                     </router-link>
-                    <a @click="clickSettings">
+                    <a @click="clickSettings"
+                       v-if="showSettings">
                         <el-dropdown-item>
                             {{ $t('navbar.settings') }}
                         </el-dropdown-item>
@@ -71,6 +72,7 @@ import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import LangSelect from '@/components/LangSelect'
 import Search from '@/components/HeaderSearch'
+import { mapState } from 'vuex'
 
 export default {
     components: {
@@ -86,8 +88,11 @@ export default {
         ...mapGetters([
             'sidebar',
             'avatar',
-            'device'
-        ])
+            'device',
+        ]),
+        ...mapState({
+            showSettings: state => state.settings.showSettings
+        }),
     },
     methods: {
         toggleSideBar () {
