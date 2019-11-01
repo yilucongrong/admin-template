@@ -90,7 +90,8 @@ export default {
         logOut: '退出登录',
         profile: '个人中心',
         theme: '换肤',
-        size: '布局大小'
+        size: '布局大小',
+        settings: '设置'
     },
     //登录模块
     login: {
@@ -193,7 +194,10 @@ export default {
     //tabs页
     tabs: {
         selected: '已选项',
-        tbSelected: '备选项'
+        tbSelected: '备选项',
+        empower: '授权',
+        authed: '已授权',
+        unauthed: '未授权'
     },
     //员工管理
     employeesManagement: {

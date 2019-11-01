@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Vue from 'vue'
 /*
  *  使用方法

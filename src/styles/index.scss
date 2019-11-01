@@ -189,11 +189,13 @@ aside {
         width: 210px !important;
     }
 
-    .el-button {
-        border: none !important;
-        padding: 0 15px;
-        line-height: 30px;
-        height: 30px;
+    //自编写button样式
+    .filter-container .el-button {
+        border-bottom: none !important;
+    }
+
+    .oprate_btn .el-button {
+        border-top: none !important;
     }
 
     // .el-input-group__append {
@@ -463,6 +465,16 @@ aside {
     padding-right: 10px;
 }
 
+.right_col .oprate_btn_r {
+    padding: 5px;
+    text-align: left;
+    border-bottom: solid 1px $border-color;
+
+    .el-button + .el-button {
+        margin-left: 0px;
+    }
+}
+
 //表格分页样式
 .pagination-container {
     background: #fff;
@@ -481,6 +493,14 @@ aside {
 }
 .no_b_padding {
     padding-bottom: 0px !important;
+}
+
+.no_t_border {
+    border-top: none !important;
+}
+
+.no_t_margin {
+    margin-top: 0px !important;
 }
 
 .border_t_1 {
@@ -515,6 +535,13 @@ aside {
 
         .filter-items {
             height: auto;
+        }
+        .el-button {
+            border-bottom: none;
+        }
+
+        .el-button + .el-button {
+            margin-left: 0px;
         }
     }
 
@@ -588,6 +615,16 @@ aside {
         border-bottom: none;
         margin: 0px;
         background: $dialogHbgColor;
+    }
+
+    .oprate_btn_d {
+        padding: 5px;
+        text-align: left;
+        border-bottom: solid 1px $border-color;
+    }
+
+    .el-button + .el-button {
+        margin-left: 0px;
     }
 
     .el-dialog__headerbtn {

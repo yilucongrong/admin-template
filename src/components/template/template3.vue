@@ -88,9 +88,10 @@
                     </div>
                 </el-col>
 
-                <el-col :span="12">
+                <el-col class="right_col"
+                        :span="12">
                     <div class="nofilter table-container">
-                        <div class="oprate_btn">
+                        <div class="oprate_btn_r">
                             <el-button class="filter-item"
                                        size="small"
                                        type="primary"

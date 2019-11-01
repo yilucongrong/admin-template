@@ -55,8 +55,7 @@ export default {
 .svg-icon {
     width: 1em;
     height: 1em;
-    /* vertical-align: -0.149em; */
-    vertical-align: -1.6px;
+    vertical-align: -0.149em;
     fill: currentColor;
     overflow: hidden;
 }
