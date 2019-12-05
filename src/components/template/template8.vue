@@ -85,7 +85,6 @@ export default {
             this.$emit('changeSelect', val)
         },
         handleClick (val) {
-            console.log(this.$refs, 'dialogRef' + val, this.selectedInfos);
             this.$refs['dialogRef' + val].dialogVisible = true;
             this.$nextTick(() => {
                 this.$refs['dialogRef' + val].initSelect(this.selectedInfos);

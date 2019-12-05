@@ -195,15 +195,13 @@
 </template>
 <script>
 import changeModuleSelect from '@/components/template/changeMoudleSelect'
-import global_valfn from '@/utils/global_valfn'
+
 import Pagination from "@/components/Pagination"; // Secondary package based on el-pagination
 import {
     selectlists,
     selecttree
 } from "@/api/system/organization";
-import { loadtreeDates } from "@/utils/treeDate";
 import { mapState } from "vuex";
-import { codeToName } from "@/utils/codeToName";
 
 export default {
     name: "zzjg",
@@ -265,7 +263,7 @@ export default {
         },
         //表格高度计算
         setTableHeight () {
-            this.theight = global_valfn.getSingleTbHeight();
+            this.theight = this.$myFun.getSingleTbHeight();
         },
         treeGetList () {
             //点击树查询
@@ -279,7 +277,7 @@ export default {
             setTimeout(() => {
                 selectlists(this.listQuery).then(response => {
                     let options = [this.dt_org_type, this.dt_org_function];
-                    response.data = codeToName(response.data, options, [
+                    response.data = this.$myFun.codeToName(response.data, options, [
                         "type",
                         "businessFunction"
                     ]);
@@ -288,7 +286,7 @@ export default {
                 }),
                     selecttree().then(response => {
                         //获取树数据
-                        this.treeData = loadtreeDates(response.data);
+                        this.treeData = this.$myFun.addTreeRoot(response.data);
                         this.orgName = response.data.map(function (itmes) {
                             return [itmes.rowId, itmes.organizationName];
                         });
@@ -301,7 +299,7 @@ export default {
 
             selectlists(this.listQuery).then(response => {
                 let options = [this.dt_org_type, this.dt_org_function];
-                response.data = codeToName(response.data, options, [
+                response.data = this.$myFun.codeToName(response.data, options, [
                     "type",
                     "businessFunction"
                 ]);
@@ -344,7 +342,7 @@ export default {
         },
         //树高度设置
         setTreeHeight () {
-            this.contentStyleObj.height = global_valfn.getTreehHeight();
+            this.contentStyleObj.height = this.$myFun.getTreehHeight();
         },
         handleNodeClick (data) {
             //点击树查询

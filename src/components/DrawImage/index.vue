@@ -115,13 +115,10 @@ export default {
                 ctx.fillStyle = this.color
                 if (this.position === 'rightBottom') {
                     ctx.translate(img.width - ctx.measureText(this.text).width / 2 - this.leftX, img.height - 10 - this.topY)
-                    console.log(this.leftX, this.topY, 99999)
                 } else if (this.position === 'center') {
                     ctx.translate(img.width / 2 + this.leftX, img.height / 2 + this.topY)
-                    console.log(this.leftX, this.topY, 222999)
                 } else if (this.position === 'leftTop') {
                     ctx.translate(this.leftX + ctx.measureText(this.text).width / 2, this.topY + 20)
-                    console.log(this.leftX, this.topY, 777799)
                 }
 
                 ctx.rotate((this.rotate * Math.PI) / 180)
@@ -152,7 +149,6 @@ export default {
         onChange (file, fileList) {
             if (file.raw.type === 'application/pdf') {
                 this.imgSrc = file.url
-                console.log()
                 // this.$refs.upload.submit() // 手动传
             } else if (file.raw.type === 'image/png' || file.raw.type === 'image/gif' || file.raw.type === 'image/jpeg') {
                 this.getImg(file)
@@ -160,7 +156,6 @@ export default {
                         return this.changeImg(res)
                     })
                     .then(res => {
-                        console.log('图片转换成功')
                         fileList.forEach(item => {
                             if (item.uid === file.uid) {
                                 item.url = res.canvasImg
@@ -168,9 +163,7 @@ export default {
                         })
                         file.name = '被改变.jpg'
                         file.url = res.canvasImg
-                        console.log(file, 888)
                         this.imgSrc = file.url
-                        console.log('执行上传')
                         // this.$refs.upload.submit() // 手动传
                     })
             }

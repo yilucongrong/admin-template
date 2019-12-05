@@ -52,8 +52,11 @@ Vue.directive('dialogDrag', {
                 const l = e.clientX - disX
                 const t = e.clientY - disY
                 let dT = dragDom.offsetTop
-                // 移动当前元素
-                if (dT >= 0 || e.clientY > 40) {
+                //设置左右可移动边界
+                let lWidth =
+                    (el.offsetWidth - dragDom.offsetWidth) / 2 -
+                    Math.abs(l + styL)
+                if ((dT >= 0 || e.clientY > 40) && lWidth > 2) {
                     dragDom.style.left = `${l + styL}px`
                     dragDom.style.top = `${t + styT}px`
                 }

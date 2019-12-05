@@ -40,7 +40,6 @@ export default {
             formData.append("file", file.file);
             userAvatar(formData)
                 .then(() => {
-                    // console.log("上传图片接口-数据", res);
                     this.handleAvatarSuccess();
                 })
                 .catch(err => {

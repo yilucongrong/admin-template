@@ -1,12 +1,13 @@
-const _import = require('@/router/_import_prodection');//获取组件的方法
-import { tree } from '@/utils/treeDate'
+const _import = require('@/router/_import_prodection') //获取组件的方法
 import Layout from '@/views/layout'
 import EmptyTemplate from '@/views/layout/EmptyTemplate'
-
-export function filterAsyncRouter (routerlist) {
-    const routerlists = tree(routerlist)
+import myFun from '@/utils/myFun'
+//获取所有有子菜单的路由rowID
+let getAllHasChildrenRowId = []
+export function filterAsyncRouter(routerlist) {
+    const routerlists = myFun.reDataToTree(routerlist)
     //获取路由信息
-    function getRouter (routerlists) {
+    function getRouter(routerlists) {
         routerlists.forEach(e => {
             // 删除无用属性
             delete e.catalogCode
@@ -19,7 +20,9 @@ export function filterAsyncRouter (routerlist) {
             // delete e.parentId
             e.name = e.catalogName
 
-            if (e.parentId === 0 || e.children) {//Layout组件特殊处理
+            if (e.parentId === 0 || e.children) {
+                getAllHasChildrenRowId.push(e.rowId)
+                //Layout组件特殊处理
                 //路径为空时会因为undefind报错，给个默认值来解决
                 e.path = e.url || 'nopath'
                 if (e.url.split('/').length > 2) {
@@ -27,21 +30,17 @@ export function filterAsyncRouter (routerlist) {
                 } else {
                     e.component = Layout
                 }
-                e.icon = 'setting-fill'
-
+                e.icon = e.icons || 'setting-fill'
             } else {
-                e.icon = 'circle'
+                e.icon = e.icons || 'circle'
                 e.component = _import(e.url)
-                //路径为空时会因为undefind报错，给个默认值来解决
-                e.path = e.url.split('/')[2] || 'nopath'
+                e.path = e.url || 'nopath'
             }
-            // delete e.parentId
-            delete e.url
-            // if (e.redirect === '') {
-            //   delete e.redirect
-            // }
 
-            if (e.icon !== '' && e.title !== '') { // 配置 菜单标题 与 图标
+            delete e.url
+
+            if (e.icon !== '' && e.title !== '') {
+                // 配置 菜单标题 与 图标
                 e.meta = {
                     // title: e.catalogName 中文名称
                     // catalogEngName 英文名称
@@ -51,7 +50,7 @@ export function filterAsyncRouter (routerlist) {
                 }
             }
             delete e.catalogName
-            delete e.icon
+
             delete e.title
             // delete e.name//由于名字的存在导致named 错误 删掉
             if (e.children != null) {
@@ -63,6 +62,6 @@ export function filterAsyncRouter (routerlist) {
     }
     const getRouters = getRouter(routerlists)
     // return asyncRouterMap
-
     return getRouters
 }
+export default getAllHasChildrenRowId

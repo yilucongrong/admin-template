@@ -155,7 +155,8 @@
                                @click="dialogStatus==='create'?create():update()">{{ $t('btn.confirm') }}</el-button>
                 </div>
             </el-dialog>
-            <el-dialog custom-class="dialog-custom"
+            <el-dialog class="table_dialog"
+                       custom-class="dialog-custom"
                        :title="$t('workstation.feedArea')"
                        :visible.sync="feedAreaDialogFormVisible"
                        v-dialogDrag
@@ -178,7 +179,7 @@ import * as api from "@/api/data-base/work-center";
 import Pagination from "@/components/Pagination";
 import tkqy from "./tkqy";
 import { mapState } from "vuex";
-import global_valfn from '@/utils/global_valfn'
+
 
 export default {
     components: { Pagination, tkqy },
@@ -278,7 +279,7 @@ export default {
         },
         //表格高度计算
         setTableHeight () {
-            this.theight = global_valfn.getSingleTbHeight();
+            this.theight = this.$myFun.getSingleTbHeight();
         },
         getList1 () {
             api.queryList(this.workCenterCode, this.listQuery).then(res => {

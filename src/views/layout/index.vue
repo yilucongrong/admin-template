@@ -65,7 +65,6 @@ export default {
             this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
         },
         clickSettings () {
-            console.log('点击了设置');
             this.$refs.rpanel.show = !this.$refs.rpanel.show;
         }
     }

@@ -30,9 +30,6 @@
         <el-option key=7
                    label="模板8(dialog)"
                    value=7></el-option>
-        <el-option key=8
-                   label="模板9(表格合并单元格)"
-                   value=8></el-option>
     </el-select>
 </template>
 <script>

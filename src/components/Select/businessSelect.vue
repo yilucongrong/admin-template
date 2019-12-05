@@ -50,7 +50,7 @@ export default {
         // }
     },
     computed: {
-        options() {
+        options () {
             if (this.$store.state.businessComponent[this.selectType]) {
                 return this.$store.state.businessComponent[
                     this.selectType
@@ -64,7 +64,7 @@ export default {
             }
         }
     },
-    mounted() {
+    mounted () {
         this.$store.dispatch("businessComponent/getBusinessComponentData", [
             this.selectType
         ]);
@@ -73,18 +73,18 @@ export default {
         prop: "dictItemKey",
         event: "change"
     },
-    data() {
+    data () {
         return {
             itemKey: this.dictItemKey
         };
     },
     watch: {
-        options(newValue, oldValue) {
+        options (newValue, oldValue) {
             this.itemKey = undefined;
         }
     },
     methods: {
-        changeSelect(val) {
+        changeSelect (val) {
             this.$emit("change", val);
             let selectRow = this.options
                 .filter(v => v[this.showField[0]] == val)

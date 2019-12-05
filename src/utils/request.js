@@ -17,7 +17,6 @@ service.interceptors.request.use(
             config.headers['X-Auth-Token'] = getToken()
         }
         return config
-
     },
     error => {
         // 处理请求错误
@@ -70,29 +69,12 @@ service.interceptors.response.use(
             // console.log('err' + error) // for debug
             if (error.response) {
                 Message({
-                    message: error,
+                    message: `${error.response.data.message}`,
                     type: 'error',
                     duration: 5 * 1000
                 })
             }
-
         }
-
-        // store.dispatch('user/logout').then(() => {
-        //     let m=3
-        //     setInterval(() => {
-        //         Message({
-        //             message: `${error.response.data.message},${m--}秒后将自动刷新页面`,
-        //             type: 'error',
-        //             duration: 5 * 1000
-        //         })
-        //     }, 1000);
-        //     setTimeout(() => {
-        //         location.reload()
-        //     }, 3000);
-
-        // })
-
         return Promise.reject(error)
     }
 )

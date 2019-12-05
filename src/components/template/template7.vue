@@ -92,7 +92,6 @@
                     </el-table-column>
                 </el-table>
                 <pagination :total="total"
-                            :size="15"
                             :page.sync="listQuery.currentPage"
                             :limit.sync="listQuery.pageSize"
                             @pagination="getList" />
@@ -104,7 +103,7 @@
 
 <script>
 import changeModuleSelect from '@/components/template/changeMoudleSelect'
-import global_valfn from '@/utils/global_valfn'
+
 import Pagination from "@/components/Pagination";
 export default {
     name: "zdmb",
@@ -141,7 +140,7 @@ export default {
         },
         //表格高度计算
         setTableHeight () {
-            this.theight = global_valfn.getSingleTbHeight();
+            this.theight = this.$myFun.getSingleTbHeight();
         },
         //获取表格数据
         getList () {

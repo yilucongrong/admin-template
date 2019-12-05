@@ -209,7 +209,7 @@
 </template>
 <script>
 import changeModuleSelect from '@/components/template/changeMoudleSelect'
-import global_valfn from '@/utils/global_valfn'
+
 // import * as api from "@/api/purchase/delivery_Publish";
 import Pagination from "@/components/Pagination";
 import { mapGetters } from 'vuex';
@@ -263,7 +263,7 @@ export default {
         },
         //表格高度计算
         setTableHeight () {
-            this.theight = global_valfn.getSingleTbHeight() - 185;
+            this.theight = this.$myFun.getSingleTbHeight() - 185;
         },
         //主表数据获取
         getDelivery () {

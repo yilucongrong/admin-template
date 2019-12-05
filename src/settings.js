@@ -1,5 +1,5 @@
 module.exports = {
-    title: 'DTGD MES',
+    title: 'DTGD-WEB',
 
     /**
      * @type {boolean} true | false

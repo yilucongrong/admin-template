@@ -21,7 +21,7 @@
 
             </div>
         </div>
-        <div class="table-container">
+        <div class="table-container no_t_margin border_t_1">
             <el-table :key="tableKey"
                       :data="list"
                       border
@@ -80,7 +80,7 @@ export default {
             listQuery: {
                 page: true,
                 currentPage: 1,
-                pageSize: 15,
+                pageSize: 10,
                 warehouseCode: undefined,
                 locationCode: undefined,
                 locationName: undefined

@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function queryRecords (query) {
+export function queryRecords(query) {
     return request({
         url: '/iwms/work-centers',
         method: 'get',
@@ -8,14 +8,14 @@ export function queryRecords (query) {
     })
 }
 
-export function getRecord (colorCode) {
+export function getRecord(colorCode) {
     return request({
         url: '/iwms/work-centers' + '/' + colorCode,
         method: 'get'
     })
 }
 
-export function addRecord (data) {
+export function addRecord(data) {
     return request({
         url: '/iwms/work-centers',
         method: 'post',
@@ -23,7 +23,7 @@ export function addRecord (data) {
     })
 }
 
-export function updateRecord (colorCode, data) {
+export function updateRecord(colorCode, data) {
     return request({
         url: '/iwms/work-centers' + '/' + colorCode,
         method: 'patch',
@@ -31,15 +31,15 @@ export function updateRecord (colorCode, data) {
     })
 }
 
-export function deleteRecord (colorCode) {
+export function deleteRecord(colorCode) {
     return request({
         url: '/iwms/work-centers' + '/' + colorCode,
         method: 'delete'
     })
 }
 
-
-export function queryList (workCenterCode, query) {//查询工位列表
+export function queryList(workCenterCode, query) {
+    //查询工位列表
 
     return request({
         url: '/iwms/work-centers' + '/' + workCenterCode + '/stations/',
@@ -48,8 +48,8 @@ export function queryList (workCenterCode, query) {//查询工位列表
     })
 }
 
-
-export function creatJob (workCenterCode, data) {//新增工位
+export function creatJob(workCenterCode, data) {
+    //新增工位
     return request({
         url: '/iwms/work-centers' + '/' + workCenterCode + '/stations/',
         method: 'post',
@@ -57,23 +57,41 @@ export function creatJob (workCenterCode, data) {//新增工位
     })
 }
 
-export function queryJob (workCenterCode, stationCode) { //查询单个工位
+export function queryJob(workCenterCode, stationCode) {
+    //查询单个工位
     return request({
-        url: '/iwms/work-centers' + '/' + workCenterCode + '/stations/' + stationCode,
+        url:
+            '/iwms/work-centers' +
+            '/' +
+            workCenterCode +
+            '/stations/' +
+            stationCode,
         method: 'get'
     })
 }
 
-export function deleteJob (workCenterCode, stationCode) { //删除工位
+export function deleteJob(workCenterCode, stationCode) {
+    //删除工位
     return request({
-        url: '/iwms/work-centers' + '/' + workCenterCode + '/stations/' + stationCode,
+        url:
+            '/iwms/work-centers' +
+            '/' +
+            workCenterCode +
+            '/stations/' +
+            stationCode,
         method: 'delete'
     })
 }
 
-export function updateJob (workCenterCode, stationCode, data) {//更新工位
+export function updateJob(workCenterCode, stationCode, data) {
+    //更新工位
     return request({
-        url: '/iwms/work-centers' + '/' + workCenterCode + '/stations/' + stationCode,
+        url:
+            '/iwms/work-centers' +
+            '/' +
+            workCenterCode +
+            '/stations/' +
+            stationCode,
         method: 'patch',
         data
     })

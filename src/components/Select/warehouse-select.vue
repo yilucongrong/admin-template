@@ -78,7 +78,7 @@ export default {
                     orgCode: this.orgCode
                 }
             }).then(res => {
-                this.options = res;
+                this.options = res.data;
             });
         },
         changeSelect (val) {

@@ -104,7 +104,6 @@
                                      prop="remark"></el-table-column>
                 </el-table>
                 <pagination :total="total"
-                            :size="15"
                             :page.sync="listQuery.currentPage"
                             :limit.sync="listQuery.pageSize"
                             @pagination="getList" />
@@ -116,11 +115,10 @@
 
 <script>
 import changeModuleSelect from '@/components/template/changeMoudleSelect'
-import global_valfn from '@/utils/global_valfn'
+
 import * as api from "@/api/system/role";
 import Pagination from "@/components/Pagination";
 import { mapState } from "vuex";
-import { codeToName } from "@/utils/codeToName";
 export default {
     name: "jsgl",
     components: { changeModuleSelect, Pagination },
@@ -164,13 +162,13 @@ export default {
         },
         //表格高度计算
         setTableHeight () {
-            this.theight = global_valfn.getSingleTbHeight();
+            this.theight = this.$myFun.getSingleTbHeight();
         },
         //获取表格数据
         getList () {
             api.selectrole(this.listQuery).then(response => {
                 let options = [this.dt_role_type];
-                response.data = codeToName(response.data, options, [
+                response.data = this.$myFun.codeToName(response.data, options, [
                     "dt_role_type"
                 ]);
                 this.list = response.data.list;

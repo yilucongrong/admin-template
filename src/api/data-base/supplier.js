@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function queryRecords (query) {
+export function queryRecords(query) {
     return request({
         url: '/iwms/suppliers',
         method: 'get',
@@ -8,14 +8,14 @@ export function queryRecords (query) {
     })
 }
 
-export function getRecord (supplierCode) {
+export function getRecord(supplierCode) {
     return request({
         url: '/iwms/suppliers' + '/' + supplierCode,
         method: 'get'
     })
 }
 
-export function addRecord (data) {
+export function addRecord(data) {
     return request({
         url: '/iwms/suppliers',
         method: 'post',
@@ -23,7 +23,7 @@ export function addRecord (data) {
     })
 }
 
-export function updateRecord (supplierCode, data) {
+export function updateRecord(supplierCode, data) {
     return request({
         url: '/iwms/suppliers' + '/' + supplierCode,
         method: 'patch',
@@ -31,7 +31,7 @@ export function updateRecord (supplierCode, data) {
     })
 }
 
-export function deleteRecord (supplierCode) {
+export function deleteRecord(supplierCode) {
     return request({
         url: '/iwms/suppliers' + '/' + supplierCode,
         method: 'delete'

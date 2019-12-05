@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function queryRecords (query) {
+export function queryRecords(query) {
     return request({
         url: '/iwms/measure-units',
         method: 'get',
@@ -8,14 +8,14 @@ export function queryRecords (query) {
     })
 }
 
-export function getRecord (colorCode) {
+export function getRecord(colorCode) {
     return request({
         url: '/iwms/measure-units' + '/' + colorCode,
         method: 'get'
     })
 }
 
-export function addRecord (data) {
+export function addRecord(data) {
     return request({
         url: '/iwms/measure-units',
         method: 'post',
@@ -23,7 +23,7 @@ export function addRecord (data) {
     })
 }
 
-export function updateRecord (colorCode, data) {
+export function updateRecord(colorCode, data) {
     return request({
         url: '/iwms/measure-units' + '/' + colorCode,
         method: 'patch',
@@ -31,7 +31,7 @@ export function updateRecord (colorCode, data) {
     })
 }
 
-export function deleteRecord (colorCode) {
+export function deleteRecord(colorCode) {
     return request({
         url: '/iwms/measure-units' + '/' + colorCode,
         method: 'delete'

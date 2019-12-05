@@ -1,14 +1,14 @@
-
 import request from '@/utils/request'
 
-export function selectrole (query) {//查询角色列表
+export function selectrole(query) {
+    //查询角色列表
     return request({
         url: '/keyguard/roles',
         method: 'get',
         params: query
     })
 }
-export function queryRecords (query) {
+export function queryRecords(query) {
     return request({
         url: '/keyguard/roles',
         method: 'get',
@@ -16,7 +16,7 @@ export function queryRecords (query) {
     })
 }
 
-export function addRecord (data) {
+export function addRecord(data) {
     return request({
         url: '/keyguard/roles',
         method: 'post',
@@ -24,36 +24,36 @@ export function addRecord (data) {
     })
 }
 
-export function getRecord (roleCode) {
+export function getRecord(roleCode) {
     return request({
         url: '/keyguard/roles' + '/' + roleCode,
         method: 'get'
     })
 }
 
-export function roleToUser (data) {//查询角色关联的所有用户
+export function roleToUser(data) {
+    //查询角色关联的所有用户
     return request({
         url: '/keyguard/roles/' + data.roleCode + '/users',
         method: 'get',
         params: data
     })
 }
-export function authorizationRecord (data) {
+export function authorizationRecord(data) {
     return request({
         url: '/keyguard/users',
         method: 'get',
         params: data
-
     })
 }
-export function selectRecord () {
+export function selectRecord() {
     return request({
         url: '/keyguard/catalogs',
         method: 'get'
     })
 }
 
-export function updateRecord (colorCode, data) {
+export function updateRecord(colorCode, data) {
     return request({
         url: '/keyguard/roles' + '/' + colorCode,
         method: 'patch',
@@ -61,30 +61,32 @@ export function updateRecord (colorCode, data) {
     })
 }
 
-export function deleteRecord (colorCode) {
+export function deleteRecord(colorCode) {
     return request({
         url: '/keyguard/roles' + '/' + colorCode,
         method: 'delete'
     })
 }
 
-export function deleteRecord1 (roleCode, userName) {
+export function deleteRecord1(roleCode, userName) {
     return request({
         url: '/keyguard/roles/' + roleCode + '/users/' + userName,
         method: 'delete'
     })
 }
 
-export function addMenu (roleCode, querys) {///v1/roles/{roleCode}更新角色或授权菜单
+export function addMenu(roleCode, querys) {
+    ///v1/roles/{roleCode}更新角色或授权菜单
     return request({
         url: '/keyguard/roles/' + roleCode,
         method: 'patch',
         data: querys
     })
 }
-export function deleteUser (userName) {//删除角色下的用户
+export function deleteUser(userName) {
+    //删除角色下的用户
     return request({
         url: '/keyguard/users/' + userName,
-        method: 'delete',
+        method: 'delete'
     })
 }

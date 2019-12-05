@@ -200,7 +200,6 @@ export default {
     methods: {
         //初始化选中内容
         initSelect (val) {
-            console.log('initSelect');
             this.listAll = null;
             this.listSelected = null;
             this.listSelected = val;

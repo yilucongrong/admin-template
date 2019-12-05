@@ -30,7 +30,7 @@ import { buildTree } from "@/utils";
 import { selectlists as listOrg } from "@/api/system/organization";
 import { queryRecords as listWorkCenter } from "@/api/data-base/work-center";
 import orgSelect from "@/components/Select/orgSelect.vue";
-import global_valfn from '@/utils/global_valfn'
+
 
 export default {
     name: "gw",
@@ -119,7 +119,7 @@ export default {
         },
         //树高度设置
         setTreeHeight () {
-            this.contentStyleObj.height = parseInt(global_valfn.getTreehHeight()) - 40 + 'px';
+            this.contentStyleObj.height = parseInt(this.$myFun.getTreehHeight()) - 40 + 'px';
         },
     },
     destroyed () {

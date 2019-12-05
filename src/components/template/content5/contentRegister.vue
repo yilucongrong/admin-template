@@ -262,7 +262,6 @@
                                      prop="specification"></el-table-column>
                 </el-table>
                 <pagination :total="total"
-                            :size="15"
                             :page.sync="listQuery.currentPage"
                             :limit.sync="listQuery.pageSize"
                             @pagination="getList" />
@@ -272,7 +271,7 @@
 </template>
 
 <script>
-import global_valfn from '@/utils/global_valfn'
+
 import changeModuleSelect from '@/components/template/changeMoudleSelect'
 import { mapState } from 'vuex';
 import Pagination from "@/components/Pagination";
@@ -352,7 +351,7 @@ export default {
     methods: {
         //表格高度计算
         setTableHeight () {
-            this.theight = global_valfn.getSingleTbHeight() - 30;
+            this.theight = this.$myFun.getSingleTbHeight() - 30;
         },
         changeMoudle (val) {
             this.$emit('changeSelect', val)

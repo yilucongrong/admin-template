@@ -23,7 +23,7 @@ router.beforeEach(async (to, from, next) => {
     const hasToken = getToken()
 
     if (hasToken) {
-        let isOutOfTime = checkToken();
+        let isOutOfTime = checkToken()
         if (!isOutOfTime) {
             next(`/login?redirect=${to.path}`)
         }
@@ -42,21 +42,29 @@ router.beforeEach(async (to, from, next) => {
                     // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
                     //通过命名空间调用user/GetMenu action
                     const menus = await store.dispatch('user/GetMenu')
-                    getRouter = filterAsyncRouter(menus)//过滤菜单
+                    getRouter = filterAsyncRouter(menus) //过滤菜单
+
                     // 基于用户获取可访问的路由映射
-                    const accessRoutes = await store.dispatch('permission/generateRoutes', getRouter)
+                    const accessRoutes = await store.dispatch(
+                        'permission/generateRoutes',
+                        getRouter
+                    )
 
                     // 动态添加可访问的路由
                     router.$addRoutes(accessRoutes)
-                    router.$addRoutes(accessRoutes.concat([{
-                        path: '*',
-                        redirect: '/404'
-                    }]));
+                    router.$addRoutes(
+                        accessRoutes.concat([
+                            {
+                                path: '*',
+                                redirect: '/404'
+                            }
+                        ])
+                    )
 
                     // 确保addroutes完整的hack方法
                     // 设置replace:true，这样导航就不会留下历史记录。
 
-                    next({ ...to, replace: true })//解决刷新后出现空白
+                    next({ ...to, replace: true }) //解决刷新后出现空白
                     // next()
                 } catch (error) {
                     // 删除token并转到登录页重新登录

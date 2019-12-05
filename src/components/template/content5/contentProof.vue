@@ -243,7 +243,7 @@
 </template>
 
 <script>
-import global_valfn from '@/utils/global_valfn'
+
 import Pagination from "@/components/Pagination";
 
 export default {
@@ -305,8 +305,8 @@ export default {
     methods: {
         //表格高度计算
         setTableHeight () {
-            this.theight = global_valfn.getSingleTbHeight() + 53;
-            this.sheight = (global_valfn.getSingleTbHeight() - 33) / 2;
+            this.theight = this.$myFun.getSingleTbHeight() + 53;
+            this.sheight = (this.$myFun.getSingleTbHeight() - 33) / 2;
         },
         //主表数据获取
         getList () {

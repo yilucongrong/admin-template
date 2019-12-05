@@ -157,13 +157,10 @@ export default {
     },
     mounted () {//创建时加载备选项
         this.getList1();
-        console.log('子 mounted');
-
     },
     methods: {
         //初始化选中内容
         initSelect (val) {
-            console.log('initSelect');
             this.listAll = null;
             this.listSelected = null;
             this.listSelected = val;
@@ -221,7 +218,6 @@ export default {
             }
         },
         selectRows (val) {//备选项选中行
-            console.log(33333, val);
             this.selectRowData = val
             this.listSelected = this.selectRowData;
             // this.getDetail(val[val.length - 1]);

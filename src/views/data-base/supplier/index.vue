@@ -48,6 +48,11 @@
                                type="primary"
                                icon="el-icon-delete"
                                @click="handleDelete">{{ $t('btn.delete') }}</el-button>
+                    <el-button class="filter-item"
+                               size="small"
+                               type="primary"
+                               @click="handleImport"
+                               icon="el-icon-edit">{{$t('table.import')}}</el-button>
                 </div>
                 <el-table :key="tableKey"
                           :data="list"
@@ -133,7 +138,6 @@
                              :model="temp"
                              :rules="rules"
                              ref="temp"
-                             label-position="left"
                              label-width="100px"
                              :inline="true"
                              style='max-width: 600px; '>
@@ -188,22 +192,22 @@
                                       prop="email">
                             <el-input v-model="temp.email"></el-input>
                         </el-form-item>
-                        <el-form-item :label="$t('supplier.address')"
+                        <!-- <el-form-item :label="$t('supplier.address')"
                                       prop="address">
                             <el-input v-model="temp.address"></el-input>
                         </el-form-item>
                         <el-form-item :label="$t('supplier.remark')"
                                       prop="remark">
                             <el-input v-model="temp.remark"></el-input>
-                        </el-form-item>
-                        <el-form-item label="通讯地址"
+                        </el-form-item> -->
+                        <el-form-item :label="$t('supplier.address')"
                                       prop="address">
                             <el-input class="big-label"
                                       type="textarea"
                                       :rows="2"
                                       v-model="temp.address"></el-input>
                         </el-form-item>
-                        <el-form-item label="描述"
+                        <el-form-item :label="$t('supplier.remark')"
                                       prop="remark">
                             <el-input class="big-label"
                                       type="textarea"
@@ -223,6 +227,15 @@
                                    @click="update">{{ $t('btn.confirm') }}</el-button>
                     </div>
                 </el-dialog>
+                <el-dialog custom-class="dialog-custom"
+                           class="table_dialog"
+                           :title="'供应商主数据导入'"
+                           :visible.sync="importDialogVisible"
+                           v-dialogDrag
+                           :close-on-click-modal="false">
+                    <ImportFile ref="importDialog"
+                                :modalNo="modalNo"></ImportFile>
+                </el-dialog>
             </div>
         </div>
     </div>
@@ -234,11 +247,11 @@ import * as api from "@/api/data-base/supplier";
 import Pagination from "@/components/Pagination";
 import { validatorContactNumber, validatorEmail } from "@/utils/validate";
 import { mapState } from "vuex";
-import global_valfn from '@/utils/global_valfn'
+import ImportFile from "@/components/ImportFile";
 
 export default {
     name: "gyszsj",
-    components: { Pagination },
+    components: { Pagination, ImportFile },
     data () {
         return {
             list: null,
@@ -269,6 +282,8 @@ export default {
             dialogFormVisible: false,
             dialogStatus: "",
             tableKey: 0,
+            modalNo: 'EXTP-BAS-0001',//导入模板编号
+            importDialogVisible: false,
             rules: {
                 supplierCode: [
                     {
@@ -337,9 +352,15 @@ export default {
                 this.total = res.data.pages.count;
             });
         },
+        handleImport () {
+            this.importDialogVisible = true;
+            this.$nextTick(() => {
+                this.$refs.importDialog.getList();
+            })
+        },
         //表格高度计算
         setTableHeight () {
-            this.theight = global_valfn.getSingleTbHeight();
+            this.theight = this.$myFun.getSingleTbHeight();
         },
         handleQuery () {
             this.listQuery.currentPage = 1;

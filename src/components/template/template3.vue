@@ -145,7 +145,7 @@
 </template>
 <script>
 import changeModuleSelect from '@/components/template/changeMoudleSelect'
-import global_valfn from '@/utils/global_valfn'
+
 import * as api from "@/api/data-base/dict";
 import Pagination from "@/components/Pagination";
 import { DICT_TYPE_OPTIONS } from "@/utils/constant";
@@ -203,7 +203,7 @@ export default {
     methods: {
         //表格高度计算
         setTableHeight () {
-            this.theight = global_valfn.getSingleTbHeight() - 2;
+            this.theight = this.$myFun.getSingleTbHeight() - 2;
             this.stheight = this.theight + 58;
         },
         //模板变化

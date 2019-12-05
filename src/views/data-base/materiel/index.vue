@@ -77,7 +77,7 @@
                                size="small"
                                type="primary"
                                @click="receiptPrint"
-                               icon="el-icon-edit">二维码打印</el-button>
+                               icon="el-icon-edit">{{$t('btn.codePrint')}}</el-button>
                 </div>
                 <el-table :key="tableKey"
                           :data="list"
@@ -216,7 +216,6 @@
                              :model="temp"
                              :rules="rules"
                              ref="temp"
-                             label-position="left"
                              label-width="120px"
                              :inline="true"
                              size="mini"
@@ -329,17 +328,17 @@
                     </div>
                 </el-dialog>
 
-                <el-dialog class="table-container"
-                           :title="$t('materiel.measuringUnitName')"
+                <el-dialog :title="$t('materiel.measuringUnitName')"
                            :visible.sync="dialogFormVisible2"
                            v-dialogDrag
+                           class="table_dialog"
                            @close="handleClose2">
                     <measureUnitTable v-on:dblclick="handleDblclick"></measureUnitTable>
                 </el-dialog>
 
                 <!-- 导入弹框 -->
                 <el-dialog custom-class="dialog-custom"
-                           class="table-container"
+                           class="table_dialog"
                            :title="'储位物料导入'"
                            :visible.sync="importDialogVisible"
                            v-dialogDrag
@@ -404,7 +403,7 @@ import dictItemSelect from "@/components/Select/dictItemSelect.vue";
 import measureUnitTable from "@/components/Table/measureUnitTable.vue";
 import { DICT_CODE, TWO_STATE_OPTIONS } from "@/utils/constant";
 import { parseTime } from "@/utils";
-import global_valfn from '@/utils/global_valfn'
+
 import qrcode from "@/components/QRCode";
 
 export default {
@@ -543,10 +542,7 @@ export default {
         },
         //表格高度计算
         setTableHeight () {
-
-            this.theight = global_valfn.getSingleTbHeight()
-            console.log(this.theight);
-
+            this.theight = this.$myFun.getSingleTbHeight()
         },
         handleQuery () {
             this.listQuery.currentPage = 1;
@@ -754,10 +750,8 @@ export default {
         //单据打印
         receiptPrint () {
             if (this.selectlistRow && this.selectlistRow.length > 0) {
-
                 this.dialogPrintVisible = true;
                 this.dialogStatus = "print";
-                console.log(this.selectlistRow, '88')
                 this.printData = this.selectlistRow;
                 this.code = this.printData[0].materielCode
                 this.$nextTick(() => {
