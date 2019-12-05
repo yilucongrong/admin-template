@@ -72,9 +72,9 @@ const resourceBase = {
         //设备类型
         '/data-base/equipment-type': '设备类型',
         //工艺管理
-        '/data-base/process-management': '工艺管理'
+        '/data-base/process-management': '工艺管理',
         //bom
-        // '/data-base/bom': 'bom'
+        '/data-base/bom': 'bom'
     }
     //协同平台
     // OA: {
