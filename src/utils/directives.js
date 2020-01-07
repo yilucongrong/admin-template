@@ -1,5 +1,6 @@
 /* eslint-disable */
 import Vue from 'vue'
+import { getName } from '@/utils/auth'
 /*
  *  使用方法
  *  将以下代码复制到一个js文件中，然后在入口文件main.js中import引入即可；
@@ -170,3 +171,27 @@ Vue.directive('dialogDrag', {
         // }
     }
 })
+const btnPermissions = {
+    inserted(el, binding) {
+        //获取指令的值，按钮要求的角色数组
+        const { value: btnPermissions } = binding
+        if (
+            btnPermissions &&
+            btnPermissions instanceof Array &&
+            btnPermissions.length > 0
+        ) {
+            //判断用户角色中是否有按钮要求的角色
+            const hasPermissions = btnPermissions.includes(getName())
+            //如果没有删除当前dom
+            if (!hasPermissions) {
+                el.parentNode && el.parentNode.removeChild(el)
+            }
+        } else {
+            throw new Error(
+                `需要指定按钮要求的角色数组 如v-permissions="['admin','kaite']"`
+            )
+        }
+    }
+}
+//vue绑定permissions指令
+Vue.directive('permissions', btnPermissions)
