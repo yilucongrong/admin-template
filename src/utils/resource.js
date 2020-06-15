@@ -22,7 +22,7 @@ const resourceBase = {
         '/system/processManage': '流程管理',
         '/system/processManage/processConfiguration': '流程配置',
         '/system/processManage/processMonitor': '流程监控',
-        '/system/processManage/processFristaid': '流程急救箱'
+        '/system/processManage/processFristaid': '流程急救箱',
     },
     // 基础数据模块
     dataBase: {
@@ -62,8 +62,8 @@ const resourceBase = {
         //工作中心
         '/data-base/5': '工作中心',
         //明细
-        '/data-base/workCenter': '工作中心',
-        '/factory-modeling/workstation': '工位定义',
+        '/data-base/workCenter': '工作中心主数据',
+        // '/factory-modeling/workstation': '工位定义',
 
         //设备台账
         '/data-base/equipment-ledger': '设备台账',
@@ -74,8 +74,8 @@ const resourceBase = {
         //工艺管理
         '/data-base/process-management': '工艺管理',
         //bom
-        '/data-base/bom': 'bom'
-    }
+        '/data-base/bom': 'bom',
+    },
     //协同平台
     // OA: {
     //     '/OA': '协同平台',
