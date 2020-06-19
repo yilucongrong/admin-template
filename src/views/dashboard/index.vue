@@ -3,8 +3,7 @@
         <el-row :gutter="20">
             <el-col :span="6">
                 <el-row>
-                    <el-col :span="24"
-                            class="dashdiv">
+                    <el-col :span="24" class="dashdiv">
                         <el-col :span="12">
                             <UserAvatar></UserAvatar>
                         </el-col>
@@ -32,10 +31,9 @@
                             </div>
                             <div class="dash_ul">
                                 <ul>
-                                    <li :key="item.id"
-                                        v-for="item in warningData">
-                                        <a href="#">{{ item.value }}</a><a :class="item.color"
-                                           class="time"></a>
+                                    <li :key="item.id" v-for="item in warningData">
+                                        <a href="#">{{ item.value }}</a>
+                                        <a :class="item.color" class="time"></a>
                                     </li>
                                 </ul>
                             </div>
@@ -46,13 +44,14 @@
 
             <el-col :span="18">
                 <el-row>
-                    <el-col :span="24"
-                            class="dashdiv">
+                    <el-col :span="24" class="dashdiv">
                         <el-col :span="8">
                             <el-col :span="12">
                                 <div class="infopic">
                                     <div class="textdiv iconstyle">
-                                        <span><i class="el-icon-share"></i></span>
+                                        <span>
+                                            <i class="el-icon-share"></i>
+                                        </span>
                                     </div>
                                 </div>
                             </el-col>
@@ -68,7 +67,9 @@
                             <el-col :span="12">
                                 <div class="infopic">
                                     <div class="textdiv iconstyle">
-                                        <span><i class="el-icon-share"></i></span>
+                                        <span>
+                                            <i class="el-icon-share"></i>
+                                        </span>
                                     </div>
                                 </div>
                             </el-col>
@@ -84,7 +85,9 @@
                             <el-col :span="12">
                                 <div class="infopic">
                                     <div class="textdiv iconstyle">
-                                        <span><i class="el-icon-share"></i></span>
+                                        <span>
+                                            <i class="el-icon-share"></i>
+                                        </span>
                                     </div>
                                 </div>
                             </el-col>
@@ -99,81 +102,78 @@
                 </el-row>
 
                 <el-row>
-                    <el-col :span="24"
-                            class="dashdiv">
+                    <el-col :span="24" class="dashdiv">
                         <div class="title">
                             <span>待办事项</span>
                         </div>
                         <ul>
-                            <li :key="item.id"
-                                v-for="item in todoList">
-                                <a href="#">{{ item.value }}</a><a class="time">{{ item.time }}</a>
+                            <li :key="item.id" v-for="item in todoList">
+                                <a href="#">{{ item.value }}</a>
+                                <a class="time">{{ item.time }}</a>
                             </li>
                         </ul>
                     </el-col>
                 </el-row>
 
                 <el-row>
-                    <el-col :span="24"
-                            class="dashdiv">
+                    <el-col :span="24" class="dashdiv">
                         <div class="title">
                             <span>通知公告</span>
                         </div>
                         <ul>
-                            <li :key="item.id"
-                                v-for="item in infoList">
-                                <a href="#">{{ item.value }}</a><a class="time">{{ item.time }}</a>
+                            <li :key="item.id" v-for="item in infoList">
+                                <a href="#">{{ item.value }}</a>
+                                <a class="time">{{ item.time }}</a>
                             </li>
                         </ul>
                     </el-col>
                 </el-row>
             </el-col>
         </el-row>
-        <div id="myChart"
-             :style="{width: '300px', height: '300px'}"></div>
+        <div :style="{width: '300px', height: '300px'}" id="myChart"></div>
     </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import UserAvatar from "@/components/UserAvatar";
+import { mapGetters } from 'vuex'
+import UserAvatar from '@/components/UserAvatar'
 
 export default {
-    name: "home",
+    name: 'home',
     components: {
         UserAvatar
     },
     computed: {
-        ...mapGetters(["name", "domainName", "token", "addRouters", "passWord"])
+        ...mapGetters(['name', 'domainName', 'token', 'addRouters', 'passWord'])
     },
-    data () {
+    data() {
         return {
             warningData: [
-                { id: 1, value: "安全库存预警", color: "red" },
-                { id: 2, value: "延迟交货预警", color: "yellow" },
-                { id: 3, value: "三日不足件预警", color: "red" },
-                { id: 4, value: "订单延迟应答预警", color: "orange" }
+                { id: 1, value: '安全库存预警', color: 'red' },
+                { id: 2, value: '延迟交货预警', color: 'yellow' },
+                { id: 3, value: '三日不足件预警', color: 'red' },
+                { id: 4, value: '订单延迟应答预警', color: 'orange' }
             ],
             todoList: [
-                { id: 1, value: "入库质检-PZ190503001", time: "20190101" },
-                { id: 2, value: "入库质检-PZ190503002", time: "20190102" },
-                { id: 3, value: "入库质检-PZ190503003", time: "20190103" },
-                { id: 4, value: "质检判定-PD190503001", time: "20190104" },
-                { id: 5, value: "质检判定-PD190503002", time: "20190105" },
-                { id: 6, value: "质检判定-PD190503003", time: "20190106" }
+                { id: 1, value: '入库质检-PZ190503001', time: '20190101' },
+                { id: 2, value: '入库质检-PZ190503002', time: '20190102' },
+                { id: 3, value: '入库质检-PZ190503003', time: '20190103' },
+                { id: 4, value: '质检判定-PD190503001', time: '20190104' },
+                { id: 5, value: '质检判定-PD190503002', time: '20190105' },
+                { id: 6, value: '质检判定-PD190503003', time: '20190106' }
             ],
             infoList: [
-                { id: 1, value: "订单反馈通知", time: "20190101" },
-                { id: 2, value: "质检驳回通知", time: "20190102" },
-                { id: 3, value: "公告信息", time: "20190103" }
+                { id: 1, value: '订单反馈通知', time: '20190101' },
+                { id: 2, value: '质检驳回通知', time: '20190102' },
+                { id: 3, value: '公告信息', time: '20190103' }
             ]
-        };
+        }
     },
-    mounted () {
+    mounted() {
         // this.drawLine()
     },
     methods: {
-        drawLine () {
+        drawLine() {
             // 基于准备好的dom，初始化echarts实例
             let myChart = this.$echarts.init(document.getElementById('myChart'))
             // 绘制图表
@@ -181,15 +181,17 @@ export default {
                 title: { text: '在Vue中使用echarts' },
                 tooltip: {},
                 xAxis: {
-                    data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+                    data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
                 },
                 yAxis: {},
-                series: [{
-                    name: '销量',
-                    type: 'bar',
-                    data: [5, 20, 36, 10, 10, 20]
-                }]
-            });
+                series: [
+                    {
+                        name: '销量',
+                        type: 'bar',
+                        data: [5, 20, 36, 10, 10, 20]
+                    }
+                ]
+            })
         }
     }
 }

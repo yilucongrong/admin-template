@@ -1,516 +1,506 @@
 <template>
     <div>
         <el-row>
-            <el-col :span="3"
-                    class="left-trees">
+            <el-col :span="3" class="left-trees">
                 <div class="left-tree">
-                    <el-tree :data="treeData"
-                             :props="defaultProps"
-                             @node-click="handleNodeClick"
-                             :style="contentStyleObj"></el-tree>
+                    <el-tree :data="treeData" :props="defaultProps" :style="contentStyleObj" @node-click="handleNodeClick"></el-tree>
                 </div>
             </el-col>
             <el-col :span="21">
                 <div class="app-container">
                     <div class="filter-container">
                         <div class="filter-items">
-                            <el-input size="small"
-                                      :placeholder="$t('systemMenu.catalogCode')"
-                                      v-model="listQuery.catalogCode"
-                                      class="filter-item"
-                                      @keyup.enter.native="handleFilter" />
-                            <el-input size="small"
-                                      :placeholder="$t('systemMenu.catalogName')"
-                                      v-model="listQuery.catalogName"
-                                      class="filter-item"
-                                      @keyup.enter.native="handleFilter" />
-                            <el-button type="primary"
-                                       size="small"
-                                       icon="el-icon-search"
-                                       @click="handleFilter">{{ $t('btn.search') }}</el-button>
+                            <el-input
+                                :placeholder="$t('systemMenu.catalogCode')"
+                                @keyup.enter.native="handleFilter"
+                                class="filter-item"
+                                size="small"
+                                v-model="listQuery.catalogCode"
+                            />
+                            <el-input
+                                :placeholder="$t('systemMenu.catalogName')"
+                                @keyup.enter.native="handleFilter"
+                                class="filter-item"
+                                size="small"
+                                v-model="listQuery.catalogName"
+                            />
+                            <el-button
+                                @click="handleFilter"
+                                icon="el-icon-search"
+                                size="small"
+                                type="primary"
+                            >{{ $t('btn.search') }}</el-button>
                         </div>
                     </div>
                     <div class="table-container">
                         <div class="oprate_btn">
-                            <el-button size="small"
-                                       class="filter-item"
-                                       type="primary"
-                                       icon="el-icon-plus"
-                                       @click="handleCreate">{{ $t('btn.add') }}</el-button>
-                            <el-button size="small"
-                                       class="filter-item"
-                                       type="primary"
-                                       icon="el-icon-delete"
-                                       @click="handleDelete">{{ $t('btn.delete') }}</el-button>
-                            <el-button size="small"
-                                       class="filter-item"
-                                       type="primary"
-                                       icon="el-icon-edit"
-                                       @click="handleUpdate">{{ $t('btn.edit') }}</el-button>
-                            <el-button size="small"
-                                       class="filter-item"
-                                       type="primary"
-                                       icon="el-icon-edit-outline"
-                                       @click="handleAdd">{{
-                                    $t('systemMenu.resourceAssociation')
-                                }}</el-button>
-                            <el-button size="small"
-                                       class="filter-item"
-                                       type="primary"
-                                       icon="el-icon-edit-outline"
-                                       @click="handleBtnAuthority">{{ $t('systemMenu.buttonOprate') }}</el-button>
+                            <el-button
+                                @click="handleCreate"
+                                class="filter-item"
+                                icon="el-icon-plus"
+                                size="small"
+                                type="primary"
+                            >{{ $t('btn.add') }}</el-button>
+                            <el-button
+                                @click="handleDelete"
+                                class="filter-item"
+                                icon="el-icon-delete"
+                                size="small"
+                                type="primary"
+                            >{{ $t('btn.delete') }}</el-button>
+                            <el-button
+                                @click="handleUpdate"
+                                class="filter-item"
+                                icon="el-icon-edit"
+                                size="small"
+                                type="primary"
+                            >{{ $t('btn.edit') }}</el-button>
+                            <el-button
+                                @click="handleAdd"
+                                class="filter-item"
+                                icon="el-icon-edit-outline"
+                                size="small"
+                                type="primary"
+                            >
+                                {{
+                                $t('systemMenu.resourceAssociation')
+                                }}
+                            </el-button>
+                            <el-button
+                                @click="handleBtnAuthority"
+                                class="filter-item"
+                                icon="el-icon-edit-outline"
+                                size="small"
+                                type="primary"
+                            >{{ $t('systemMenu.buttonOprate') }}</el-button>
                         </div>
-                        <el-table v-loading="listLoading"
-                                  :key="tableKey"
-                                  :data="list"
-                                  border
-                                  fit
-                                  :height="theight"
-                                  highlight-current-row
-                                  style="width: 100%;"
-                                  cell-class-name="table-cell"
-                                  header-cell-class-name="header-cell"
-                                  @selection-change="selectRow"
-                                  @row-click="rowClick"
-                                  ref="tb_a">
-                            <el-table-column type="selection"
-                                             width="30">
-                            </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('systemMenu.catalogCode')"
-                                             prop="catalogCode"
-                                             align="center"
-                                             width="120">
+                        <el-table
+                            :data="list"
+                            :height="theight"
+                            :key="tableKey"
+                            @row-click="rowClick"
+                            @selection-change="selectRow"
+                            border
+                            cell-class-name="table-cell"
+                            fit
+                            header-cell-class-name="header-cell"
+                            highlight-current-row
+                            ref="tb_a"
+                            style="width: 100%;"
+                            v-loading="listLoading"
+                        >
+                            <el-table-column type="selection" width="30"></el-table-column>
+                            <el-table-column
+                                :label="$t('systemMenu.catalogCode')"
+                                align="center"
+                                prop="catalogCode"
+                                show-overflow-tooltip
+                                width="120"
+                            >
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.catalogCode }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('systemMenu.catalogName')"
-                                             width="80"
-                                             align="center">
+                            <el-table-column
+                                :label="$t('systemMenu.catalogName')"
+                                align="center"
+                                show-overflow-tooltip
+                                width="80"
+                            >
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.catalogName }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('systemMenu.catalogEngName')"
-                                             min-width="80">
+                            <el-table-column :label="$t('systemMenu.catalogEngName')" min-width="80" show-overflow-tooltip>
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.catalogEngName }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('systemMenu.catalogOrder')"
-                                             width="60"
-                                             align="center">
+                            <el-table-column
+                                :label="$t('systemMenu.catalogOrder')"
+                                align="center"
+                                show-overflow-tooltip
+                                width="60"
+                            >
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.catalogOrder }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('systemMenu.nodeType')"
-                                             width="120"
-                                             align="center">
+                            <el-table-column :label="$t('systemMenu.nodeType')" align="center" show-overflow-tooltip width="120">
                                 <template slot-scope="scope">
-                                    <span>{{
+                                    <span>
+                                        {{
                                         scope.row.nodeType | nodeFilter
-                                    }}</span>
+                                        }}
+                                    </span>
                                 </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('systemMenu.parentId')"
-                                             width="120">
+                            <el-table-column :label="$t('systemMenu.parentId')" show-overflow-tooltip width="120">
                                 <template slot-scope="scope">
-                                    <span>{{
+                                    <span>
+                                        {{
                                         pidFilter(scope.row.parentId)
-                                    }}</span>
+                                        }}
+                                    </span>
                                 </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('systemMenu.url')"
-                                             width="120">
+                            <el-table-column :label="$t('systemMenu.url')" show-overflow-tooltip width="120">
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.url }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('systemMenu.remark')"
-                                             align="center"
-                                             width="180"
-                                             prop="remark">
+                            <el-table-column
+                                :label="$t('systemMenu.remark')"
+                                align="center"
+                                prop="remark"
+                                show-overflow-tooltip
+                                width="180"
+                            >
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.remark }}</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip
-                                             :label="$t('systemMenu.icons')"
-                                             align="center"
-                                             width="180"
-                                             prop="icons">
+                            <el-table-column
+                                :label="$t('systemMenu.icons')"
+                                align="center"
+                                prop="icons"
+                                show-overflow-tooltip
+                                width="180"
+                            >
                                 <template slot-scope="scope">
-                                    <span>{{ scope.row.icons }}
-                                        <svg-icon :icon-class="scope.row.icons" /></span>
+                                    <span>
+                                        {{ scope.row.icons }}
+                                        <svg-icon :icon-class="scope.row.icons" />
+                                    </span>
                                 </template>
                             </el-table-column>
                         </el-table>
-                        <pagination v-show="total > 0"
-                                    :total="total"
-                                    :page.sync="listQuery.currentPage"
-                                    :limit.sync="listQuery.pageSize"
-                                    @pagination="getList" />
+                        <pagination
+                            :limit.sync="listQuery.pageSize"
+                            :page.sync="listQuery.currentPage"
+                            :total="total"
+                            @pagination="getList"
+                            v-show="total > 0"
+                        />
                     </div>
                 </div>
             </el-col>
         </el-row>
 
         <!-- 新增，修改弹窗 -->
-        <el-dialog custom-class="dialog-custom"
-                   :title="dialogStatus == 'create' ? $t('btn.add') : $t('btn.edit')"
-                   :visible.sync="dialogFormVisible"
-                   v-dialogDrag
-                   :close-on-click-modal="false">
-            <el-form class="small-space"
-                     ref="dataForm"
-                     :inline="true"
-                     :rules="rules"
-                     :model="temp"
-                     label-width="90px">
-                <el-form-item :label="$t('systemMenu.catalogCode')"
-                              prop="catalogCode">
-                    <el-input v-if="dialogStatus == 'update'"
-                              v-model="temp.catalogCode"
-                              disabled="disabled" />
-                    <el-input v-else
-                              v-model="temp.catalogCode" />
+        <el-dialog
+            :close-on-click-modal="false"
+            :title="dialogStatus == 'create' ? $t('btn.add') : $t('btn.edit')"
+            :visible.sync="dialogFormVisible"
+            custom-class="dialog-custom"
+            v-dialogDrag
+        >
+            <el-form :inline="true" :model="temp" :rules="rules" class="small-space" label-width="90px" ref="dataForm">
+                <el-form-item :label="$t('systemMenu.catalogCode')" prop="catalogCode">
+                    <el-input disabled="disabled" v-if="dialogStatus == 'update'" v-model="temp.catalogCode" />
+                    <el-input v-else v-model="temp.catalogCode" />
                 </el-form-item>
-                <el-form-item :label="$t('systemMenu.catalogName')"
-                              prop="catalogName">
+                <el-form-item :label="$t('systemMenu.catalogName')" prop="catalogName">
                     <el-input v-model="temp.catalogName" />
                 </el-form-item>
-                <el-form-item :label="$t('systemMenu.catalogEngName')"
-                              prop="catalogEngName">
+                <el-form-item :label="$t('systemMenu.catalogEngName')" prop="catalogEngName">
                     <el-input v-model="temp.catalogEngName" />
                 </el-form-item>
-                <el-form-item :label="$t('systemMenu.catalogOrder')"
-                              prop="catalogOrder">
+                <el-form-item :label="$t('systemMenu.catalogOrder')" prop="catalogOrder">
                     <el-input v-model="temp.catalogOrder" />
                 </el-form-item>
-                <el-form-item :label="$t('systemMenu.parentId')"
-                              prop="parentId">
-                    <select-tree :options="treeData"
-                                 v-model="temp.parentId"
-                                 :props="defaultProps"
-                                 :value="0" />
+                <el-form-item :label="$t('systemMenu.parentId')" prop="parentId">
+                    <select-tree :options="treeData" :props="defaultProps" :value="0" v-model="temp.parentId" />
                     <!-- <el-input v-model="temp.parentId" disabled="disabled"/> -->
                 </el-form-item>
-                <el-form-item :label="$t('systemMenu.nodeType')"
-                              prop="nodeType">
+                <el-form-item :label="$t('systemMenu.nodeType')" prop="nodeType">
                     <el-radio-group v-model="temp.nodeType">
                         <el-radio :label="1">{{ $t('from.open') }}</el-radio>
                         <el-radio :label="0">{{ $t('from.stop') }}</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item :label="$t('systemMenu.url')"
-                              prop="url">
+                <el-form-item :label="$t('systemMenu.url')" prop="url">
                     <el-input v-model="temp.url" />
                 </el-form-item>
-                <el-form-item :label="$t('systemMenu.allowEmptyValue')"
-                              prop="allowEmptyValue">
+                <el-form-item :label="$t('systemMenu.allowEmptyValue')" prop="allowEmptyValue">
                     <el-radio-group v-model="temp.allowEmptyValue">
                         <el-radio label="PC">PC</el-radio>
                         <el-radio label="PDA">PDA</el-radio>
                     </el-radio-group>
                 </el-form-item>
-                <el-form-item :label="$t('systemMenu.remark')"
-                              prop="remark">
+                <el-form-item :label="$t('systemMenu.remark')" prop="remark">
                     <el-input v-model="temp.remark" />
                 </el-form-item>
-                <el-form-item :label="$t('systemMenu.icons')"
-                              prop="icons">
+                <el-form-item :label="$t('systemMenu.icons')" prop="icons">
                     <el-select v-model="temp.icons">
-                        <el-option v-for="item in icons"
-                                   :key="item"
-                                   :label="item"
-                                   :value="item">
+                        <el-option :key="item" :label="item" :value="item" v-for="item in icons">
                             <svg-icon :icon-class="item" />
                             <span>{{ item }}</span>
                         </el-option>
                     </el-select>
                 </el-form-item>
             </el-form>
-            <div slot="footer"
-                 class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">{{
+            <div class="dialog-footer" slot="footer">
+                <el-button @click="dialogFormVisible = false">
+                    {{
                     $t('btn.cancel')
-                }}</el-button>
-                <el-button type="primary"
-                           @click="
+                    }}
+                </el-button>
+                <el-button
+                    @click="
                         dialogStatus === 'create' ? createData() : updateData()
-                    ">{{ $t('btn.confirm') }}</el-button>
+                    "
+                    type="primary"
+                >{{ $t('btn.confirm') }}</el-button>
             </div>
         </el-dialog>
         <!-- 资源关联弹窗 -->
-        <el-dialog class="table_dialog"
-                   custom-class="dialog-custom"
-                   :title="$t('systemMenu.resourceAssociation')"
-                   :visible.sync="dialogFormUser"
-                   v-dialogDrag
-                   :close-on-click-modal="false">
+        <el-dialog
+            :close-on-click-modal="false"
+            :title="$t('systemMenu.resourceAssociation')"
+            :visible.sync="dialogFormUser"
+            class="table_dialog"
+            custom-class="dialog-custom"
+            v-dialogDrag
+        >
             <div class="tab_container">
-                <el-tabs v-model="activeName2"
-                         type="border-card"
-                         @tab-click="handleTabClick">
-                    <el-tab-pane :label="$t('tabs.unauthed')"
-                                 name="first">
+                <el-tabs @tab-click="handleTabClick" type="border-card" v-model="activeName2">
+                    <el-tab-pane :label="$t('tabs.unauthed')" name="first">
                         <div class="filter-container border_b_1">
                             <div class="filter-items">
-                                <el-button size="small"
-                                           class="filter-item"
-                                           type="primary"
-                                           icon="el-icon-select"
-                                           @click="authority">{{ $t('btn.empower') }}</el-button>
+                                <el-button
+                                    @click="authority"
+                                    class="filter-item"
+                                    icon="el-icon-select"
+                                    size="small"
+                                    type="primary"
+                                >{{ $t('btn.empower') }}</el-button>
                             </div>
                         </div>
                         <div class="table-container">
-                            <el-table v-loading="listLoading"
-                                      :key="tableKey"
-                                      :data="listUnrelation"
-                                      border
-                                      fit
-                                      height="350px"
-                                      highlight-current-row
-                                      cell-class-name="table-cell"
-                                      header-cell-class-name="header-cell"
-                                      style="width: 100%;"
-                                      @selection-change="selectRowUser">
-                                <el-table-column type="selection"
-                                                 width="30">
-                                </el-table-column>
-                                <el-table-column show-overflow-tooltip
-                                                 :label="$t('systemResource.endpointCode')"
-                                                 align="center">
+                            <el-table
+                                :data="listUnrelation"
+                                :key="tableKey"
+                                @selection-change="selectRowUser"
+                                border
+                                cell-class-name="table-cell"
+                                fit
+                                header-cell-class-name="header-cell"
+                                height="350px"
+                                highlight-current-row
+                                style="width: 100%;"
+                                v-loading="listLoading"
+                            >
+                                <el-table-column type="selection" width="30"></el-table-column>
+                                <el-table-column :label="$t('systemResource.endpointCode')" align="center" show-overflow-tooltip>
                                     <template slot-scope="scope">
-                                        <span>{{
+                                        <span>
+                                            {{
                                             scope.row.endpointCode
-                                        }}</span>
+                                            }}
+                                        </span>
                                     </template>
                                 </el-table-column>
-                                <el-table-column show-overflow-tooltip
-                                                 :label="$t('systemResource.endpointName')">
+                                <el-table-column :label="$t('systemResource.endpointName')" show-overflow-tooltip>
                                     <template slot-scope="scope">
-                                        <span>{{
+                                        <span>
+                                            {{
                                             scope.row.endpointName
-                                        }}</span>
+                                            }}
+                                        </span>
                                     </template>
                                 </el-table-column>
-                                <el-table-column show-overflow-tooltip
-                                                 :label="$t('systemResource.method')"
-                                                 align="center">
+                                <el-table-column :label="$t('systemResource.method')" align="center" show-overflow-tooltip>
                                     <template slot-scope="scope">
                                         <span>{{ scope.row.method }}</span>
                                     </template>
                                 </el-table-column>
-                                <el-table-column show-overflow-tooltip
-                                                 :label="$t('systemResource.url')"
-                                                 align="center">
+                                <el-table-column :label="$t('systemResource.url')" align="center" show-overflow-tooltip>
                                     <template slot-scope="scope">
                                         <span>{{ scope.row.url }}</span>
                                     </template>
                                 </el-table-column>
-                                <el-table-column show-overflow-tooltip
-                                                 :label="$t('systemResource.remark')"
-                                                 align="center">
+                                <el-table-column :label="$t('systemResource.remark')" align="center" show-overflow-tooltip>
                                     <template slot-scope="scope">
                                         <span>{{ scope.row.remark }}</span>
                                     </template>
                                 </el-table-column>
                             </el-table>
-                            <pagination v-show="total1 > 0"
-                                        :total="total1"
-                                        :page.sync="listQuery1.currentPage"
-                                        :limit.sync="listQuery1.pageSize"
-                                        @pagination="getListUnelation" />
+                            <pagination
+                                :limit.sync="listQuery1.pageSize"
+                                :page.sync="listQuery1.currentPage"
+                                :total="total1"
+                                @pagination="getListUnelation"
+                                v-show="total1 > 0"
+                            />
                         </div>
                     </el-tab-pane>
-                    <el-tab-pane :label="$t('tabs.authed')"
-                                 name="second">
+                    <el-tab-pane :label="$t('tabs.authed')" name="second">
                         <div class="filter-container border_b_1">
                             <div class="filter-items">
-                                <el-button size="small"
-                                           class="filter-item"
-                                           type="primary"
-                                           icon="el-icon-select"
-                                           @click="unauthority">{{ $t('btn.unauthority') }}</el-button>
+                                <el-button
+                                    @click="unauthority"
+                                    class="filter-item"
+                                    icon="el-icon-select"
+                                    size="small"
+                                    type="primary"
+                                >{{ $t('btn.unauthority') }}</el-button>
                             </div>
                         </div>
                         <div class="table-container">
-                            <el-table v-loading="listLoading"
-                                      :key="tableKey"
-                                      :data="listRelation"
-                                      border
-                                      fit
-                                      height="350px"
-                                      cell-class-name="table-cell"
-                                      header-cell-class-name="header-cell"
-                                      highlight-current-row
-                                      style="width: 100%;"
-                                      @selection-change="selectRowUser">
-                                <el-table-column type="selection"
-                                                 width="30">
-                                </el-table-column>
-                                <el-table-column show-overflow-tooltip
-                                                 :label="$t('systemResource.endpointCode')"
-                                                 align="center">
+                            <el-table
+                                :data="listRelation"
+                                :key="tableKey"
+                                @selection-change="selectRowUser"
+                                border
+                                cell-class-name="table-cell"
+                                fit
+                                header-cell-class-name="header-cell"
+                                height="350px"
+                                highlight-current-row
+                                style="width: 100%;"
+                                v-loading="listLoading"
+                            >
+                                <el-table-column type="selection" width="30"></el-table-column>
+                                <el-table-column :label="$t('systemResource.endpointCode')" align="center" show-overflow-tooltip>
                                     <template slot-scope="scope">
-                                        <span>{{
+                                        <span>
+                                            {{
                                             scope.row.endpointCode
-                                        }}</span>
+                                            }}
+                                        </span>
                                     </template>
                                 </el-table-column>
-                                <el-table-column show-overflow-tooltip
-                                                 :label="$t('systemResource.endpointName')">
+                                <el-table-column :label="$t('systemResource.endpointName')" show-overflow-tooltip>
                                     <template slot-scope="scope">
-                                        <span>{{
+                                        <span>
+                                            {{
                                             scope.row.endpointName
-                                        }}</span>
+                                            }}
+                                        </span>
                                     </template>
                                 </el-table-column>
-                                <el-table-column show-overflow-tooltip
-                                                 :label="$t('systemResource.method')"
-                                                 align="center">
+                                <el-table-column :label="$t('systemResource.method')" align="center" show-overflow-tooltip>
                                     <template slot-scope="scope">
                                         <span>{{ scope.row.method }}</span>
                                     </template>
                                 </el-table-column>
-                                <el-table-column show-overflow-tooltip
-                                                 :label="$t('systemResource.url')"
-                                                 align="center">
+                                <el-table-column :label="$t('systemResource.url')" align="center" show-overflow-tooltip>
                                     <template slot-scope="scope">
                                         <span>{{ scope.row.url }}</span>
                                     </template>
                                 </el-table-column>
-                                <el-table-column show-overflow-tooltip
-                                                 :label="$t('systemResource.remark')"
-                                                 align="center">
+                                <el-table-column :label="$t('systemResource.remark')" align="center" show-overflow-tooltip>
                                     <template slot-scope="scope">
                                         <span>{{ scope.row.remark }}</span>
                                     </template>
                                 </el-table-column>
                             </el-table>
-                            <pagination v-show="total2 > 0"
-                                        :total="total2"
-                                        :page.sync="listQuery2.currentPage"
-                                        :limit.sync="listQuery2.pageSize"
-                                        @pagination="getListRelation" />
+                            <pagination
+                                :limit.sync="listQuery2.pageSize"
+                                :page.sync="listQuery2.currentPage"
+                                :total="total2"
+                                @pagination="getListRelation"
+                                v-show="total2 > 0"
+                            />
                         </div>
                     </el-tab-pane>
                 </el-tabs>
             </div>
         </el-dialog>
-        <el-dialog class="table_dialog"
-                   custom-class="dialog-custom"
-                   :visible.sync="dialogPvVisible"
-                   title="Reading statistics">
+        <el-dialog :visible.sync="dialogPvVisible" class="table_dialog" custom-class="dialog-custom" title="Reading statistics">
             <div class="table-container no_t_border">
-                <el-table :data="pvData"
-                          border
-                          fit
-                          highlight-current-row
-                          cell-class-name="table-cell"
-                          header-cell-class-name="header-cell"
-                          style="width: 100%">
-                    <el-table-column show-overflow-tooltip
-                                     prop="key"
-                                     label="Channel" />
-                    <el-table-column show-overflow-tooltip
-                                     prop="pv"
-                                     label="Pv" />
+                <el-table
+                    :data="pvData"
+                    border
+                    cell-class-name="table-cell"
+                    fit
+                    header-cell-class-name="header-cell"
+                    highlight-current-row
+                    style="width: 100%"
+                >
+                    <el-table-column label="Channel" prop="key" show-overflow-tooltip />
+                    <el-table-column label="Pv" prop="pv" show-overflow-tooltip />
                 </el-table>
             </div>
 
-            <span slot="footer"
-                  class="dialog-footer">
-                <el-button type="primary"
-                           @click="dialogPvVisible = false">{{
+            <span class="dialog-footer" slot="footer">
+                <el-button @click="dialogPvVisible = false" type="primary">
+                    {{
                     $t('btn.confirm')
-                }}</el-button>
+                    }}
+                </el-button>
             </span>
         </el-dialog>
 
         <!-- 按钮权限弹框 -->
-        <el-dialog class="table_dialog"
-                   custom-class="dialog-custom"
-                   :title="'按钮操作'"
-                   :visible.sync="btnAuthorityDialog"
-                   v-dialogDrag
-                   :close-on-click-modal="false">
+        <el-dialog
+            :close-on-click-modal="false"
+            :title="'按钮操作'"
+            :visible.sync="btnAuthorityDialog"
+            class="table_dialog"
+            custom-class="dialog-custom"
+            v-dialogDrag
+        >
             <div class="oprate_btn_d border_b_1">
-                <el-button class="filter-item"
-                           size="small"
-                           type="primary"
-                           @click="addButton"
-                           icon="el-icon-plus">{{ $t('btn.add') }}</el-button>
-                <el-button class="filter-item"
-                           size="small"
-                           type="primary"
-                           @click="deleteButton"
-                           icon="el-icon-plus">{{ $t('btn.delete') }}</el-button>
+                <el-button
+                    @click="addButton"
+                    class="filter-item"
+                    icon="el-icon-plus"
+                    size="small"
+                    type="primary"
+                >{{ $t('btn.add') }}</el-button>
+                <el-button
+                    @click="deleteButton"
+                    class="filter-item"
+                    icon="el-icon-plus"
+                    size="small"
+                    type="primary"
+                >{{ $t('btn.delete') }}</el-button>
             </div>
             <div class="table-container no_t_border no_t_margin">
-                <el-table :data="btnFucList"
-                          border
-                          fit
-                          height="320px"
-                          highlight-current-row
-                          style="width: 100%;"
-                          ref="detailtable"
-                          @selection-change="btnSelectChange"
-                          cell-class-name="table-cell"
-                          header-cell-class-name="header-cell">
-                    <el-table-column type="selection"
-                                     fixed
-                                     width="30"
-                                     align="center"></el-table-column>
-                    <el-table-column show-overflow-tooltip
-                                     :label="'行号'"
-                                     prop="rowId">
+                <el-table
+                    :data="btnFucList"
+                    @selection-change="btnSelectChange"
+                    border
+                    cell-class-name="table-cell"
+                    fit
+                    header-cell-class-name="header-cell"
+                    height="320px"
+                    highlight-current-row
+                    ref="detailtable"
+                    style="width: 100%;"
+                >
+                    <el-table-column align="center" fixed type="selection" width="30"></el-table-column>
+                    <el-table-column :label="'行号'" prop="rowId" show-overflow-tooltip>
                         <template slot-scope="scope">
-                            <el-input v-model="scope.row.rowId"
-                                      type="text"
-                                      required></el-input>
+                            <el-input required type="text" v-model="scope.row.rowId"></el-input>
                         </template>
                     </el-table-column>
-                    <el-table-column show-overflow-tooltip
-                                     :label="'功能'"
-                                     prop="btnFunc">
+                    <el-table-column :label="'功能'" prop="btnFunc" show-overflow-tooltip>
                         <template slot-scope="scope">
-                            <el-input v-model="scope.row.btnFunc"
-                                      type="text"
-                                      required></el-input>
+                            <el-input required type="text" v-model="scope.row.btnFunc"></el-input>
                         </template>
                     </el-table-column>
-                    <el-table-column show-overflow-tooltip
-                                     :label="'按钮名称'"
-                                     prop="btnName">
+                    <el-table-column :label="'按钮名称'" prop="btnName" show-overflow-tooltip>
                         <template slot-scope="scope">
-                            <el-input v-model="scope.row.btnName"
-                                      type="text"
-                                      required></el-input>
+                            <el-input required type="text" v-model="scope.row.btnName"></el-input>
                         </template>
                     </el-table-column>
                 </el-table>
             </div>
 
-            <div slot="footer"
-                 class="dialog-footer">
-                <el-button @click="btnAuthorityDialog = !btnAuthorityDialog">{{
+            <div class="dialog-footer" slot="footer">
+                <el-button @click="btnAuthorityDialog = !btnAuthorityDialog">
+                    {{
                     $t('btn.cancel')
-                }}</el-button>
-                <el-button type="primary"
-                           @click="confirmBtnList">{{
+                    }}
+                </el-button>
+                <el-button @click="confirmBtnList" type="primary">
+                    {{
                     $t('btn.confirm')
-                }}</el-button>
+                    }}
+                </el-button>
             </div>
         </el-dialog>
     </div>
@@ -532,7 +522,7 @@ import getAllHasChildrenRowId from '@/utils/addRouter'
 export default {
     name: 'systemMenu',
     components: { Pagination, SelectTree },
-    data () {
+    data() {
         return {
             tableKey: 0,
             list: [],
@@ -552,7 +542,7 @@ export default {
             listLoading: true,
             circle: '',
             listQuery: {
-                parentId:0,
+                parentId: 0,
                 currentPage: 1,
                 pageSize: 15,
                 page: 1
@@ -624,12 +614,12 @@ export default {
             }
         }
     },
-    created () {
+    created() {
         this.getList()
         this.getTree()
         this.getHeight()
     },
-    mounted () {
+    mounted() {
         this.$store.dispatch('dict/getDicData', [
             'dt_org_type',
             'dt_org_function'
@@ -645,27 +635,27 @@ export default {
     },
     methods: {
         //添加按钮
-        addButton () {
+        addButton() {
             this.btnFucList.push({ rowId: '', btnFunc: '', btnName: '' })
         },
         //删除按钮
-        deleteButton () { },
+        deleteButton() {},
         //保存按钮
-        confirmBtnList () { },
-        btnSelectChange (val) {
+        confirmBtnList() {},
+        btnSelectChange(val) {
             this.btnSelectRow = val
         },
         //表格高度计算
-        setTableHeight () {
+        setTableHeight() {
             this.theight = this.$myFun.getSingleTbHeight()
         },
-        resetTemp () {
+        resetTemp() {
             this.temp = {
                 nodeType: 1,
                 allowEmptyValue: 'PC'
             }
         },
-        pidFilter (value) {
+        pidFilter(value) {
             //父目录过滤器
             if (value === 0) {
                 return '根目录'
@@ -677,7 +667,7 @@ export default {
                 }
             }
         },
-        handleTabClick (tab) {
+        handleTabClick(tab) {
             //选项卡切换
             if (tab.name == 'second') {
                 this.getListRelation()
@@ -685,21 +675,19 @@ export default {
                 this.getListUnelation()
             }
         },
-        getHeight () {
+        getHeight() {
             //自适应高度
             this.contentStyleObj.height =
                 document.body.scrollHeight - 110 + 'px'
         },
-        destroyed () {
+        destroyed() {
             //自适应窗体大小
             window.removeEventListener('resize', this.getHeight)
         },
-        getList () {
+        getList() {
             //获取数据
             selectDatas(this.listQuery).then(response => {
-                
                 this.list = response.data.list.filter(v => {
-                   
                     if (resource[v.url]) {
                         if (
                             v.parentId == 0 ||
@@ -712,16 +700,16 @@ export default {
                         return v
                     }
                 })
-                if(this.listQuery.parentId==0){
-                    this.total = response.data.pages.count-3
-                }else{
+                if (this.listQuery.parentId == 0) {
+                    this.total = response.data.pages.count - 3
+                } else {
                     this.total = response.data.pages.count
                 }
-                
+
                 // Just to simulate the time of the request
             })
         },
-        getTree () {
+        getTree() {
             //获取树数据
             selectDatas().then(response => {
                 this.treeData = this.$myFun.addTreeRoot(response.data)
@@ -731,10 +719,10 @@ export default {
             })
         },
         //树高度设置
-        setTreeHeight () {
+        setTreeHeight() {
             this.contentStyleObj.height = this.$myFun.getTreehHeight()
         },
-        handleCreate () {
+        handleCreate() {
             //新增弹窗调用
             if (this.listQuery.parentId || this.listQuery.parentId === 0) {
                 this.resetTemp()
@@ -752,7 +740,7 @@ export default {
                 })
             }
         },
-        handleUpdate () {
+        handleUpdate() {
             //更新弹窗调用
             if (this.selectlistRow && this.selectlistRow.length == 1) {
                 this.temp = this.selectlistRow[0] // copy obj
@@ -769,11 +757,11 @@ export default {
                 })
             }
         },
-        handleFilter () {
+        handleFilter() {
             //查询
             this.getList()
         },
-        createData () {
+        createData() {
             //新增
             this.$refs['dataForm'].validate(valid => {
                 if (valid) {
@@ -791,7 +779,7 @@ export default {
                 }
             })
         },
-        updateData () {
+        updateData() {
             //更新
             this.$refs['dataForm'].validate(valid => {
                 if (valid) {
@@ -812,7 +800,7 @@ export default {
                 }
             })
         },
-        handleDelete () {
+        handleDelete() {
             //删除
             if (this.selectlistRow && this.selectlistRow.length == 1) {
                 this.$confirm('此操作将删除所选中数据, 是否继续?', '提示', {
@@ -846,7 +834,7 @@ export default {
                 })
             }
         },
-        getListRelation () {
+        getListRelation() {
             //查询关联的数据
             this.listQuery2.catalogCode = this.selectlistRow[0].catalogCode
             selectEndpoints(this.listQuery2).then(response => {
@@ -854,14 +842,14 @@ export default {
                 this.total2 = response.data.pages.count
             })
         },
-        getListUnelation () {
+        getListUnelation() {
             //查询未关联资源列表
             selectEndpoints(this.listQuery1).then(response => {
                 this.listUnrelation = response.data.list
                 this.total1 = response.data.pages.count
             })
         },
-        handleAdd () {
+        handleAdd() {
             //资源关联弹窗
             if (this.selectlistRow && this.selectlistRow.length == 1) {
                 this.dialogFormUser = true
@@ -878,7 +866,7 @@ export default {
                 })
             }
         },
-        authority () {
+        authority() {
             //授权
             let fun = 'SAVE'
             if (this.selectlistRowUser && this.selectlistRowUser.length > 0) {
@@ -913,7 +901,7 @@ export default {
                 })
             }
         },
-        unauthority () {
+        unauthority() {
             //取消授权
             let fun = 'REMOVE'
             if (this.selectlistRowUser && this.selectlistRowUser.length > 0) {
@@ -949,7 +937,7 @@ export default {
             }
         },
         // 获取表格选中时的数据
-        selectRow (val) {
+        selectRow(val) {
             if (val.length > 1) {
                 this.$refs.tb_a.clearSelection() //清除其他行的选中
                 this.$refs.tb_a.toggleRowSelection(
@@ -960,24 +948,24 @@ export default {
                 this.selectlistRow = val
             }
         },
-        rowClick (val) {
+        rowClick(val) {
             this.$refs.tb_a.clearSelection() //清除其他行的选中
             this.$refs.tb_a.toggleRowSelection(val) //单击行绑定点击事件
         },
 
-        selectRowUser (val) {
+        selectRowUser(val) {
             this.selectlistRowUser = val
         },
-        selectRowUser1 (val) {
+        selectRowUser1(val) {
             this.selectlistRowUser1 = val
         },
-        handleNodeClick (data) {
+        handleNodeClick(data) {
             //点击树查询
             this.listQuery.parentId = data.rowId
             this.getList()
         },
         //按钮权限添加
-        handleBtnAuthority () {
+        handleBtnAuthority() {
             this.btnAuthorityDialog = true
         }
     }
