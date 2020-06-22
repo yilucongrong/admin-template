@@ -6,7 +6,7 @@ function resolve(dir) {
     return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || 'DTGD MES' // page title
+const name = defaultSettings.title || 'DTGD WEB' // page title
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run
@@ -21,8 +21,8 @@ for (let key in obj) {
             changeOrigin: true,
             ws: true,
             pathRewrite: {
-                ['^' + obj[key]]: ''
-            }
+                ['^' + obj[key]]: '',
+            },
         }
     }
 }
@@ -45,7 +45,7 @@ module.exports = {
     // 在vue cli3.0版本，新建vue.config.js文件在其中配置  css:{ sourceMap: true }老版本：设置 cssSourceMap:true
     css: {
         // 开发环境为true生产环境false
-        sourceMap: process.env.NODE_ENV === 'development'
+        sourceMap: process.env.NODE_ENV === 'development',
     },
     productionSourceMap: false,
     // 如果你的前端应用和后端 API 服务器没有运行在同一个主机上，
@@ -57,12 +57,12 @@ module.exports = {
         open: true,
         overlay: {
             warnings: false,
-            errors: true
+            errors: true,
         },
         disableHostCheck: true,
         // proxy: 'http://localhost:6666', //这会告诉开发服务器将任何未知请求 (没有匹配到静态文件的请求) 代理到http://localhost:6666
         // 如果你想要更多的代理控制行为，也可以使用一个 path: options 成对的对象。
-        proxy: proxyObj
+        proxy: proxyObj,
         // proxy: {
         //     // '/keyguard': {
         //     //     target: 'http://172.30.248.74:2001/keyguard/v1', //对应自己的接口
@@ -114,9 +114,9 @@ module.exports = {
         name: name,
         resolve: {
             alias: {
-                '@': resolve('src')
-            }
-        }
+                '@': resolve('src'),
+            },
+        },
     },
     chainWebpack(config) {
         config.plugins.delete('preload') // TODO: need test
@@ -135,7 +135,7 @@ module.exports = {
             .use('svg-sprite-loader')
             .loader('svg-sprite-loader')
             .options({
-                symbolId: 'icon-[name]'
+                symbolId: 'icon-[name]',
             })
             .end()
 
@@ -144,7 +144,7 @@ module.exports = {
             .rule('vue')
             .use('vue-loader')
             .loader('vue-loader')
-            .tap(options => {
+            .tap((options) => {
                 options.compilerOptions.preserveWhitespace = true
                 return options
             })
@@ -152,19 +152,19 @@ module.exports = {
 
         config
             // https://webpack.js.org/configuration/devtool/#development
-            .when(process.env.NODE_ENV === 'development', config =>
+            .when(process.env.NODE_ENV === 'development', (config) =>
                 config.devtool('cheap-source-map')
             )
 
-        config.when(process.env.NODE_ENV !== 'development', config => {
+        config.when(process.env.NODE_ENV !== 'development', (config) => {
             config
                 .plugin('ScriptExtHtmlWebpackPlugin')
                 .after('html')
                 .use('script-ext-html-webpack-plugin', [
                     {
                         // `runtime` must same as runtimeChunk name. default is `runtime`
-                        inline: /runtime\..*\.js$/
-                    }
+                        inline: /runtime\..*\.js$/,
+                    },
                 ])
                 .end()
             config.optimization.splitChunks({
@@ -174,21 +174,21 @@ module.exports = {
                         name: 'chunk-libs',
                         test: /[\\/]node_modules[\\/]/,
                         priority: 10,
-                        chunks: 'initial' // only package third parties that are initially dependent
+                        chunks: 'initial', // only package third parties that are initially dependent
                     },
                     elementUI: {
                         name: 'chunk-elementUI', // split elementUI into a single package
                         priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
-                        test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
+                        test: /[\\/]node_modules[\\/]_?element-ui(.*)/, // in order to adapt to cnpm
                     },
                     commons: {
                         name: 'chunk-commons',
                         test: resolve('src/components'), // can customize your rules
                         minChunks: 3, //  minimum common number
                         priority: 5,
-                        reuseExistingChunk: true
-                    }
-                }
+                        reuseExistingChunk: true,
+                    },
+                },
             })
             config.optimization.runtimeChunk('single')
         })
@@ -200,7 +200,7 @@ module.exports = {
             favicon16: 'favicon.ico',
             appleTouchIcon: 'favicon.ico',
             maskIcon: 'favicon.ico',
-            msTileImage: 'favicon.ico'
-        }
-    }
+            msTileImage: 'favicon.ico',
+        },
+    },
 }
