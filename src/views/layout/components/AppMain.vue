@@ -1,9 +1,7 @@
 <template>
     <section class="app-main">
-        <transition name="fade-transform"
-                    mode="out-in">
-            <keep-alive :include="cachedViews"
-                        exclude="redirect">
+        <transition mode="out-in" name="fade-transform">
+            <keep-alive :include="cachedViews" exclude="redirect">
                 <router-view :key="key" />
             </keep-alive>
         </transition>
@@ -12,17 +10,17 @@
 
 <script>
 export default {
-    name: "AppMain",
+    name: 'AppMain',
     computed: {
-        cachedViews () {
-            return this.$store.state.tagsView.cachedViews;
+        cachedViews() {
+            return this.$store.state.tagsView.cachedViews
         },
-        key () {
-            return this.$route.path;
+        key() {
+            return this.$route.path
             // return this.$route.fullPath
         }
     }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -50,9 +48,6 @@ export default {
         padding-top: 84px;
     }
 }
-</style>
-
-<style lang="scss">
 // fix css style bug in open el-dialog
 .el-popup-parent--hidden {
     .fixed-header {
@@ -60,3 +55,4 @@ export default {
     }
 }
 </style>
+

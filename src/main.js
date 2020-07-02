@@ -32,6 +32,7 @@ Vue.use(Element, {
 Vue.prototype.$echarts = echarts
 Vue.prototype.$myFun = myFun //其中$xx为新命的名。
 Vue.prototype.$myFun.getSVG = getSVG
+//全局过滤器
 Object.keys(filters).forEach((key) => {
     Vue.filter(key, filters[key])
 })

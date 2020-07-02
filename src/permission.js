@@ -56,8 +56,8 @@ router.beforeEach(async (to, from, next) => {
                         accessRoutes.concat([
                             {
                                 path: '*',
-                                redirect: '/404'
-                            }
+                                redirect: '/404',
+                            },
                         ])
                     )
 
@@ -88,8 +88,11 @@ router.beforeEach(async (to, from, next) => {
         }
     }
 })
-
-router.afterEach(() => {
-    // finish progress bar
-    NProgress.done()
-})
+router.beforeEach((to, from, next) => {
+    console.log(to, from, 111111)
+    next()
+}),
+    router.afterEach(() => {
+        // finish progress bar
+        NProgress.done()
+    })

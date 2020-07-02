@@ -1,15 +1,14 @@
 // set function parseTime,formatTime to filter
 export { parseTime, formatTime } from '@/utils'
 
-
-function pluralize (time, label) {
+function pluralize(time, label) {
     if (time === 1) {
         return time + label
     }
     return time + label + 's'
 }
 
-export function timeAgo (time) {
+export function timeAgo(time) {
     const between = Date.now() / 1000 - Number(time)
     if (between < 3600) {
         return pluralize(~~(between / 60), ' minute')
@@ -21,29 +20,34 @@ export function timeAgo (time) {
 }
 
 /* 数字 格式化*/
-export function numberFormatter (num, digits) {
+export function numberFormatter(num, digits) {
     const si = [
-        { value: 1E18, symbol: 'E' },
-        { value: 1E15, symbol: 'P' },
-        { value: 1E12, symbol: 'T' },
-        { value: 1E9, symbol: 'G' },
-        { value: 1E6, symbol: 'M' },
-        { value: 1E3, symbol: 'k' }
+        { value: 1e18, symbol: 'E' },
+        { value: 1e15, symbol: 'P' },
+        { value: 1e12, symbol: 'T' },
+        { value: 1e9, symbol: 'G' },
+        { value: 1e6, symbol: 'M' },
+        { value: 1e3, symbol: 'k' },
     ]
     for (let i = 0; i < si.length; i++) {
         if (num >= si[i].value) {
-            return (num / si[i].value + 0.1).toFixed(digits).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, '$1') + si[i].symbol
+            return (
+                (num / si[i].value + 0.1)
+                    .toFixed(digits)
+                    .replace(/\.0+$|(\.[0-9]*[1-9])0+$/, '$1') + si[i].symbol
+            )
         }
     }
     return num.toString()
 }
 
-export function toThousandFilter (num) {
-    return (+num || 0).toString().replace(/^-?\d+/g, m => m.replace(/(?=(?!\b)(\d{3})+$)/g, ','))
+export function toThousandFilter(num) {
+    return (+num || 0)
+        .toString()
+        .replace(/^-?\d+/g, (m) => m.replace(/(?=(?!\b)(\d{3})+$)/g, ','))
 }
 
-
-export function stateFilter (value) {
+export function stateFilter(value) {
     if (value === 0) {
         return '停止'
     } else if (value === 1) {
@@ -53,8 +57,9 @@ export function stateFilter (value) {
     }
 }
 
-export function optionsFilter ([val, options]) {
-    const item = options.filter(v => v.value === val)
+export function optionsFilter([val, options]) {
+    const item = options
+        .filter((v) => v.value === val)
         .find((value, index, arr) => arr)
     if (!item) {
         return ''
@@ -62,7 +67,7 @@ export function optionsFilter ([val, options]) {
     return item.label
 }
 
-export function sexFilter (value) {
+export function sexFilter(value) {
     if (value === 0) {
         return '女'
     } else if (value === 1) {
@@ -72,7 +77,7 @@ export function sexFilter (value) {
     }
 }
 
-export function isEnabledFilter (value) {
+export function isEnabledFilter(value) {
     if (value === 0) {
         return '无效'
     } else if (value === 1) {
@@ -82,7 +87,7 @@ export function isEnabledFilter (value) {
     }
 }
 //节点类型
-export function nodeFilter (value) {
+export function nodeFilter(value) {
     if (value === 0) {
         return '无效'
     } else if (value === 1) {
@@ -92,7 +97,7 @@ export function nodeFilter (value) {
     }
 }
 //上级组织
-export function organizationFilter (value, list) {
+export function organizationFilter(value, list) {
     return list.parentName
 }
 // 组织类型
